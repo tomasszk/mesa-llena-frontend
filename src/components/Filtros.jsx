@@ -1,7 +1,10 @@
 /* ==========================================================================
    Filtros del catalogo
    --------------------------------------------------------------------------
-   Cubre el punto "Busqueda y filtrado de productos por categoria, precio, etc."
+   Junto con ChipsCategorias cubre el punto "Busqueda y filtrado de productos
+   por categoria, precio, etc." del enunciado. Aca van la busqueda por texto,
+   el rango de precios y la disponibilidad; la categoria quedo afuera, en los
+   chips de arriba, porque es el filtro que mas se usa.
 
    El filtrado lo hace el BACKEND, no el frontend: este formulario arma los
    parametros y se los manda a GET /products, que los traduce a la query de
@@ -17,19 +20,18 @@ import { useState } from 'react';
 
 const FILTROS_VACIOS = {
   search: '',
-  categoryId: '',
   minPrice: '',
   maxPrice: '',
   onlyAvailable: false,
 };
 
-function Filtros({ categorias, alAplicar, cantidadResultados, cargando }) {
+function Filtros({ alAplicar, cargando }) {
   const [borrador, setBorrador] = useState(FILTROS_VACIOS);
 
   /**
    * Un solo handler para todos los campos: usa el atributo name del input
    * para saber que parte del estado tiene que cambiar. Asi no escribimos
-   * cinco funciones casi iguales.
+   * cuatro funciones casi iguales.
    */
   function alCambiar(evento) {
     const { name, value, type, checked } = evento.target;
@@ -43,11 +45,10 @@ function Filtros({ categorias, alAplicar, cantidadResultados, cargando }) {
 
     // Si el usuario puso un minimo mayor que el maximo, los damos vuelta en
     // lugar de devolverle una lista vacia sin explicacion.
-    const min = borrador.minPrice;
-    const max = borrador.maxPrice;
-    const hayQueDarVuelta = min !== '' && max !== '' && Number(min) > Number(max);
+    const { minPrice: min, maxPrice: max } = borrador;
+    const alReves = min !== '' && max !== '' && Number(min) > Number(max);
 
-    alAplicar(hayQueDarVuelta ? { ...borrador, minPrice: max, maxPrice: min } : borrador);
+    alAplicar(alReves ? { ...borrador, minPrice: max, maxPrice: min } : borrador);
   }
 
   function limpiar() {
@@ -55,10 +56,8 @@ function Filtros({ categorias, alAplicar, cantidadResultados, cargando }) {
     alAplicar(FILTROS_VACIOS);
   }
 
-  // Para saber si mostrar el boton de limpiar: hay algun filtro puesto?
   const hayFiltros =
     borrador.search !== '' ||
-    borrador.categoryId !== '' ||
     borrador.minPrice !== '' ||
     borrador.maxPrice !== '' ||
     borrador.onlyAvailable;
@@ -67,32 +66,15 @@ function Filtros({ categorias, alAplicar, cantidadResultados, cargando }) {
     <form className="filtros panel" onSubmit={buscar}>
       <div className="filtros-grilla">
         <div className="campo filtro-busqueda">
-          <label htmlFor="search">Buscar</label>
+          <label htmlFor="search">Buscar un juego</label>
           <input
             id="search"
             name="search"
             type="search"
-            placeholder="Nombre o descripcion del juego"
+            placeholder="Nombre o descripcion"
             value={borrador.search}
             onChange={alCambiar}
           />
-        </div>
-
-        <div className="campo">
-          <label htmlFor="categoryId">Categoria</label>
-          <select
-            id="categoryId"
-            name="categoryId"
-            value={borrador.categoryId}
-            onChange={alCambiar}
-          >
-            <option value="">Todas</option>
-            {categorias.map((categoria) => (
-              <option key={categoria.id} value={categoria.id}>
-                {categoria.description}
-              </option>
-            ))}
-          </select>
         </div>
 
         <div className="campo">
@@ -122,18 +104,6 @@ function Filtros({ categorias, alAplicar, cantidadResultados, cargando }) {
             onChange={alCambiar}
           />
         </div>
-      </div>
-
-      <div className="filtros-pie">
-        <label className="checkbox">
-          <input
-            name="onlyAvailable"
-            type="checkbox"
-            checked={borrador.onlyAvailable}
-            onChange={alCambiar}
-          />
-          Solo con stock disponible
-        </label>
 
         <div className="filtros-botones">
           {hayFiltros && (
@@ -147,13 +117,15 @@ function Filtros({ categorias, alAplicar, cantidadResultados, cargando }) {
         </div>
       </div>
 
-      {cantidadResultados != null && (
-        <p className="texto-chico texto-gris sin-margen" style={{ marginTop: '.75rem' }}>
-          {cantidadResultados === 0
-            ? 'Ningun juego coincide con la busqueda'
-            : `${cantidadResultados} ${cantidadResultados === 1 ? 'juego' : 'juegos'} en el catalogo`}
-        </p>
-      )}
+      <label className="checkbox">
+        <input
+          name="onlyAvailable"
+          type="checkbox"
+          checked={borrador.onlyAvailable}
+          onChange={alCambiar}
+        />
+        Mostrar solo los que tienen stock
+      </label>
     </form>
   );
 }

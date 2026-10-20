@@ -13,8 +13,12 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Aviso from '../components/Aviso';
 import Cargando from '../components/Cargando';
-import { obtenerProducto } from '../api/productos';
+import TarjetaChica from '../components/TarjetaChica';
+import { obtenerProducto, obtenerProductos } from '../api/productos';
 import { imagenBase64, precio } from '../formato';
+
+/** Cuantos juegos de la misma categoria mostramos abajo del detalle. */
+const RELACIONADOS = 4;
 
 function DetalleProducto({ usuario, alAgregar }) {
   const { id } = useParams();
@@ -28,6 +32,9 @@ function DetalleProducto({ usuario, alAgregar }) {
 
   const [cantidad, setCantidad] = useState(1);
   const [agregando, setAgregando] = useState(false);
+
+  // Otros juegos de la misma categoria, para que el usuario siga mirando.
+  const [relacionados, setRelacionados] = useState([]);
 
   /* ------------------------------------------------------------------
      Se pide el producto cada vez que cambia el id de la URL. Es importante
@@ -61,6 +68,45 @@ function DetalleProducto({ usuario, alAgregar }) {
       cancelado = true;
     };
   }, [id]);
+
+  /* ------------------------------------------------------------------
+     Una vez que sabemos de que categoria es el producto, pedimos otros de la
+     misma. Este efecto depende de la categoria y del id, no del objeto
+     producto entero: si dependiera del objeto se volveria a ejecutar en cada
+     render que lo reemplace, aunque la categoria sea la misma.
+     ------------------------------------------------------------------ */
+  const categoriaId = producto?.categoryId;
+
+  useEffect(() => {
+    if (!categoriaId) {
+      setRelacionados([]);
+      return;
+    }
+
+    let cancelado = false;
+
+    // Pedimos uno de mas, porque uno de los que vuelven es el que ya estamos
+    // mirando y lo vamos a descartar.
+    obtenerProductos({ categoryId: categoriaId, size: RELACIONADOS + 1, onlyAvailable: true })
+      .then((respuesta) => {
+        if (cancelado) return;
+
+        const otros = (respuesta.content ?? [])
+          .filter((p) => String(p.id) !== String(id))
+          .slice(0, RELACIONADOS);
+
+        setRelacionados(otros);
+      })
+      .catch(() => {
+        // Es contenido secundario: si falla, simplemente no mostramos la
+        // seccion. No tiene sentido avisarle nada al usuario por esto.
+        if (!cancelado) setRelacionados([]);
+      });
+
+    return () => {
+      cancelado = true;
+    };
+  }, [categoriaId, id]);
 
   async function agregar() {
     setAgregando(true);
@@ -214,6 +260,19 @@ function DetalleProducto({ usuario, alAgregar }) {
           )}
         </div>
       </div>
+
+      {/* Otros juegos de la misma categoria */}
+      {relacionados.length > 0 && (
+        <section className="relacionados">
+          <h2>Mas de {producto.categoryDescription}</h2>
+
+          <div className="grilla-chica">
+            {relacionados.map((otro) => (
+              <TarjetaChica key={otro.id} producto={otro} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

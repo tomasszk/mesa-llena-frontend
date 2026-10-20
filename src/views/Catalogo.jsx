@@ -11,6 +11,7 @@
    ========================================================================== */
 
 import { useEffect, useState } from 'react';
+import ChipsCategorias from '../components/ChipsCategorias';
 import Filtros from '../components/Filtros';
 import TarjetaProducto from '../components/TarjetaProducto';
 import Paginador from '../components/Paginador';
@@ -24,7 +25,6 @@ const POR_PAGINA = 12;
 
 const SIN_FILTROS = {
   search: '',
-  categoryId: '',
   minPrice: '',
   maxPrice: '',
   onlyAvailable: false,
@@ -38,6 +38,9 @@ function Catalogo({ usuario, alAgregar }) {
   const [totalProductos, setTotalProductos] = useState(null);
 
   // --- Que le pedimos al backend ---
+  // La categoria va aparte del resto de los filtros porque se aplica sola, de
+  // un clic en los chips, mientras que los demas esperan al boton "Buscar".
+  const [categoriaId, setCategoriaId] = useState('');
   const [filtros, setFiltros] = useState(SIN_FILTROS);
   const [pagina, setPagina] = useState(0);
 
@@ -51,22 +54,20 @@ function Catalogo({ usuario, alAgregar }) {
   /* ------------------------------------------------------------------
      Las categorias se piden UNA sola vez, cuando el componente se monta.
      Por eso el array de dependencias va vacio: [].
-     Las usamos para llenar el <select> del filtro.
      ------------------------------------------------------------------ */
   useEffect(() => {
     obtenerCategorias()
       .then((pagina) => setCategorias(pagina.content ?? []))
       .catch(() => {
-        // Si fallan las categorias el catalogo igual funciona: simplemente el
-        // filtro por categoria queda sin opciones. No vale la pena romper
-        // toda la pantalla por eso.
+        // Si fallan las categorias el catalogo igual funciona: simplemente no
+        // se ven los chips. No vale la pena romper toda la pantalla por eso.
         setCategorias([]);
       });
   }, []);
 
   /* ------------------------------------------------------------------
-     Los productos se vuelven a pedir cada vez que cambian los filtros o la
-     pagina. Eso es lo que dice el array de dependencias: [filtros, pagina].
+     Los productos se vuelven a pedir cada vez que cambia algun filtro o la
+     pagina. Eso es lo que dice el array de dependencias.
 
      El flag "cancelado" evita un problema clasico: si el usuario cambia el
      filtro dos veces rapido, podrian volver las dos respuestas y la primera
@@ -79,7 +80,7 @@ function Catalogo({ usuario, alAgregar }) {
     setCargando(true);
     setError('');
 
-    obtenerProductos({ ...filtros, page: pagina, size: POR_PAGINA })
+    obtenerProductos({ ...filtros, categoryId: categoriaId, page: pagina, size: POR_PAGINA })
       .then((respuesta) => {
         if (cancelado) return;
 
@@ -102,11 +103,16 @@ function Catalogo({ usuario, alAgregar }) {
     return () => {
       cancelado = true;
     };
-  }, [filtros, pagina]);
+  }, [filtros, categoriaId, pagina]);
 
-  /** Cuando se aplican filtros nuevos, volvemos a la primera pagina. */
+  /** Al cambiar cualquier filtro volvemos a la primera pagina. */
   function aplicarFiltros(filtrosNuevos) {
     setFiltros(filtrosNuevos);
+    setPagina(0);
+  }
+
+  function elegirCategoria(id) {
+    setCategoriaId(id);
     setPagina(0);
   }
 
@@ -131,7 +137,7 @@ function Catalogo({ usuario, alAgregar }) {
   /**
    * Si la cuenta no puede comprar, por que. Devuelve null cuando si puede,
    * asi la tarjeta no muestra ningun aviso.
-   *   - Sin sesion      -> le falta una cuenta.
+   *   - Sin sesion       -> le falta una cuenta.
    *   - Cuenta de tienda -> /carts pide el rol USER, la tienda no compra.
    */
   const motivoNoPuedeComprar = !usuario
@@ -140,31 +146,58 @@ function Catalogo({ usuario, alAgregar }) {
       ? 'La cuenta de la tienda no compra'
       : null;
 
+  const nombreCategoria = categorias.find((c) => String(c.id) === categoriaId)?.description;
+
   return (
     <div className="contenedor">
       <section className="portada">
-        <h1>Juegos de mesa para jugar en serio</h1>
-        <p>
-          Estrategia, familiares, party games y clasicos. Elegi el tuyo y que no quede nadie
-          afuera de la mesa.
-        </p>
+        <div className="portada-texto">
+          <span className="portada-sello">Juegos de mesa</span>
+          <h1>
+            Que no quede nadie
+            <br />
+            afuera de la mesa
+          </h1>
+          <p>
+            Estrategia, familiares, party games y clasicos de toda la vida. Elegi el tuyo y
+            armá la próxima partida.
+          </p>
+        </div>
+
+        {/* Decoracion: un dado y dos fichas, puro adorno */}
+        <div className="portada-adorno" aria-hidden="true">
+          <span className="adorno-dado">{'⚄'}</span>
+          <span className="adorno-ficha adorno-ficha-1">{'⬢'}</span>
+          <span className="adorno-ficha adorno-ficha-2">{'⬢'}</span>
+        </div>
       </section>
 
-      <Filtros
+      <ChipsCategorias
         categorias={categorias}
-        alAplicar={aplicarFiltros}
-        cantidadResultados={cargando ? null : totalProductos}
-        cargando={cargando}
+        elegida={categoriaId}
+        alElegir={elegirCategoria}
       />
 
+      <Filtros alAplicar={aplicarFiltros} cargando={cargando} />
+
       <Aviso tipo="error">{error}</Aviso>
+
+      {/* Cuantos resultados hay, y de que categoria */}
+      {!cargando && totalProductos != null && (
+        <p className="resumen-resultados">
+          {totalProductos === 0
+            ? 'Ningun juego coincide con la busqueda'
+            : `${totalProductos} ${totalProductos === 1 ? 'juego' : 'juegos'}`}
+          {nombreCategoria && <span className="texto-gris"> en {nombreCategoria}</span>}
+        </p>
+      )}
 
       {/* Los tres estados posibles: cargando, sin resultados, o la lista */}
       {cargando ? (
         <Cargando texto="Buscando juegos..." />
       ) : productos.length === 0 && !error ? (
         <Vacio icono={'\u{1F50D}'} titulo="No encontramos juegos con esos filtros">
-          Probá con otra categoria, ampliá el rango de precios o limpiá la busqueda.
+          Probá con otra categoría, ampliá el rango de precios o limpiá la búsqueda.
         </Vacio>
       ) : (
         <>

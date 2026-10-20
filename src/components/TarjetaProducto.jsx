@@ -46,11 +46,17 @@ function TarjetaProducto({ producto, alAgregar, motivoNoPuedeComprar, agregando 
             </div>
           )}
 
+          {/* Las etiquetas van sobre la tapa y no abajo con el precio: asi el
+              bloque de texto mide lo mismo en todas las tarjetas y los precios
+              quedan alineados entre si a lo largo de la grilla. */}
           <div className="tarjeta-producto-etiquetas">
             {tieneDescuento && !agotado && (
               <span className="etiqueta etiqueta-oferta">-{producto.discount}%</span>
             )}
             {agotado && <span className="etiqueta etiqueta-agotado">Agotado</span>}
+            {!agotado && producto.stock <= 5 && (
+              <span className="etiqueta etiqueta-poco">Quedan {producto.stock}</span>
+            )}
           </div>
         </div>
 
@@ -64,10 +70,6 @@ function TarjetaProducto({ producto, alAgregar, motivoNoPuedeComprar, agregando 
               <span className="precio-tachado">{precio(producto.price)}</span>
             )}
           </div>
-
-          {!agotado && producto.stock <= 5 && (
-            <span className="etiqueta etiqueta-poco">Quedan {producto.stock}</span>
-          )}
         </div>
       </Link>
 
