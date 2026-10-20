@@ -1,0 +1,805 @@
+/* ==========================================================================
+   Mesa Llena - estilos de los componentes
+   --------------------------------------------------------------------------
+   index.css tiene la paleta, el reset y los elementos basicos (botones,
+   inputs, tablas). Este archivo tiene el aspecto de cada parte concreta de la
+   aplicacion: el navbar, las tarjetas de producto, el carrito, etc.
+   ========================================================================== */
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--gris-suave);
+  box-shadow: 0 1px 3px rgba(15, 39, 71, .05);
+}
+
+.navbar-interior {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: var(--alto-navbar);
+}
+
+.navbar-logo { flex-shrink: 0; }
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.logo-marca { flex-shrink: 0; }
+
+.logo-texto {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--azul);
+  white-space: nowrap;
+}
+
+.logo-texto-acento { color: var(--turquesa); }
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  flex: 1;
+}
+
+.navbar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem .8rem;
+  border-radius: var(--radio-chico);
+  font-weight: 700;
+  color: var(--azul);
+  white-space: nowrap;
+}
+
+.navbar-link:hover { background: var(--offwhite); color: var(--azul); }
+
+/* react-router le pone la clase "active" al NavLink de la ruta actual */
+.navbar-link.active {
+  background: var(--turquesa-suave);
+  color: var(--turquesa-oscuro);
+}
+
+.navbar-contador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 .3rem;
+  border-radius: 999px;
+  background: var(--coral);
+  color: var(--blanco);
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.navbar-sesion {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-left: auto;
+}
+
+.navbar-usuario {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .875rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.navbar-hamburguesa {
+  display: none;
+  margin-left: auto;
+  padding: .4rem .6rem;
+  border: 2px solid var(--gris-suave);
+  border-radius: var(--radio-chico);
+  background: var(--blanco);
+  color: var(--azul);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* --- Navbar en pantallas chicas: el menu se despliega hacia abajo --- */
+@media (max-width: 880px) {
+  .navbar-hamburguesa { display: block; }
+
+  .navbar-menu {
+    display: none;
+    position: absolute;
+    top: var(--alto-navbar);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .25rem;
+    padding: 1rem 1.25rem 1.25rem;
+    background: var(--blanco);
+    border-bottom: 1px solid var(--gris-suave);
+    box-shadow: var(--sombra-alta);
+  }
+
+  .navbar-menu.abierto { display: flex; }
+
+  .navbar-sesion {
+    margin-left: 0;
+    margin-top: .5rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--gris-suave);
+    flex-wrap: wrap;
+  }
+}
+
+/* ==========================================================================
+   Pie de pagina
+   ========================================================================== */
+
+.pie {
+  background: var(--blanco);
+  border-top: 1px solid var(--gris-suave);
+  padding: 2rem 0;
+  color: var(--gris-texto);
+}
+
+.pie-interior {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+   Portada del catalogo
+   ========================================================================== */
+
+.portada {
+  padding: 2rem 2.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radio);
+  background: linear-gradient(135deg, var(--azul) 0%, #163257 60%, var(--turquesa-oscuro) 140%);
+  color: var(--blanco);
+}
+
+.portada h1 { color: var(--blanco); max-width: 22ch; }
+
+.portada p {
+  margin: 0;
+  max-width: 56ch;
+  color: rgba(255, 255, 255, .82);
+}
+
+@media (max-width: 560px) {
+  .portada { padding: 1.5rem 1.25rem; }
+  .portada h1 { font-size: 1.5rem; }
+}
+
+/* ==========================================================================
+   Filtros
+   ========================================================================== */
+
+.filtros { margin-bottom: 1.5rem; }
+
+.filtros-grilla {
+  display: grid;
+  gap: 0 1rem;
+  grid-template-columns: 2fr 1.3fr 1fr 1fr;
+}
+
+.filtros-grilla .campo { margin-bottom: .5rem; }
+
+.filtros-pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.filtros-botones { display: flex; gap: .5rem; }
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .925rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--turquesa);
+  cursor: pointer;
+}
+
+@media (max-width: 880px) {
+  .filtros-grilla { grid-template-columns: 1fr 1fr; }
+  .filtro-busqueda { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+  .filtros-grilla { grid-template-columns: 1fr; }
+  .filtros-pie { flex-direction: column; align-items: stretch; }
+  .filtros-botones { justify-content: stretch; }
+  .filtros-botones .boton { flex: 1; }
+}
+
+/* ==========================================================================
+   Tarjeta de producto
+   ========================================================================== */
+
+.tarjeta-producto {
+  display: flex;
+  flex-direction: column;
+  background: var(--blanco);
+  border: 1px solid var(--gris-suave);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  transition: box-shadow .18s, transform .18s;
+}
+
+.tarjeta-producto:hover {
+  box-shadow: var(--sombra-alta);
+  transform: translateY(-2px);
+}
+
+.tarjeta-producto.agotado { opacity: .78; }
+
+.tarjeta-producto-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  color: inherit;
+}
+
+.tarjeta-producto-link:hover { color: inherit; }
+
+.tarjeta-producto-imagen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--offwhite);
+  overflow: hidden;
+}
+
+.tarjeta-producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tarjeta-producto-etiquetas {
+  position: absolute;
+  top: .6rem;
+  left: .6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .35rem;
+}
+
+.tarjeta-producto-datos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .4rem;
+  padding: .9rem 1rem .5rem;
+  flex: 1;
+}
+
+.tarjeta-producto-nombre {
+  margin: 0;
+  font-size: 1.025rem;
+  /* Si el nombre es muy largo lo cortamos a dos lineas, asi todas las
+     tarjetas de la grilla mantienen la misma altura. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tarjeta-producto-precio {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin-top: auto;
+}
+
+.tarjeta-producto-precio strong { font-size: 1.2rem; }
+
+.precio-tachado {
+  color: var(--gris-texto);
+  text-decoration: line-through;
+  font-size: .875rem;
+}
+
+.precio-tachado.grande { font-size: 1.05rem; }
+
+.tarjeta-producto-accion { padding: .5rem 1rem 1rem; }
+
+/* Marcador para cuando un producto no tiene foto */
+.imagen-faltante {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 60px;
+  background: var(--offwhite);
+  color: var(--gris-suave);
+  font-size: 2rem;
+}
+
+.imagen-faltante.grande { font-size: 4rem; }
+
+/* ==========================================================================
+   Migas de pan
+   ========================================================================== */
+
+.migas {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 1.25rem;
+  font-size: .875rem;
+}
+
+.migas a { font-weight: 700; color: var(--turquesa-oscuro); }
+.migas span[aria-hidden] { color: var(--gris-suave); }
+
+/* ==========================================================================
+   Detalle del producto
+   ========================================================================== */
+
+.detalle {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: start;
+}
+
+.detalle-foto-grande {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--blanco);
+  border: 1px solid var(--gris-suave);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+
+.detalle-foto-grande img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.detalle-etiqueta {
+  position: absolute;
+  top: .85rem;
+  left: .85rem;
+}
+
+.detalle-miniaturas {
+  display: flex;
+  gap: .6rem;
+  margin-top: .75rem;
+  flex-wrap: wrap;
+}
+
+.miniatura {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border: 2px solid var(--gris-suave);
+  border-radius: var(--radio-chico);
+  background: var(--blanco);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+
+.miniatura:hover { border-color: var(--turquesa); }
+.miniatura.activa { border-color: var(--azul); }
+
+.miniatura img { width: 100%; height: 100%; object-fit: cover; }
+
+.detalle-datos h1 { margin: .5rem 0 .75rem; }
+
+.detalle-precio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+.detalle-precio strong { font-size: 2rem; }
+
+.detalle-descripcion {
+  padding: 1rem 0;
+  border-top: 1px solid var(--gris-suave);
+  border-bottom: 1px solid var(--gris-suave);
+  white-space: pre-line;
+}
+
+.detalle-stock { margin: 1.25rem 0; }
+
+.detalle-compra {
+  display: flex;
+  align-items: flex-end;
+  gap: .75rem;
+}
+
+.detalle-compra .campo { width: 110px; }
+.detalle-compra .boton { flex: 1; }
+
+@media (max-width: 880px) {
+  .detalle { grid-template-columns: 1fr; gap: 1.5rem; }
+  .detalle-precio strong { font-size: 1.6rem; }
+}
+
+/* ==========================================================================
+   Carrito
+   ========================================================================== */
+
+.carrito {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 340px;
+  align-items: start;
+}
+
+.carrito-lista { padding: .5rem 1.25rem; }
+
+.linea-carrito {
+  display: grid;
+  grid-template-columns: 84px 1fr auto 110px auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--gris-suave);
+}
+
+.linea-carrito:last-child { border-bottom: none; }
+
+.linea-con-problema {
+  background: var(--error-suave);
+  margin: 0 -1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.linea-carrito-imagen {
+  width: 84px;
+  height: 72px;
+  border-radius: var(--radio-chico);
+  background: var(--offwhite);
+  overflow: hidden;
+}
+
+.linea-carrito-imagen img { width: 100%; height: 100%; object-fit: cover; }
+
+.linea-carrito-cantidad {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+.linea-carrito-numero {
+  min-width: 2.25rem;
+  text-align: center;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.linea-carrito-subtotal strong { font-size: 1.05rem; }
+
+/* --- Resumen --- */
+.carrito-resumen { position: sticky; top: calc(var(--alto-navbar) + 1.5rem); }
+
+.resumen-lineas {
+  margin: 1rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gris-suave);
+}
+
+.resumen-lineas li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .3rem 0;
+}
+
+.resumen-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  font-weight: 700;
+}
+
+.resumen-total strong { font-size: 1.5rem; }
+
+@media (max-width: 1000px) {
+  .carrito { grid-template-columns: 1fr; }
+  .carrito-resumen { position: static; }
+}
+
+@media (max-width: 680px) {
+  .linea-carrito {
+    grid-template-columns: 64px 1fr auto;
+    grid-template-areas:
+      "imagen datos datos"
+      "imagen cantidad subtotal"
+      "quitar quitar quitar";
+    gap: .5rem 1rem;
+  }
+
+  .linea-carrito-imagen { grid-area: imagen; width: 64px; height: 64px; }
+  .linea-carrito-datos { grid-area: datos; }
+  .linea-carrito-cantidad { grid-area: cantidad; }
+  .linea-carrito-subtotal { grid-area: subtotal; text-align: right; }
+  .linea-carrito-quitar { grid-area: quitar; }
+  .linea-carrito-quitar .boton { width: 100%; }
+}
+
+/* ==========================================================================
+   Mis compras
+   ========================================================================== */
+
+.lista-ordenes { display: flex; flex-direction: column; gap: 1rem; }
+
+.orden {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  color: inherit;
+  transition: box-shadow .18s, border-color .18s;
+}
+
+.orden:hover {
+  color: inherit;
+  border-color: var(--turquesa);
+  box-shadow: var(--sombra-alta);
+}
+
+.orden-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .1rem;
+  white-space: nowrap;
+}
+
+.orden-total strong { font-size: 1.35rem; }
+
+@media (max-width: 620px) {
+  .orden { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .orden-total { align-items: flex-start; }
+}
+
+/* --- Comprobante de compra exitosa --- */
+.comprobante-exito {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--exito-borde);
+  border-radius: var(--radio);
+  background: var(--exito-suave);
+  color: #065F46;
+}
+
+.comprobante-exito h2 { color: #064E3B; }
+
+.comprobante-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--exito);
+  color: var(--blanco);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   Formularios centrados (login y registro)
+   ========================================================================== */
+
+.formulario-centrado {
+  max-width: 460px;
+  margin: 1.5rem auto 3rem;
+}
+
+/* ==========================================================================
+   Paginador
+   ========================================================================== */
+
+.paginador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+/* ==========================================================================
+   Paneles de administracion
+   ========================================================================== */
+
+.dos-columnas {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 340px 1fr;
+  align-items: start;
+}
+
+@media (max-width: 880px) {
+  .dos-columnas { grid-template-columns: 1fr; }
+}
+
+.lista-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.lista-categorias li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .55rem .75rem;
+  border: 1px solid var(--gris-suave);
+  border-radius: var(--radio-chico);
+  background: var(--offwhite);
+}
+
+.miniatura-tabla {
+  width: 56px;
+  height: 48px;
+  border-radius: var(--radio-chico);
+  background: var(--offwhite);
+  overflow: hidden;
+}
+
+.miniatura-tabla img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Edicion de stock / descuento dentro de la tabla */
+.edicion-celda {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .3rem;
+}
+
+.edicion-celda input { width: 78px; padding: .35rem .5rem; }
+
+/* ==========================================================================
+   Formulario de producto
+   ========================================================================== */
+
+.formulario-producto { max-width: 720px; }
+
+.formulario-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: .75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gris-suave);
+}
+
+.galeria-chica {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.galeria-item {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border: 1px solid var(--gris-suave);
+  border-radius: var(--radio-chico);
+  background: var(--offwhite);
+  overflow: hidden;
+}
+
+.galeria-item img { width: 100%; height: 100%; object-fit: cover; }
+
+.galeria-quitar {
+  position: absolute;
+  top: .25rem;
+  right: .25rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(17, 24, 39, .72);
+  color: var(--blanco);
+  font-size: .75rem;
+  cursor: pointer;
+}
+
+.galeria-quitar:hover { background: var(--error); }
+
+.galeria-principal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: .15rem;
+  background: var(--azul);
+  color: var(--blanco);
+  font-size: .7rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Cartelito flotante de confirmacion
+   ========================================================================== */
+
+.flotante {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  z-index: 100;
+  max-width: min(440px, calc(100vw - 2.5rem));
+  padding: .85rem 1.15rem;
+  border-radius: var(--radio-chico);
+  box-shadow: var(--sombra-alta);
+  font-weight: 700;
+  color: var(--blanco);
+  animation: aparecer .22s ease-out;
+}
+
+.flotante-exito { background: var(--exito); }
+.flotante-error { background: var(--error); }
+.flotante-info { background: var(--azul); }
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* La animacion termina en translateX(-50%), pero si el usuario tiene las
+   animaciones desactivadas no se ejecuta, asi que el centrado va aparte. */
+.flotante { transform: translateX(-50%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .flotante { animation: none; }
+  .tarjeta-producto:hover { transform: none; }
+  .spinner { animation-duration: 1.6s; }
+}
