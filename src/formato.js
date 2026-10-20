@@ -24,18 +24,45 @@ export function precio(valor) {
 }
 
 /**
+ * Primeros caracteres del Base64 de cada formato, y el MIME que le corresponde.
+ *
+ * Todo archivo empieza con unos bytes fijos que lo identifican (los "magic
+ * numbers"): un PNG arranca con 89 50 4E 47, un JPEG con FF D8 FF, etc. Como
+ * Base64 codifica de a bloques de 3 bytes, esos primeros bytes siempre producen
+ * el mismo prefijo de texto, y alcanza con comparar strings para saber que es.
+ */
+const FIRMAS = [
+  ['iVBORw0KGgo', 'image/png'],
+  ['/9j/', 'image/jpeg'],
+  ['R0lGOD', 'image/gif'],
+  ['UklGR', 'image/webp'],
+];
+
+/**
  * Arma el src de un <img> a partir de una imagen en Base64.
  *
  * El backend guarda las fotos como Blob en MySQL y las devuelve codificadas en
  * Base64 (ver ProductResponse.toBase64). Para mostrarlas no hace falta pedir
  * otro endpoint: se las pasa directo al navegador como "data URL".
  *
+ * El tipo hay que declararlo bien. Una data URL necesita un MIME concreto
+ * ("image/png"), no un comodin como "image/*": con el comodin el navegador no
+ * sabe que esta recibiendo y la imagen queda sin cargar. Como el backend guarda
+ * el Blob sin recordar de que formato era, lo deducimos del contenido.
+ *
  * Devuelve null si el producto no tiene foto, asi la vista puede decidir que
  * mostrar en su lugar.
  */
 export function imagenBase64(base64) {
   if (!base64) return null;
-  return `data:image/*;base64,${base64}`;
+
+  const firma = FIRMAS.find(([prefijo]) => base64.startsWith(prefijo));
+
+  // Si no reconocemos la firma, JPEG es la apuesta mas segura: es el formato
+  // mas comun en fotos de producto.
+  const tipo = firma ? firma[1] : 'image/jpeg';
+
+  return `data:${tipo};base64,${base64}`;
 }
 
 /** Primera imagen de un producto, o null si no tiene ninguna. */
