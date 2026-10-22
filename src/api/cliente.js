@@ -5,12 +5,11 @@
    tres motivos:
 
    1) El token se agrega en UN solo lugar. Si manana cambia como se manda la
-      autorizacion, se toca aca y no en las 11 vistas.
+      autorizacion, se toca aca y no en cada vista.
    2) Los errores del backend se traducen una sola vez a un mensaje en
       castellano que las vistas pueden mostrar tal cual.
-   3) La profesora aviso que en la tercera entrega todo esto se refactoriza a
-      Redux. Teniendo los fetch concentrados aca, ese refactor toca estos
-      archivos y no todas las vistas.
+   3) Los fetch quedan centralizados para separar la comunicacion HTTP de la
+      logica de las vistas y facilitar futuros cambios.
    ========================================================================== */
 
 import { borrarSesion, leerToken } from './sesion';

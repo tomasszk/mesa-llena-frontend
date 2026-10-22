@@ -11,8 +11,8 @@
    desde aca. Ese es el flujo unidireccional de React, el componente padre
    manda los datos hacia abajo y los hijos avisan hacia arriba cuando pasa algo.
 
-   (En la tercera entrega este estado compartido se reemplaza por Redux. Por eso
-   esta concentrado en un solo componente y no desparramado por las vistas.)
+   El estado compartido se mantiene centralizado aca para evitar duplicarlo entre
+   vistas y mantener un flujo de datos claro y predecible.
    ========================================================================== */
 
 import { useCallback, useEffect, useState } from 'react';
