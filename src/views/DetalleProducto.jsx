@@ -10,10 +10,11 @@
    eso son campos del producto y vienen del backend, igual que el precio: no
    hay ningun dato escrito a mano en el frontend.
 
-   La pagina se tiñe con los colores de la caja del juego. Ese color tampoco
-   esta escrito en una lista: se calcula de la propia foto (ver
-   colorDeImagen.js), asi que un juego que la tienda publique manana tambien
-   va a tener su pagina tematizada sin tocar codigo.
+   La pantalla se arma alrededor de la foto del juego: la misma imagen se usa
+   dos veces, nitida adelante y desenfocada y oscurecida como fondo, y de ella
+   sale tambien el color de los acentos (ver colorDeImagen.js). Asi cada juego
+   tiene su propia pagina sin que haya una lista de juegos escrita a mano: uno
+   que la tienda publique manana se va a ver igual de propio.
 
    El id del producto sale de la URL con useParams: la ruta esta declarada
    como /productos/:id, asi que useParams() devuelve { id }.
@@ -194,174 +195,187 @@ function DetalleProducto({ usuario, alAgregar }) {
   if (producto.durationMinutes) {
     ficha.push({
       icono: '\u{23F1}',
-      titulo: 'Duracion',
+      titulo: 'Dura',
       valor: `${producto.durationMinutes} min`,
     });
   }
 
   if (producto.minAge) {
-    ficha.push({
-      icono: '\u{1F382}',
-      titulo: 'Edad',
-      valor: `${producto.minAge}+`,
-    });
+    ficha.push({ icono: '\u{1F382}', titulo: 'Desde', valor: `${producto.minAge} anios` });
   }
 
   ficha.push({
-    icono: '\u{1F3F7}',
-    titulo: 'Categoria',
+    icono: '\u{1F3F2}',
+    titulo: 'Tipo',
     valor: producto.categoryDescription,
   });
 
   // El style lleva las variables del tema. De ahi para abajo, el CSS las usa.
   return (
     <div className="juego" style={tema}>
-      <div className="contenedor">
-        <nav className="migas">
-          <Link to="/">Catalogo</Link>
-          <span aria-hidden="true">/</span>
-          <span className="texto-gris">{producto.name}</span>
-        </nav>
-      </div>
+      {/* ================= Portada inmersiva ================= */}
+      <section className="juego-hero">
+        {/*
+          La misma foto, de fondo, desenfocada y oscurecida. Es la forma mas
+          directa de que cada pagina tenga su propia identidad sin inventar
+          nada: el ambiente sale literalmente del producto.
+          aria-hidden porque no aporta informacion: es la misma imagen que ya
+          esta al lado, nitida y con su alt.
+        */}
+        <div className="juego-hero-fondo" aria-hidden="true">
+          {portada && <img src={portada} alt="" />}
+        </div>
 
-      {/* ---------------- Portada tematizada ---------------- */}
-      <section className="juego-portada">
-        <div className="contenedor detalle">
-          <div className="detalle-fotos">
-            <div className="detalle-foto-grande">
-              {producto.images?.length > 0 ? (
-                <img src={imagenBase64(producto.images[imagenActiva])} alt={producto.name} />
-              ) : (
-                <div className="imagen-faltante grande" aria-hidden="true">
-                  {'\u{1F3B2}'}
+        <div className="contenedor juego-hero-contenido">
+          <nav className="migas migas-claras">
+            <Link to="/">Catalogo</Link>
+            <span aria-hidden="true">/</span>
+            <Link to={`/?categoria=${producto.categoryId}`}>
+              {producto.categoryDescription}
+            </Link>
+            <span aria-hidden="true">/</span>
+            <span>{producto.name}</span>
+          </nav>
+
+          <div className="juego-grilla">
+            {/* ---------------- Las fotos ---------------- */}
+            <div className="juego-fotos">
+              <div className="juego-foto-grande">
+                {producto.images?.length > 0 ? (
+                  <img src={imagenBase64(producto.images[imagenActiva])} alt={producto.name} />
+                ) : (
+                  <div className="imagen-faltante grande" aria-hidden="true">
+                    {'\u{1F3B2}'}
+                  </div>
+                )}
+
+                {tieneDescuento && !agotado && (
+                  <span className="etiqueta etiqueta-oferta juego-etiqueta">
+                    {producto.discount}% off
+                  </span>
+                )}
+                {agotado && (
+                  <span className="etiqueta etiqueta-agotado juego-etiqueta">Agotado</span>
+                )}
+              </div>
+
+              {/* Las miniaturas solo tienen sentido si hay mas de una foto */}
+              {producto.images?.length > 1 && (
+                <div className="juego-miniaturas">
+                  {producto.images.map((imagen, indice) => (
+                    <button
+                      key={indice}
+                      type="button"
+                      className={`miniatura ${indice === imagenActiva ? 'activa' : ''}`}
+                      onClick={() => setImagenActiva(indice)}
+                      aria-label={`Ver foto ${indice + 1} de ${producto.images.length}`}
+                    >
+                      <img src={imagenBase64(imagen)} alt="" />
+                    </button>
+                  ))}
                 </div>
               )}
-
-              {tieneDescuento && !agotado && (
-                <span className="etiqueta etiqueta-oferta detalle-etiqueta">
-                  {producto.discount}% off
-                </span>
-              )}
-              {agotado && (
-                <span className="etiqueta etiqueta-agotado detalle-etiqueta">Agotado</span>
-              )}
             </div>
 
-            {/* Las miniaturas solo tienen sentido si hay mas de una foto */}
-            {producto.images?.length > 1 && (
-              <div className="detalle-miniaturas">
-                {producto.images.map((imagen, indice) => (
-                  <button
-                    key={indice}
-                    type="button"
-                    className={`miniatura ${indice === imagenActiva ? 'activa' : ''}`}
-                    onClick={() => setImagenActiva(indice)}
-                    aria-label={`Ver foto ${indice + 1} de ${producto.images.length}`}
-                  >
-                    <img src={imagenBase64(imagen)} alt="" />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+            {/* ---------------- Los datos y la compra ---------------- */}
+            <div className="juego-info">
+              <span className="juego-categoria">{producto.categoryDescription}</span>
+              <h1>{producto.name}</h1>
+              <p className="juego-bajada">{producto.description}</p>
 
-          <div className="detalle-datos">
-            <span className="juego-categoria">{producto.categoryDescription}</span>
-            <h1>{producto.name}</h1>
-
-            <p className="juego-bajada">{producto.description}</p>
-
-            <div className="detalle-precio">
-              <strong>{precio(producto.finalPrice)}</strong>
-              {tieneDescuento && (
-                <>
-                  <span className="precio-tachado grande">{precio(producto.price)}</span>
-                  <span className="juego-ahorro">
-                    Ahorras {precio(Number(producto.price) - Number(producto.finalPrice))}
-                  </span>
-                </>
-              )}
-            </div>
-
-            <div className="detalle-stock">
-              {agotado ? (
-                <Aviso tipo="error">
-                  Este juego esta sin stock por ahora, asi que no se puede agregar al carrito.
-                </Aviso>
-              ) : producto.stock <= 5 ? (
-                <Aviso tipo="info">
-                  Ultimas {producto.stock} {producto.stock === 1 ? 'unidad' : 'unidades'}.
-                </Aviso>
-              ) : (
-                <p className="texto-chico juego-stock">
-                  {producto.stock} unidades disponibles
-                </p>
-              )}
-            </div>
-
-            <div className="detalle-compra">
-              <div className="campo" style={{ marginBottom: 0 }}>
-                <label htmlFor="cantidad">Cantidad</label>
-                <select
-                  id="cantidad"
-                  value={cantidad}
-                  onChange={(e) => setCantidad(Number(e.target.value))}
-                  disabled={agotado}
-                >
-                  {/* Un option por cada unidad que haya en stock, hasta 10 para
-                      no armar una lista interminable. */}
-                  {Array.from({ length: Math.min(maximo, 10) }, (_, i) => i + 1).map((n) => (
-                    <option key={n} value={n}>
-                      {n}
-                    </option>
+              {/* La ficha, en linea y sobre la foto de fondo */}
+              {ficha.length > 0 && (
+                <ul className="juego-ficha">
+                  {ficha.map((dato) => (
+                    <li key={dato.titulo}>
+                      <span className="juego-ficha-icono" aria-hidden="true">
+                        {dato.icono}
+                      </span>
+                      <span className="juego-ficha-texto">
+                        <small>{dato.titulo}</small>
+                        <strong>{dato.valor}</strong>
+                      </span>
+                    </li>
                   ))}
-                </select>
+                </ul>
+              )}
+
+              {/* La caja de compra, en blanco para que se despegue del fondo */}
+              <div className="juego-compra">
+                <div className="juego-precio">
+                  <strong>{precio(producto.finalPrice)}</strong>
+                  {tieneDescuento && (
+                    <span className="juego-precio-viejo">
+                      <span className="precio-tachado">{precio(producto.price)}</span>
+                      <span className="juego-ahorro">
+                        Ahorras {precio(Number(producto.price) - Number(producto.finalPrice))}
+                      </span>
+                    </span>
+                  )}
+                </div>
+
+                <div className="juego-acciones">
+                  <div className="campo" style={{ marginBottom: 0 }}>
+                    <label htmlFor="cantidad">Cantidad</label>
+                    <select
+                      id="cantidad"
+                      value={cantidad}
+                      onChange={(e) => setCantidad(Number(e.target.value))}
+                      disabled={agotado}
+                    >
+                      {/* Un option por cada unidad que haya en stock, hasta 10
+                          para no armar una lista interminable. */}
+                      {Array.from({ length: Math.min(maximo, 10) }, (_, i) => i + 1).map((n) => (
+                        <option key={n} value={n}>
+                          {n}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="boton boton-comprar"
+                    onClick={agregar}
+                    disabled={agotado || agregando}
+                  >
+                    {agotado ? 'Sin stock' : agregando ? 'Agregando...' : 'Agregar al carrito'}
+                  </button>
+                </div>
+
+                <p className="juego-nota">
+                  {agotado
+                    ? 'Por ahora no hay unidades. Volve a mirar en unos dias.'
+                    : producto.stock <= 5
+                      ? `Ultimas ${producto.stock} ${producto.stock === 1 ? 'unidad' : 'unidades'}`
+                      : `${producto.stock} unidades disponibles`}
+                  {!puedeComprar &&
+                    !agotado &&
+                    (usuario
+                      ? ' · la cuenta de la tienda no compra'
+                      : ' · vas a necesitar una cuenta')}
+                </p>
               </div>
-
-              <button
-                type="button"
-                className="boton boton-coral"
-                onClick={agregar}
-                disabled={agotado || agregando}
-              >
-                {agotado ? 'Sin stock' : agregando ? 'Agregando...' : 'Agregar al carrito'}
-              </button>
             </div>
-
-            {!puedeComprar && !agotado && (
-              <p className="texto-chico juego-stock">
-                {usuario
-                  ? 'Estas usando la cuenta de la tienda, que vende pero no compra.'
-                  : 'Vas a necesitar una cuenta para terminar la compra.'}
-              </p>
-            )}
           </div>
         </div>
       </section>
 
       <div className="contenedor">
-        {/* ---------------- Ficha del juego ---------------- */}
-        <section className="ficha">
-          {ficha.map((dato) => (
-            <div key={dato.titulo} className="ficha-dato">
-              <span className="ficha-icono" aria-hidden="true">
-                {dato.icono}
-              </span>
-              <span className="ficha-titulo">{dato.titulo}</span>
-              <strong className="ficha-valor">{dato.valor}</strong>
-            </div>
-          ))}
-        </section>
-
-        {/* ---------------- Como se juega ---------------- */}
+        {/* ================= Como se juega ================= */}
         {producto.howToPlay && (
-          <section className="como-se-juega panel">
-            <h2>Como se juega</h2>
-            <p>{producto.howToPlay}</p>
+          <section className="como-se-juega">
+            <div className="como-se-juega-marca" aria-hidden="true">
+              {'⚄'}
+            </div>
+            <div>
+              <h2>Como se juega</h2>
+              <p>{producto.howToPlay}</p>
+            </div>
           </section>
         )}
 
-        {/* ---------------- Otros juegos de la categoria ---------------- */}
+        {/* ================= Otros de la categoria ================= */}
         {relacionados.length > 0 && (
           <section className="relacionados">
             <h2>Mas de {producto.categoryDescription}</h2>

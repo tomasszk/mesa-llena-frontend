@@ -11,6 +11,7 @@
    ========================================================================== */
 
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ChipsCategorias from '../components/ChipsCategorias';
 import Filtros from '../components/Filtros';
 import TarjetaProducto from '../components/TarjetaProducto';
@@ -38,9 +39,18 @@ function Catalogo({ usuario, alAgregar }) {
   const [totalProductos, setTotalProductos] = useState(null);
 
   // --- Que le pedimos al backend ---
-  // La categoria va aparte del resto de los filtros porque se aplica sola, de
-  // un clic en los chips, mientras que los demas esperan al boton "Buscar".
-  const [categoriaId, setCategoriaId] = useState('');
+  /*
+   * La categoria elegida vive en la URL y no en un useState.
+   *
+   * Es el filtro que mas se usa, y teniendolo en la direccion pasan tres
+   * cosas que con un estado comun no: se puede compartir o guardar el link de
+   * una categoria, el boton de atras del navegador funciona como uno espera,
+   * y otras pantallas pueden linkear directo a una categoria (lo hace la miga
+   * de pan del detalle del producto).
+   */
+  const [parametros, setParametros] = useSearchParams();
+  const categoriaId = parametros.get('categoria') ?? '';
+
   const [filtros, setFiltros] = useState(SIN_FILTROS);
   const [pagina, setPagina] = useState(0);
 
@@ -112,7 +122,9 @@ function Catalogo({ usuario, alAgregar }) {
   }
 
   function elegirCategoria(id) {
-    setCategoriaId(id);
+    // replace: true para no llenar el historial con un paso por cada chip que
+    // el usuario toca mientras curiosea.
+    setParametros(id ? { categoria: id } : {}, { replace: true });
     setPagina(0);
   }
 
