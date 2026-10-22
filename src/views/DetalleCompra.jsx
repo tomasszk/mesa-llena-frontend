@@ -127,28 +127,49 @@ function DetalleCompra() {
               </tr>
             </thead>
             <tbody>
-              {orden.items.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    {/* El producto puede haber sido dado de baja despues de la
-                        compra. El nombre quedo guardado en la orden, asi que la
-                        compra se sigue viendo bien igual. */}
-                    <Link to={`/productos/${item.productId}`}>{item.productName}</Link>
-                  </td>
-                  <td className="numero">{precio(item.unitPrice)}</td>
-                  <td className="numero">
-                    {item.discount > 0 ? (
-                      <span className="etiqueta etiqueta-oferta">-{item.discount}%</span>
-                    ) : (
-                      <span className="texto-gris">&mdash;</span>
-                    )}
-                  </td>
-                  <td className="numero">{item.quantity}</td>
-                  <td className="numero">
-                    <strong>{precio(item.subtotal)}</strong>
-                  </td>
-                </tr>
-              ))}
+              {orden.items.map((item) => {
+                /*
+                 * Cuidado con el precio que se muestra: la orden guarda
+                 * unitPrice como el precio DE LISTA y el descuento aparte, asi
+                 * que mostrar unitPrice tal cual no cierra con el subtotal
+                 * (54.999 x 2 no da 93.498,30). Lo que pago el usuario por
+                 * unidad sale de dividir el subtotal por la cantidad, que
+                 * ademas lo calculo el backend. El precio de lista queda
+                 * tachado al lado, igual que en el catalogo y en el carrito.
+                 */
+                const pagadoPorUnidad = Number(item.subtotal) / item.quantity;
+
+                return (
+                  <tr key={item.id}>
+                    <td>
+                      {/* El producto puede haber sido dado de baja despues de
+                          la compra. El nombre quedo guardado en la orden, asi
+                          que la compra se sigue viendo bien igual. */}
+                      <Link to={`/productos/${item.productId}`}>{item.productName}</Link>
+                    </td>
+                    <td className="numero">
+                      {precio(pagadoPorUnidad)}
+                      {item.discount > 0 && (
+                        <>
+                          <br />
+                          <span className="precio-tachado">{precio(item.unitPrice)}</span>
+                        </>
+                      )}
+                    </td>
+                    <td className="numero">
+                      {item.discount > 0 ? (
+                        <span className="etiqueta etiqueta-oferta">-{item.discount}%</span>
+                      ) : (
+                        <span className="texto-gris">&mdash;</span>
+                      )}
+                    </td>
+                    <td className="numero">{item.quantity}</td>
+                    <td className="numero">
+                      <strong>{precio(item.subtotal)}</strong>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -11,6 +11,7 @@
    distinto al que se va a cobrar.
    ========================================================================== */
 
+import { Link } from 'react-router-dom';
 import { precio, imagenBase64 } from '../formato';
 
 function LineaCarrito({ item, alCambiarCantidad, alQuitar, ocupado }) {
@@ -27,7 +28,9 @@ function LineaCarrito({ item, alCambiarCantidad, alQuitar, ocupado }) {
 
   return (
     <li className={`linea-carrito ${excedeStock ? 'linea-con-problema' : ''}`}>
-      <div className="linea-carrito-imagen">
+      {/* La foto y el nombre llevan al detalle: es lo primero que uno intenta
+          cuando quiere repasar que era un producto antes de comprarlo. */}
+      <Link to={`/productos/${item.productId}`} className="linea-carrito-imagen">
         {imagen ? (
           <img src={imagen} alt={item.productName} />
         ) : (
@@ -35,10 +38,12 @@ function LineaCarrito({ item, alCambiarCantidad, alQuitar, ocupado }) {
             {'\u{1F3B2}'}
           </div>
         )}
-      </div>
+      </Link>
 
       <div className="linea-carrito-datos">
-        <h3 className="sin-margen">{item.productName}</h3>
+        <h3 className="sin-margen">
+          <Link to={`/productos/${item.productId}`}>{item.productName}</Link>
+        </h3>
         <p className="texto-chico texto-gris sin-margen">
           {precio(item.unitPrice)} por unidad
           {item.discount > 0 && (

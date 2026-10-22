@@ -131,6 +131,23 @@ function Ingresar({ alIniciarSesion }) {
         <p className="centrado texto-chico" style={{ marginTop: '1.25rem', marginBottom: 0 }}>
           No tenes cuenta? <Link to="/registro">Crear una cuenta</Link>
         </p>
+
+        {/*
+          Cuenta de ejemplo, para que quien abra el proyecto por primera vez
+          pueda entrar sin tener que registrarse ni buscar nada.
+
+          Es una de las dos cuentas que el backend crea solo cuando arranca con
+          la base vacia (ver DemoDataLoader), asi que no estamos publicando
+          nada que no este ya en el repositorio. La cuenta de la tienda no se
+          muestra a proposito: su contrasenia se configura en
+          application.properties, que justamente no se sube.
+        */}
+        <div className="cuenta-demo">
+          <strong>Para probar</strong>
+          <span>
+            sofia@mail.com &middot; contrasenia <code>123456</code>
+          </span>
+        </div>
       </div>
     </div>
   );

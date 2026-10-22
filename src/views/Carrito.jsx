@@ -19,7 +19,7 @@
    pantalla sin pedir los datos otra vez.
    ========================================================================== */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Aviso from '../components/Aviso';
 import Cargando from '../components/Cargando';
@@ -34,11 +34,16 @@ import {
 import { hacerCheckout } from '../api/ordenes';
 import { precio } from '../formato';
 
-function Carrito({ carrito, setCarrito, avisar }) {
-  // Carga inicial: la hacemos aca aunque App ya tenga el carrito, para que la
-  // vista funcione tambien cuando alguien entra directo a /carrito por URL.
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState('');
+/**
+ * El carrito y su estado de carga vienen de App, que es quien los tiene para
+ * el contador del navbar. Si esta vista los pidiera por su cuenta, entrar al
+ * carrito dispararia dos veces la misma request.
+ */
+function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
+  // Error propio de las operaciones que se hacen desde esta pantalla (cambiar
+  // una cantidad, quitar, vaciar, comprar). Arranca con el que pueda traer la
+  // carga inicial, si es que fallo.
+  const [error, setError] = useState(errorInicial || '');
 
   // "ocupado" bloquea los botones mientras hay una operacion en curso, para
   // que el usuario no dispare dos cambios encima del mismo item.
@@ -49,25 +54,6 @@ function Carrito({ carrito, setCarrito, avisar }) {
 
   const recargar = useCallback(async () => {
     setCarrito(await obtenerCarrito());
-  }, [setCarrito]);
-
-  useEffect(() => {
-    let cancelado = false;
-
-    obtenerCarrito()
-      .then((datos) => {
-        if (!cancelado) setCarrito(datos);
-      })
-      .catch((e) => {
-        if (!cancelado) setError(e.message);
-      })
-      .finally(() => {
-        if (!cancelado) setCargando(false);
-      });
-
-    return () => {
-      cancelado = true;
-    };
   }, [setCarrito]);
 
   /** Cambia la cantidad de una linea. */
@@ -185,9 +171,19 @@ function Carrito({ carrito, setCarrito, avisar }) {
         </div>
 
         {items.length > 0 && (
-          <button type="button" className="boton boton-peligro" onClick={vaciar} disabled={ocupado}>
-            Vaciar carrito
-          </button>
+          <div className="encabezado-acciones">
+            <Link to="/" className="boton boton-borde">
+              Seguir comprando
+            </Link>
+            <button
+              type="button"
+              className="boton boton-peligro"
+              onClick={vaciar}
+              disabled={ocupado}
+            >
+              Vaciar carrito
+            </button>
+          </div>
         )}
       </div>
 

@@ -114,6 +114,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .encabezado-pagina p { color: var(--gris-texto); margin: 0; }
 
+.encabezado-acciones { display: flex; flex-wrap: wrap; gap: .6rem; }
+
 .grilla-productos {
   display: grid;
   gap: 1.25rem;

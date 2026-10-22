@@ -51,6 +51,12 @@ function App() {
 
   const [carrito, setCarrito] = useState(null);
 
+  // El estado de la carga del carrito tambien vive aca, no en la vista. Si lo
+  // manejara la vista, el carrito se pediria dos veces al entrar: una la pide
+  // App para el contador del navbar y otra la vista para mostrarlo.
+  const [cargandoCarrito, setCargandoCarrito] = useState(false);
+  const [errorCarrito, setErrorCarrito] = useState('');
+
   // Cartelito flotante para confirmarle al usuario lo que acaba de pasar.
   const [aviso, setAviso] = useState(null);
 
@@ -66,11 +72,17 @@ function App() {
 
   /** Vuelve a pedir el carrito al backend y refresca el estado. */
   const refrescarCarrito = useCallback(async () => {
+    setCargandoCarrito(true);
+    setErrorCarrito('');
+
     try {
       setCarrito(await obtenerCarrito());
-    } catch {
-      // Si falla no rompemos la pantalla: el carrito queda como estaba y el
-      // usuario lo va a ver cuando entre a /carrito, que si muestra el error.
+    } catch (error) {
+      // El contador del navbar simplemente no se actualiza, pero la vista del
+      // carrito si tiene que poder contar que paso.
+      setErrorCarrito(error.message);
+    } finally {
+      setCargandoCarrito(false);
     }
   }, []);
 
@@ -192,7 +204,13 @@ function App() {
             path="/carrito"
             element={
               <RutaProtegida usuario={usuario} rol="USER">
-                <Carrito carrito={carrito} setCarrito={setCarrito} avisar={avisar} />
+                <Carrito
+                  carrito={carrito}
+                  setCarrito={setCarrito}
+                  cargando={cargandoCarrito}
+                  errorInicial={errorCarrito}
+                  avisar={avisar}
+                />
               </RutaProtegida>
             }
           />

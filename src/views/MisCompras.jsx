@@ -82,36 +82,50 @@ function MisCompras() {
       ) : (
         <>
           <ul className="lista-ordenes">
-            {ordenes.map((orden) => (
-              <li key={orden.id}>
-                <Link to={`/mis-compras/${orden.id}`} className="orden panel">
-                  <div className="orden-datos">
-                    <h3 className="sin-margen">Compra #{orden.id}</h3>
-                    <p className="texto-chico texto-gris sin-margen">{fechaHora(orden.date)}</p>
-                    <p className="texto-chico sin-margen" style={{ marginTop: '.35rem' }}>
-                      {orden.items.length}{' '}
-                      {orden.items.length === 1 ? 'producto' : 'productos'}:{' '}
-                      <span className="texto-gris">
-                        {/* Mostramos los primeros tres nombres como adelanto */}
-                        {orden.items
-                          .slice(0, 3)
-                          .map((item) => item.productName)
-                          .join(', ')}
-                        {orden.items.length > 3 && ` y ${orden.items.length - 3} mas`}
-                      </span>
-                    </p>
-                  </div>
+            {ordenes.map((orden) => {
+              // Cuantas unidades se llevo en total, que no es lo mismo que
+              // cuantos productos distintos tiene la compra.
+              const unidades = orden.items.reduce((suma, item) => suma + item.quantity, 0);
 
-                  <div className="orden-total">
-                    <span className="texto-chico texto-gris">Total</span>
-                    <strong>{precio(orden.total)}</strong>
-                    <span className="texto-chico" style={{ color: 'var(--turquesa-oscuro)' }}>
-                      Ver detalle &rarr;
-                    </span>
-                  </div>
-                </Link>
-              </li>
-            ))}
+              return (
+                <li key={orden.id}>
+                  <Link to={`/mis-compras/${orden.id}`} className="orden panel">
+                    <div className="orden-datos">
+                      <div className="orden-encabezado">
+                        <h3 className="sin-margen">Compra #{orden.id}</h3>
+                        <span className="etiqueta etiqueta-confirmada">Confirmada</span>
+                      </div>
+
+                      <p className="texto-chico texto-gris sin-margen">
+                        {fechaHora(orden.date)} &middot; {unidades}{' '}
+                        {unidades === 1 ? 'unidad' : 'unidades'}
+                      </p>
+
+                      <ul className="orden-productos">
+                        {/* Los primeros tres nombres, como adelanto */}
+                        {orden.items.slice(0, 3).map((item) => (
+                          <li key={item.id}>
+                            {item.productName}
+                            {item.quantity > 1 && (
+                              <span className="texto-gris"> x{item.quantity}</span>
+                            )}
+                          </li>
+                        ))}
+                        {orden.items.length > 3 && (
+                          <li className="texto-gris">y {orden.items.length - 3} mas</li>
+                        )}
+                      </ul>
+                    </div>
+
+                    <div className="orden-total">
+                      <span className="texto-chico texto-gris">Total</span>
+                      <strong>{precio(orden.total)}</strong>
+                      <span className="orden-ver">Ver detalle &rarr;</span>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <Paginador pagina={pagina} totalPaginas={totalPaginas} alCambiarPagina={setPagina} />
