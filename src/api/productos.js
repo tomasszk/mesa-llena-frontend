@@ -45,6 +45,21 @@ export function obtenerProducto(id) {
 }
 
 /**
+ * Agrega al formulario los datos de la ficha del juego.
+ *
+ * Los campos vacios no se mandan: en el backend son opcionales, y si
+ * mandaramos un string vacio Spring no podria convertirlo a Integer y la
+ * request fallaria con un 400.
+ */
+function agregarFicha(formulario, ficha) {
+  if (!ficha) return;
+
+  for (const [campo, valor] of Object.entries(ficha)) {
+    if (valor !== '' && valor != null) formulario.append(campo, valor);
+  }
+}
+
+/**
  * Alta de un producto (solo ADMIN).
  *
  * Este endpoint es el unico que NO recibe JSON: recibe multipart/form-data,
@@ -54,7 +69,8 @@ export function obtenerProducto(id) {
  * Importante: el campo se llama "images" (en plural) y se agrega una vez por
  * cada archivo. Asi lo recibe la List<MultipartFile> del ProductRequest.
  */
-export function crearProducto({ name, description, price, stock, discount, categoryId, imagenes }) {
+export function crearProducto({ name, description, price, stock, discount, categoryId,
+  imagenes, ficha }) {
   const formulario = new FormData();
   formulario.append('name', name);
   formulario.append('description', description);
@@ -62,6 +78,8 @@ export function crearProducto({ name, description, price, stock, discount, categ
   formulario.append('stock', stock);
   formulario.append('discount', discount ?? 0);
   formulario.append('categoryId', categoryId);
+
+  agregarFicha(formulario, ficha);
 
   for (const archivo of imagenes) {
     formulario.append('images', archivo);
@@ -79,7 +97,7 @@ export function crearProducto({ name, description, price, stock, discount, categ
  */
 export function actualizarProducto(
   id,
-  { name, description, price, stock, discount, categoryId, imagenes },
+  { name, description, price, stock, discount, categoryId, imagenes, ficha },
 ) {
   const formulario = new FormData();
   formulario.append('name', name);
@@ -88,6 +106,8 @@ export function actualizarProducto(
   formulario.append('stock', stock);
   formulario.append('discount', discount ?? 0);
   formulario.append('categoryId', categoryId);
+
+  agregarFicha(formulario, ficha);
 
   // Si no hay archivos nuevos no mandamos el campo: el backend interpreta
   // "images == null" como "dejale las fotos que ya tenia".

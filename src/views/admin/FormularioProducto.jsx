@@ -27,6 +27,13 @@ const CAMPOS_VACIOS = {
   stock: '',
   discount: '0',
   categoryId: '',
+  // Ficha del juego. Es opcional: si queda vacia, el producto se publica
+  // igual y el detalle simplemente no muestra esos datos.
+  minPlayers: '',
+  maxPlayers: '',
+  durationMinutes: '',
+  minAge: '',
+  howToPlay: '',
 };
 
 // Lo que acepta el <input type="file"> y lo que validamos antes de subir.
@@ -82,6 +89,12 @@ function FormularioProducto({ avisar }) {
           stock: String(producto.stock ?? ''),
           discount: String(producto.discount ?? 0),
           categoryId: String(producto.categoryId ?? ''),
+          minPlayers: producto.minPlayers == null ? '' : String(producto.minPlayers),
+          maxPlayers: producto.maxPlayers == null ? '' : String(producto.maxPlayers),
+          durationMinutes:
+            producto.durationMinutes == null ? '' : String(producto.durationMinutes),
+          minAge: producto.minAge == null ? '' : String(producto.minAge),
+          howToPlay: producto.howToPlay ?? '',
         });
         setImagenesActuales(producto.images ?? []);
       })
@@ -176,6 +189,25 @@ function FormularioProducto({ avisar }) {
 
     if (datos.categoryId === '') nuevos.categoryId = 'Elegi una categoria';
 
+    // La ficha es opcional, pero si se completa tiene que tener sentido.
+    const min = Number(datos.minPlayers);
+    const max = Number(datos.maxPlayers);
+
+    if (datos.minPlayers !== '' && min < 1)
+      nuevos.minPlayers = 'Tiene que ser 1 o mas';
+
+    if (datos.maxPlayers !== '' && max < 1)
+      nuevos.maxPlayers = 'Tiene que ser 1 o mas';
+
+    if (datos.minPlayers !== '' && datos.maxPlayers !== '' && min > max)
+      nuevos.maxPlayers = 'El maximo no puede ser menor que el minimo';
+
+    if (datos.durationMinutes !== '' && Number(datos.durationMinutes) < 1)
+      nuevos.durationMinutes = 'Tiene que ser de al menos 1 minuto';
+
+    if (datos.minAge !== '' && Number(datos.minAge) < 0)
+      nuevos.minAge = 'La edad no puede ser negativa';
+
     // Al publicar hace falta al menos una foto. Al editar, si no elige fotos
     // nuevas, se quedan las que ya tenia.
     if (!esEdicion && archivos.length === 0) {
@@ -202,6 +234,13 @@ function FormularioProducto({ avisar }) {
       discount: datos.discount === '' ? 0 : datos.discount,
       categoryId: datos.categoryId,
       imagenes: archivos,
+      ficha: {
+        minPlayers: datos.minPlayers,
+        maxPlayers: datos.maxPlayers,
+        durationMinutes: datos.durationMinutes,
+        minAge: datos.minAge,
+        howToPlay: datos.howToPlay.trim(),
+      },
     };
 
     try {
@@ -374,6 +413,90 @@ function FormularioProducto({ avisar }) {
             )
           )}
         </div>
+
+        {/* ---------------- Ficha del juego ---------------- */}
+        <fieldset className="ficha-campos">
+          <legend>
+            Ficha del juego <span className="texto-gris">(opcional)</span>
+          </legend>
+          <p className="ayuda" style={{ marginTop: 0 }}>
+            Es lo que se muestra en la pagina del juego: para cuantos es, cuanto dura y
+            como se juega.
+          </p>
+
+          <div className="fila-campos">
+            <div className={claseCampo('minPlayers')}>
+              <label htmlFor="minPlayers">Jugadores (minimo)</label>
+              <input
+                id="minPlayers"
+                name="minPlayers"
+                type="number"
+                min="1"
+                value={datos.minPlayers}
+                onChange={alCambiar}
+              />
+              {errores.minPlayers && <p className="error-campo">{errores.minPlayers}</p>}
+            </div>
+
+            <div className={claseCampo('maxPlayers')}>
+              <label htmlFor="maxPlayers">Jugadores (maximo)</label>
+              <input
+                id="maxPlayers"
+                name="maxPlayers"
+                type="number"
+                min="1"
+                value={datos.maxPlayers}
+                onChange={alCambiar}
+              />
+              {errores.maxPlayers && <p className="error-campo">{errores.maxPlayers}</p>}
+            </div>
+          </div>
+
+          <div className="fila-campos">
+            <div className={claseCampo('durationMinutes')}>
+              <label htmlFor="durationMinutes">Duracion (minutos)</label>
+              <input
+                id="durationMinutes"
+                name="durationMinutes"
+                type="number"
+                min="1"
+                value={datos.durationMinutes}
+                onChange={alCambiar}
+              />
+              {errores.durationMinutes && (
+                <p className="error-campo">{errores.durationMinutes}</p>
+              )}
+            </div>
+
+            <div className={claseCampo('minAge')}>
+              <label htmlFor="minAge">Edad desde</label>
+              <input
+                id="minAge"
+                name="minAge"
+                type="number"
+                min="0"
+                value={datos.minAge}
+                onChange={alCambiar}
+              />
+              {errores.minAge && <p className="error-campo">{errores.minAge}</p>}
+            </div>
+          </div>
+
+          <div className="campo">
+            <label htmlFor="howToPlay">Como se juega</label>
+            <textarea
+              id="howToPlay"
+              name="howToPlay"
+              value={datos.howToPlay}
+              onChange={alCambiar}
+              placeholder="En tu turno... Gana el que..."
+              style={{ minHeight: 140 }}
+            />
+            <p className="ayuda">
+              Un par de parrafos explicando el turno y como se gana.
+            </p>
+          </div>
+        </fieldset>
 
         {/* ---------------- Las fotos ---------------- */}
         <div className={claseCampo('imagenes')}>

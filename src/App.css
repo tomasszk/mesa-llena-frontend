@@ -471,12 +471,60 @@
 
 /* ==========================================================================
    Detalle del producto
+   --------------------------------------------------------------------------
+   Las variables --juego-* las escribe React con el color sacado de la foto
+   del juego (ver colorDeImagen.js). Aca se declaran los valores por defecto,
+   con la paleta de la marca, para que la pagina se vea bien igual mientras el
+   color se calcula, o si no se pudo calcular ninguno.
    ========================================================================== */
+
+.juego {
+  --juego-fuerte: var(--azul);
+  --juego-medio: var(--azul-claro);
+  --juego-suave: var(--turquesa-suave);
+  --juego-borde: var(--gris-suave);
+}
+
+/* La franja tematizada que contiene la foto y la compra */
+.juego-portada {
+  background: linear-gradient(180deg, var(--juego-suave) 0%, var(--offwhite) 100%);
+  border-top: 4px solid var(--juego-medio);
+  border-bottom: 1px solid var(--juego-borde);
+  padding: 2.5rem 0 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.juego-categoria {
+  display: inline-block;
+  padding: .25rem .7rem;
+  border-radius: 999px;
+  background: var(--juego-fuerte);
+  color: var(--blanco);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.juego-bajada {
+  font-size: 1.05rem;
+  color: var(--juego-fuerte);
+  opacity: .88;
+  margin-bottom: 1.25rem;
+}
+
+.juego-ahorro {
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--coral-oscuro);
+}
+
+.juego-stock { color: var(--juego-medio); }
 
 .detalle {
   display: grid;
-  gap: 2rem;
-  grid-template-columns: 1.1fr 1fr;
+  gap: 2.5rem;
+  grid-template-columns: 1.05fr 1fr;
   align-items: start;
 }
 
@@ -525,7 +573,11 @@
 
 .miniatura img { width: 100%; height: 100%; object-fit: cover; }
 
-.detalle-datos h1 { margin: .5rem 0 .75rem; }
+.detalle-datos h1 {
+  margin: .75rem 0 .6rem;
+  font-size: 2.6rem;
+  color: var(--juego-fuerte);
+}
 
 .detalle-precio {
   display: flex;
@@ -537,14 +589,61 @@
 
 .detalle-precio strong { font-size: 2rem; }
 
-.detalle-descripcion {
-  padding: 1rem 0;
-  border-top: 1px solid var(--gris-suave);
-  border-bottom: 1px solid var(--gris-suave);
-  white-space: pre-line;
+.detalle-stock { margin: 1.25rem 0; }
+
+/* ==========================================================================
+   Ficha del juego: jugadores, duracion, edad, categoria
+   ========================================================================== */
+
+.ficha {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin-bottom: 2.5rem;
 }
 
-.detalle-stock { margin: 1.25rem 0; }
+.ficha-dato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+  padding: 1.25rem .75rem;
+  background: var(--blanco);
+  border: 1px solid var(--juego-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.ficha-icono { font-size: 1.6rem; line-height: 1; margin-bottom: .35rem; }
+
+.ficha-titulo {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+}
+
+.ficha-valor { font-size: 1.2rem; color: var(--juego-fuerte); }
+
+/* ==========================================================================
+   Como se juega
+   ========================================================================== */
+
+.como-se-juega {
+  margin-bottom: 2.5rem;
+  border-left: 5px solid var(--juego-medio);
+}
+
+.como-se-juega h2 { color: var(--juego-fuerte); }
+
+.como-se-juega p {
+  margin: 0;
+  max-width: 78ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
 
 .detalle-compra {
   display: flex;
@@ -971,4 +1070,23 @@
   .tarjeta-producto:hover { transform: none; }
   .tarjeta-producto:hover .tarjeta-producto-imagen img { transform: none; }
   .spinner { animation-duration: 1.6s; }
+}
+
+/* ==========================================================================
+   Ficha del juego en el formulario de la tienda
+   ========================================================================== */
+
+.ficha-campos {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.25rem .5rem;
+  border: 1px solid var(--gris-suave);
+  border-radius: var(--radio);
+  background: var(--offwhite);
+}
+
+.ficha-campos legend {
+  padding: 0 .5rem;
+  font-size: .925rem;
+  font-weight: 800;
+  color: var(--azul);
 }
