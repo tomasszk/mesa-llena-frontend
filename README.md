@@ -33,7 +33,7 @@ seguí su README para configurar `application.properties`. Después, desde
 
 Queda escuchando en `http://localhost:4002`.
 
-**3. El frontend**, desde `client/`:
+**3. El frontend**, desde la raíz del repositorio:
 
 ```bash
 npm install
