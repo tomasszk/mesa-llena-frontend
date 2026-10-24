@@ -29,7 +29,7 @@ function LineaCarrito({ item, alCambiarCantidad, alQuitar, ocupado }) {
   return (
     <li className={`linea-carrito ${excedeStock ? 'linea-con-problema' : ''}`}>
       {/* La foto y el nombre llevan al detalle: es lo primero que uno intenta
-          cuando quiere repasar que era un producto antes de comprarlo. */}
+          cuando quiere repasar qué era un producto antes de comprarlo. */}
       <Link to={`/productos/${item.productId}`} className="linea-carrito-imagen">
         {imagen ? (
           <img src={imagen} alt={item.productName} />
