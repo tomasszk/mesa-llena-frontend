@@ -92,7 +92,7 @@ function DetalleCompra() {
             {'✓'}
           </div>
           <div>
-            <h2 className="sin-margen">Listo, tu compra esta confirmada</h2>
+            <h2 className="sin-margen">Listo, tu compra está confirmada</h2>
             <p className="sin-margen">
               Ya descontamos el stock de cada juego y te guardamos la compra en tu historial.
             </p>

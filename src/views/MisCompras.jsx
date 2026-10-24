@@ -70,14 +70,14 @@ function MisCompras() {
       {ordenes.length === 0 && !error ? (
         <Vacio
           icono={'\u{1F4E6}'}
-          titulo="Todavia no compraste nada"
+          titulo="Todavía no compraste nada"
           accion={
             <Link to="/" className="boton">
-              Ver el catalogo
+              Ver el catálogo
             </Link>
           }
         >
-          Cuando termines una compra te va a quedar registrada aca.
+          Cuando termines una compra te va a quedar registrada acá.
         </Vacio>
       ) : (
         <>

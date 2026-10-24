@@ -1,7 +1,7 @@
 /* ==========================================================================
    Ingresar (login)
    --------------------------------------------------------------------------
-   Cubre "Autenticacion de usuarios mediante usuario y contrasenia (login)".
+   Cubre "Autenticacion de usuarios mediante usuario y contraseña (login)".
 
    El backend responde con { access_token, role, username }. El token lo
    guardamos en localStorage (lo hace App a traves de alIniciarSesion) y el
@@ -57,7 +57,7 @@ function Ingresar({ alIniciarSesion }) {
     const { name, value } = evento.target;
     setDatos({ ...datos, [name]: value });
     // Al primer cambio borramos el error anterior: si el usuario esta
-    // corrigiendo la contrasenia, el cartel rojo viejo ya no aplica.
+    // corrigiendo la contraseña, el cartel rojo viejo ya no aplica.
     setError('');
   }
 
@@ -87,7 +87,7 @@ function Ingresar({ alIniciarSesion }) {
         <div className="centrado" style={{ marginBottom: '1.5rem' }}>
           <Logo tamanio={48} />
           <h1 style={{ marginTop: '.75rem' }}>Ingresar</h1>
-          <p className="texto-gris sin-margen">Entra para comprar y ver tus compras.</p>
+          <p className="texto-gris sin-margen">Entrá para comprar y ver tus compras.</p>
         </div>
 
         <Aviso tipo="error">{error}</Aviso>
@@ -129,25 +129,8 @@ function Ingresar({ alIniciarSesion }) {
         </form>
 
         <p className="centrado texto-chico" style={{ marginTop: '1.25rem', marginBottom: 0 }}>
-          No tenes cuenta? <Link to="/registro">Crear una cuenta</Link>
+          ¿No tenés cuenta? <Link to="/registro">Crear una cuenta</Link>
         </p>
-
-        {/*
-          Cuenta de ejemplo, para que quien abra el proyecto por primera vez
-          pueda entrar sin tener que registrarse ni buscar nada.
-
-          Es una de las dos cuentas que el backend crea solo cuando arranca con
-          la base vacia (ver DemoDataLoader), asi que no estamos publicando
-          nada que no este ya en el repositorio. La cuenta de la tienda no se
-          muestra a proposito: su contrasenia se configura en
-          application.properties, que justamente no se sube.
-        */}
-        <div className="cuenta-demo">
-          <strong>Para probar</strong>
-          <span>
-            sofia@mail.com &middot; contrasenia <code>123456</code>
-          </span>
-        </div>
       </div>
     </div>
   );

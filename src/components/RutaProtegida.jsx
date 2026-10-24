@@ -34,11 +34,11 @@ function RutaProtegida({ usuario, rol, children }) {
           <h2>No tenés permiso para entrar acá</h2>
           <p className="texto-gris">
             {rol === 'ADMIN'
-              ? 'Esta seccion es del panel de la tienda. Tu cuenta es de comprador.'
-              : 'Esta seccion es para cuentas de comprador. Estas usando la cuenta de la tienda, que vende pero no compra.'}
+              ? 'Esta sección es del panel de la tienda. Tu cuenta es de comprador.'
+              : 'Esta sección es para cuentas de comprador. Estás usando la cuenta de la tienda, que vende pero no compra.'}
           </p>
           <Link to="/" className="boton">
-            Volver al catalogo
+            Volver al catálogo
           </Link>
         </div>
       </div>

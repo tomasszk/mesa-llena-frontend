@@ -17,10 +17,10 @@ function NoEncontrado() {
         </div>
         <h1>Esta página no existe</h1>
         <p className="texto-gris">
-          La direccion que pusiste no corresponde a ninguna seccion de Mesa Llena.
+          La dirección que pusiste no corresponde a ninguna sección de Mesa Llena.
         </p>
         <Link to="/" className="boton">
-          Volver al catalogo
+          Volver al catálogo
         </Link>
       </div>
     </div>

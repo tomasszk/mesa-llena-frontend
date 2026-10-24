@@ -293,7 +293,7 @@ function FormularioProducto({ avisar }) {
           <h1>{esEdicion ? 'Editar producto' : 'Publicar producto'}</h1>
           <p>
             {esEdicion
-              ? 'Cambia lo que necesites y guarda. Las fotos solo se reemplazan si subis nuevas.'
+              ? 'Cambiá lo que necesites y guardá. Las fotos solo se reemplazan si subís nuevas.'
               : 'Cargá el juego con su descripción, categoría, precio y al menos una foto.'}
           </p>
         </div>
@@ -305,7 +305,7 @@ function FormularioProducto({ avisar }) {
 
       {categorias.length === 0 && (
         <Aviso tipo="info">
-          Todavia no hay categorias cargadas, y un producto necesita una.{' '}
+          Todavía no hay categorías cargadas, y un producto necesita una.{' '}
           <Link to="/admin/categorias">Creá la primera categoría</Link> y volvé.
         </Aviso>
       )}
@@ -325,13 +325,13 @@ function FormularioProducto({ avisar }) {
         </div>
 
         <div className={claseCampo('description')}>
-          <label htmlFor="description">Descripcion</label>
+          <label htmlFor="description">Descripción</label>
           <textarea
             id="description"
             name="description"
             value={datos.description}
             onChange={alCambiar}
-            placeholder="De que se trata, para cuantos jugadores, cuanto dura una partida..."
+            placeholder="De qué se trata, para cuántos jugadores, cuánto dura una partida..."
           />
           {errores.description && <p className="error-campo">{errores.description}</p>}
         </div>
@@ -420,13 +420,13 @@ function FormularioProducto({ avisar }) {
             Ficha del juego <span className="texto-gris">(opcional)</span>
           </legend>
           <p className="ayuda" style={{ marginTop: 0 }}>
-            Es lo que se muestra en la pagina del juego: para cuantos es, cuanto dura y
-            como se juega.
+            Es lo que se muestra en la página del juego: para cuántos es, cuánto dura y
+            cómo se juega.
           </p>
 
           <div className="fila-campos">
             <div className={claseCampo('minPlayers')}>
-              <label htmlFor="minPlayers">Jugadores (minimo)</label>
+              <label htmlFor="minPlayers">Jugadores (mínimo)</label>
               <input
                 id="minPlayers"
                 name="minPlayers"
@@ -439,7 +439,7 @@ function FormularioProducto({ avisar }) {
             </div>
 
             <div className={claseCampo('maxPlayers')}>
-              <label htmlFor="maxPlayers">Jugadores (maximo)</label>
+              <label htmlFor="maxPlayers">Jugadores (máximo)</label>
               <input
                 id="maxPlayers"
                 name="maxPlayers"
@@ -454,7 +454,7 @@ function FormularioProducto({ avisar }) {
 
           <div className="fila-campos">
             <div className={claseCampo('durationMinutes')}>
-              <label htmlFor="durationMinutes">Duracion (minutos)</label>
+              <label htmlFor="durationMinutes">Duración (minutos)</label>
               <input
                 id="durationMinutes"
                 name="durationMinutes"
@@ -483,7 +483,7 @@ function FormularioProducto({ avisar }) {
           </div>
 
           <div className="campo">
-            <label htmlFor="howToPlay">Como se juega</label>
+            <label htmlFor="howToPlay">Cómo se juega</label>
             <textarea
               id="howToPlay"
               name="howToPlay"
@@ -493,7 +493,7 @@ function FormularioProducto({ avisar }) {
               style={{ minHeight: 140 }}
             />
             <p className="ayuda">
-              Un par de parrafos explicando el turno y como se gana.
+              Un par de párrafos explicando el turno y cómo se gana.
             </p>
           </div>
         </fieldset>
@@ -514,8 +514,8 @@ function FormularioProducto({ avisar }) {
             <p className="error-campo">{errores.imagenes}</p>
           ) : (
             <p className="ayuda">
-              Podes elegir varias a la vez. Hasta 5 MB cada una.
-              {esEdicion && ' Si subis fotos nuevas, reemplazan a todas las actuales.'}
+              Podés elegir varias a la vez. Hasta 5 MB cada una.
+              {esEdicion && ' Si subís fotos nuevas, reemplazan a todas las actuales.'}
             </p>
           )}
         </div>
@@ -557,7 +557,7 @@ function FormularioProducto({ avisar }) {
               ))}
             </div>
             <p className="ayuda">
-              La primera foto es la que se ve en el catalogo y en el carrito.
+              La primera foto es la que se ve en el catálogo y en el carrito.
             </p>
           </div>
         )}

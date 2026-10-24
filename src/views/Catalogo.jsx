@@ -171,7 +171,7 @@ function Catalogo({ usuario, alAgregar }) {
             afuera de la mesa
           </h1>
           <p>
-            Estrategia, familiares, party games y clasicos de toda la vida. Elegi el tuyo y
+            Estrategia, familiares, party games y clásicos de toda la vida. Elegí el tuyo y
             armá la próxima partida.
           </p>
         </div>
@@ -198,7 +198,7 @@ function Catalogo({ usuario, alAgregar }) {
       {!cargando && totalProductos != null && (
         <p className="resumen-resultados">
           {totalProductos === 0
-            ? 'Ningun juego coincide con la busqueda'
+            ? 'Ningún juego coincide con la búsqueda'
             : `${totalProductos} ${totalProductos === 1 ? 'juego' : 'juegos'}`}
           {nombreCategoria && <span className="texto-gris"> en {nombreCategoria}</span>}
         </p>

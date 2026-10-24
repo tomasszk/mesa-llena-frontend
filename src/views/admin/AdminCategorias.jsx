@@ -120,15 +120,15 @@ function AdminCategorias({ avisar }) {
 
         <div className="panel">
           <h2>
-            Categorias existentes{' '}
+            Categorías existentes{' '}
             <span className="texto-gris texto-chico">({categorias.length})</span>
           </h2>
 
           {cargando ? (
-            <Cargando texto="Cargando categorias..." />
+            <Cargando texto="Cargando categorías..." />
           ) : categorias.length === 0 ? (
             <Vacio icono={'\u{1F3F7}'} titulo="Todavía no hay categorías">
-              Crea la primera con el formulario de al lado.
+              Creá la primera con el formulario de al lado.
             </Vacio>
           ) : (
             <ul className="lista-categorias">

@@ -18,7 +18,7 @@ export function registrarse({ username, email, password, name, surname }) {
 }
 
 /**
- * Login con email y contrasenia.
+ * Login con email y contraseña.
  * Devuelve { access_token, role, username }.
  */
 export function iniciarSesion({ email, password }) {

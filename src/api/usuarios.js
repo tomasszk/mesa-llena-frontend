@@ -8,7 +8,7 @@
 
 import { get, patch } from './cliente';
 
-/** Listado de cuentas. Nunca devuelve contrasenias. */
+/** Listado de cuentas. Nunca devuelve contraseñas. */
 export function obtenerUsuarios({ page = 0, size = 20 } = {}) {
   return get(`/users?page=${page}&size=${size}`, true);
 }

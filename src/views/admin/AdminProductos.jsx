@@ -132,7 +132,7 @@ function AdminProductos({ avisar }) {
   /** Baja del producto. En el backend es una baja logica. */
   async function borrar(producto) {
     const confirmado = window.confirm(
-      `Dar de baja "${producto.name}"?\n\n` +
+      `¿Dar de baja "${producto.name}"?\n\n` +
         'Va a dejar de aparecer en el catálogo y se va a quitar de los carritos. ' +
         'Las compras ya hechas no se tocan.',
     );
@@ -191,7 +191,7 @@ function AdminProductos({ avisar }) {
             </Link>
           }
         >
-          Carga un juego con su foto, su precio y su categoria para que aparezca en el catalogo.
+          Cargá un juego con su foto, su precio y su categoría para que aparezca en el catálogo.
         </Vacio>
       ) : (
         <>

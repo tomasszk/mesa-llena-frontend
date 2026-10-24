@@ -161,7 +161,7 @@ function App() {
 
     // La tienda no compra en su propio negocio.
     if (usuario.role !== 'USER') {
-      avisar('error', 'La cuenta de la tienda no puede comprar. Entra con una cuenta de comprador.');
+      avisar('error', 'La cuenta de la tienda no puede comprar. Entrá con una cuenta de comprador.');
       return;
     }
 

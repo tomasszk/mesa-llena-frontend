@@ -50,7 +50,7 @@ async function mensajeDeError(respuesta) {
   if (respuesta.status === 401) return 'Tenés que iniciar sesión para hacer esto.';
   if (respuesta.status === 403) return 'Tu cuenta no tiene permiso para hacer esto.';
   if (respuesta.status === 404) return 'No encontramos lo que estabas buscando.';
-  return `El servidor respondio con un error (${respuesta.status}).`;
+  return `El servidor respondió con un error (${respuesta.status}).`;
 }
 
 /**
@@ -93,7 +93,7 @@ async function pedir(ruta, { metodo = 'GET', cuerpo, conToken = false, esFormula
     // Si el fetch explota antes de recibir respuesta es porque no hubo red:
     // el backend esta apagado, o es otro puerto, o el CORS no deja pasar.
     throw new Error(
-      'No pudimos conectarnos con el servidor. Verifica que el backend este corriendo en ' +
+      'No pudimos conectarnos con el servidor. Verificá que el backend esté corriendo en ' +
         URL_API +
         '.',
     );

@@ -2,7 +2,7 @@
    Registro
    --------------------------------------------------------------------------
    Cubre "Registro de usuarios (debe solicitar un nombre de usuario, mail,
-   contrasenia, nombre y apellido)".
+   contraseña, nombre y apellido)".
 
    Los cinco campos son los que pide el RegisterRequest del backend. No hay
    campo de rol: todos los registros entran como comprador (USER), porque
@@ -62,17 +62,17 @@ function Registro({ alIniciarSesion }) {
     if (datos.email.trim() === '') {
       nuevos.email = 'El email es obligatorio';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(datos.email)) {
-      nuevos.email = 'Revisa el email, no tiene un formato valido';
+      nuevos.email = 'Revisá el email, no tiene un formato válido';
     }
 
     if (datos.password === '') {
-      nuevos.password = 'La contrasenia es obligatoria';
+      nuevos.password = 'La contraseña es obligatoria';
     } else if (datos.password.length < 6) {
       nuevos.password = 'Tiene que tener al menos 6 caracteres';
     }
 
     if (datos.repetirPassword !== datos.password) {
-      nuevos.repetirPassword = 'Las dos contrasenias tienen que ser iguales';
+      nuevos.repetirPassword = 'Las dos contraseñas tienen que ser iguales';
     }
 
     setErrores(nuevos);
@@ -120,7 +120,7 @@ function Registro({ alIniciarSesion }) {
           <Logo tamanio={48} />
           <h1 style={{ marginTop: '.75rem' }}>Crear cuenta</h1>
           <p className="texto-gris sin-margen">
-            Con la cuenta podes armar tu carrito y seguir tus compras.
+            Con la cuenta podés armar tu carrito y seguir tus compras.
           </p>
         </div>
 
@@ -187,7 +187,7 @@ function Registro({ alIniciarSesion }) {
               {errores.password ? (
                 <p className="error-campo">{errores.password}</p>
               ) : (
-                <p className="ayuda">Minimo 6 caracteres</p>
+                <p className="ayuda">Mínimo 6 caracteres</p>
               )}
             </div>
 

@@ -71,7 +71,7 @@ function Filtros({ alAplicar, cargando }) {
             id="search"
             name="search"
             type="search"
-            placeholder="Nombre o descripcion"
+            placeholder="Nombre o descripción"
             value={borrador.search}
             onChange={alCambiar}
           />
@@ -99,7 +99,7 @@ function Filtros({ alAplicar, cargando }) {
             type="number"
             min="0"
             step="0.01"
-            placeholder="Sin limite"
+            placeholder="Sin límite"
             value={borrador.maxPrice}
             onChange={alCambiar}
           />

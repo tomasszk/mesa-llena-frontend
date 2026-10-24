@@ -25,7 +25,7 @@ function ChipsCategorias({ categorias, elegida, alElegir }) {
   if (categorias.length === 0) return null;
 
   return (
-    <nav className="chips" aria-label="Filtrar por categoria">
+    <nav className="chips" aria-label="Filtrar por categoría">
       <button
         type="button"
         className={`chip ${elegida === '' ? 'activo' : ''}`}

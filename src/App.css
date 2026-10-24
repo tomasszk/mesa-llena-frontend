@@ -1186,39 +1186,6 @@
 }
 
 /* ==========================================================================
-   Cuenta de ejemplo en el login
-   ========================================================================== */
-
-.cuenta-demo {
-  display: flex;
-  flex-direction: column;
-  gap: .15rem;
-  margin-top: 1.25rem;
-  padding: .75rem 1rem;
-  border: 1px dashed var(--gris-suave);
-  border-radius: var(--radio-chico);
-  background: var(--offwhite);
-  text-align: center;
-  font-size: .8rem;
-  color: var(--gris-texto);
-}
-
-.cuenta-demo strong {
-  font-size: .7rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--azul);
-}
-
-.cuenta-demo code {
-  padding: .05rem .3rem;
-  border-radius: 4px;
-  background: var(--gris-suave);
-  color: var(--azul);
-  font-size: .8rem;
-}
-
-/* ==========================================================================
    Lista de compras
    ========================================================================== */
 

@@ -54,14 +54,14 @@ function Navbar({ usuario, carrito, alCerrarSesion }) {
           className="navbar-hamburguesa"
           onClick={() => setMenuAbierto(!menuAbierto)}
           aria-expanded={menuAbierto}
-          aria-label="Abrir menu"
+          aria-label="Abrir menú"
         >
           {menuAbierto ? '✕' : '☰'}
         </button>
 
         <nav className={`navbar-menu ${menuAbierto ? 'abierto' : ''}`}>
           <NavLink to="/" className="navbar-link" onClick={cerrarMenu} end>
-            Catalogo
+            Catálogo
           </NavLink>
 
           {esComprador && (
@@ -82,7 +82,7 @@ function Navbar({ usuario, carrito, alCerrarSesion }) {
                 Productos
               </NavLink>
               <NavLink to="/admin/categorias" className="navbar-link" onClick={cerrarMenu}>
-                Categorias
+                Categorías
               </NavLink>
               <NavLink to="/admin/usuarios" className="navbar-link" onClick={cerrarMenu}>
                 Usuarios

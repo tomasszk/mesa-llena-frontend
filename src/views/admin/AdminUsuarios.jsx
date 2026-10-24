@@ -10,7 +10,7 @@
    - El backend no deja que un admin se cambie el rol a si mismo, para que la
      tienda no quede sin ningun administrador. Aca directamente no le mostramos
      el boton, asi no intenta algo que va a fallar.
-   - El listado nunca trae contrasenias: el UserResponse no las expone.
+   - El listado nunca trae contraseñas: el UserResponse no las expone.
    ========================================================================== */
 
 import { useEffect, useState } from 'react';
@@ -62,9 +62,9 @@ function AdminUsuarios({ usuario, avisar }) {
 
     const confirmado = window.confirm(
       rolNuevo === 'ADMIN'
-        ? `Darle permisos de tienda a ${cuenta.username}?\n\n` +
-            'Va a poder publicar, editar y dar de baja productos, y administrar las demas cuentas.'
-        : `Quitarle los permisos de tienda a ${cuenta.username}?\n\n` +
+        ? `¿Darle permisos de tienda a ${cuenta.username}?\n\n` +
+            'Va a poder publicar, editar y dar de baja productos, y administrar las demás cuentas.'
+        : `¿Quitarle los permisos de tienda a ${cuenta.username}?\n\n` +
             'Va a volver a ser una cuenta de comprador.',
     );
     if (!confirmado) return;
@@ -148,7 +148,7 @@ function AdminUsuarios({ usuario, avisar }) {
                           <div className="celda-acciones">
                             {esMiCuenta ? (
                               <span className="texto-chico texto-gris">
-                                No podes cambiar tu propio rol
+                                No podés cambiar tu propio rol
                               </span>
                             ) : (
                               <button

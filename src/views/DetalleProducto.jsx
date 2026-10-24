@@ -163,7 +163,7 @@ function DetalleProducto({ usuario, alAgregar }) {
       <div className="contenedor">
         <Aviso tipo="error">{error || 'No encontramos este producto.'}</Aviso>
         <Link to="/" className="boton">
-          Volver al catalogo
+          Volver al catálogo
         </Link>
       </div>
     );
@@ -369,7 +369,7 @@ function DetalleProducto({ usuario, alAgregar }) {
               {'⚄'}
             </div>
             <div>
-              <h2>Como se juega</h2>
+              <h2>Cómo se juega</h2>
               <p>{producto.howToPlay}</p>
             </div>
           </section>

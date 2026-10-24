@@ -95,7 +95,7 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
   /** Vacia el carrito completo. */
   async function vaciar() {
     // Es una accion destructiva, asi que pedimos confirmacion.
-    if (!window.confirm('Seguro que queres vaciar el carrito?')) return;
+    if (!window.confirm('¿Seguro que querés vaciar el carrito?')) return;
 
     setOcupado(true);
     setError('');
@@ -165,7 +165,7 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
           <h1>Tu carrito</h1>
           <p>
             {items.length === 0
-              ? 'Todavia no agregaste nada.'
+              ? 'Todavía no agregaste nada.'
               : `${items.length} ${items.length === 1 ? 'producto' : 'productos'} en el carrito`}
           </p>
         </div>
@@ -194,14 +194,14 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
       {items.length === 0 ? (
         <Vacio
           icono={'\u{1F6D2}'}
-          titulo="Tu carrito esta vacio"
+          titulo="Tu carrito está vacío"
           accion={
             <Link to="/" className="boton">
-              Ver el catalogo
+              Ver el catálogo
             </Link>
           }
         >
-          Elegi algun juego del catalogo y va a aparecer aca.
+          Elegí algún juego del catálogo y va a aparecer acá.
         </Vacio>
       ) : (
         <div className="carrito">
@@ -241,7 +241,7 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
 
             {hayProblemaDeStock && (
               <Aviso tipo="error">
-                Hay productos con mas unidades de las que quedan en stock. Ajusta las cantidades
+                Hay productos con más unidades de las que quedan en stock. Ajustá las cantidades
                 para poder comprar.
               </Aviso>
             )}

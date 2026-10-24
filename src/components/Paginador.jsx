@@ -16,7 +16,7 @@ function Paginador({ pagina, totalPaginas, alCambiarPagina }) {
   const esUltima = pagina >= totalPaginas - 1;
 
   return (
-    <nav className="paginador" aria-label="Paginas de resultados">
+    <nav className="paginador" aria-label="Páginas de resultados">
       <button
         type="button"
         className="boton boton-borde"
@@ -27,7 +27,7 @@ function Paginador({ pagina, totalPaginas, alCambiarPagina }) {
       </button>
 
       <span className="texto-chico texto-gris">
-        Pagina {pagina + 1} de {totalPaginas}
+        Página {pagina + 1} de {totalPaginas}
       </span>
 
       <button

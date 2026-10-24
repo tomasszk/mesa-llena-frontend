@@ -55,7 +55,7 @@ function LineaCarrito({ item, alCambiarCantidad, alQuitar, ocupado }) {
 
         {excedeStock && (
           <p className="error-campo">
-            Solo quedan {item.stock} unidades. Baja la cantidad para poder comprar.
+            Solo quedan {item.stock} unidades. Bajá la cantidad para poder comprar.
           </p>
         )}
       </div>
@@ -79,7 +79,7 @@ function LineaCarrito({ item, alCambiarCantidad, alQuitar, ocupado }) {
           onClick={() => alCambiarCantidad(item, item.quantity + 1)}
           disabled={ocupado || !puedeSumar}
           aria-label={`Agregar una unidad de ${item.productName}`}
-          title={puedeSumar ? '' : 'No hay mas stock de este producto'}
+          title={puedeSumar ? '' : 'No hay más stock de este producto'}
         >
           +
         </button>
