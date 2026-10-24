@@ -1,22 +1,22 @@
 /* ==========================================================================
-   Sesion del usuario (localStorage)
+   Sesión del usuario (localStorage)
    --------------------------------------------------------------------------
-   El backend es STATELESS: no guarda sesiones en memoria. Lo unico que nos
+   El backend es STATELESS: no guarda sesiones en memoria. Lo único que nos
    devuelve al registrarnos o loguearnos es un token de JWT, y ese token es el
    que tenemos que mandar en cada request siguiente.
 
    Como el token tiene que sobrevivir a un F5, no alcanza con guardarlo en un
    estado de React (que se borra al recargar). Lo guardamos en localStorage,
-   tal como lo explico la profesora en la clase del 05/10.
+   tal como lo explicó la profesora en la clase del 05/10.
    ========================================================================== */
 
-// Las claves con las que guardamos en localStorage. Estan en constantes para
+// Las claves con las que guardamos en localStorage. Están en constantes para
 // no escribir el string a mano en cada lugar y equivocarnos en una letra.
 const CLAVE_TOKEN = 'jwtToken';
 const CLAVE_USUARIO = 'usuario';
 
 /**
- * Guarda la sesion despues de un login o un registro exitoso.
+ * Guarda la sesión después de un login o un registro exitoso.
  * Recibe la AuthenticationResponse del backend, que trae tres cosas:
  *   access_token -> el JWT
  *   role         -> USER o ADMIN
@@ -36,8 +36,8 @@ export function leerToken() {
 }
 
 /**
- * Devuelve { username, role } del usuario logueado, o null si no hay sesion.
- * Si por algun motivo lo guardado no es un JSON valido, limpiamos todo y
+ * Devuelve { username, role } del usuario logueado, o null si no hay sesión.
+ * Si por algún motivo lo guardado no es un JSON válido, limpiamos todo y
  * devolvemos null: preferimos pedir login de nuevo antes que romper la app.
  */
 export function leerUsuario() {
@@ -55,7 +55,7 @@ export function leerUsuario() {
   }
 }
 
-/** Cierra la sesion: saca el token y los datos del usuario de localStorage. */
+/** Cierra la sesión: saca el token y los datos del usuario de localStorage. */
 export function borrarSesion() {
   localStorage.removeItem(CLAVE_TOKEN);
   localStorage.removeItem(CLAVE_USUARIO);

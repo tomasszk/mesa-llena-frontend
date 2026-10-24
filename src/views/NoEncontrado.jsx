@@ -1,9 +1,9 @@
 /* ==========================================================================
-   404: cualquier direccion que no exista
+   404: cualquier dirección que no exista
    --------------------------------------------------------------------------
-   Esta ruta esta declarada como path="*" en App, asi que agarra todo lo que no
-   coincidio con ninguna ruta anterior. Sin esto, escribir mal una direccion
-   dejaria la pantalla en blanco sin ninguna explicacion.
+   Esta ruta está declarada como path="*" en App, así que agarra todo lo que no
+   coincidió con ninguna ruta anterior. Sin esto, escribir mal una dirección
+   dejaría la pantalla en blanco sin ninguna explicación.
    ========================================================================== */
 
 import { Link } from 'react-router-dom';

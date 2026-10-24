@@ -1,18 +1,18 @@
 /* ==========================================================================
-   Filtros del catalogo
+   Filtros del catálogo
    --------------------------------------------------------------------------
-   Junto con ChipsCategorias cubre el punto "Busqueda y filtrado de productos
-   por categoria, precio, etc." del enunciado. Aca van la busqueda por texto,
-   el rango de precios y la disponibilidad; la categoria quedo afuera, en los
-   chips de arriba, porque es el filtro que mas se usa.
+   Junto con ChipsCategorias cubre el punto "Búsqueda y filtrado de productos
+   por categoría, precio, etc." del enunciado. Acá van la búsqueda por texto,
+   el rango de precios y la disponibilidad; la categoría quedó afuera, en los
+   chips de arriba, porque es el filtro que más se usa.
 
    El filtrado lo hace el BACKEND, no el frontend: este formulario arma los
-   parametros y se los manda a GET /products, que los traduce a la query de
-   JPA. No nos traemos todos los productos para filtrarlos aca, porque eso
-   dejaria de funcionar en cuanto el catalogo crezca.
+   parámetros y se los manda a GET /products, que los traduce a la query de
+   JPA. No nos traemos todos los productos para filtrarlos acá, porque eso
+   dejaría de funcionar en cuanto el catálogo crezca.
 
-   El componente guarda su propio borrador en estado local y recien cuando el
-   usuario aprieta "Buscar" avisa al padre. Asi no mandamos una request por
+   El componente guarda su propio borrador en estado local y recién cuando el
+   usuario aprieta "Buscar" avisa al padre. Así no mandamos una request por
    cada letra que escribe.
    ========================================================================== */
 
@@ -30,7 +30,7 @@ function Filtros({ alAplicar, cargando }) {
 
   /**
    * Un solo handler para todos los campos: usa el atributo name del input
-   * para saber que parte del estado tiene que cambiar. Asi no escribimos
+   * para saber qué parte del estado tiene que cambiar. Así no escribimos
    * cuatro funciones casi iguales.
    */
   function alCambiar(evento) {
@@ -39,12 +39,12 @@ function Filtros({ alAplicar, cargando }) {
   }
 
   function buscar(evento) {
-    // Sin esto el navegador recarga la pagina entera al mandar el formulario
+    // Sin esto el navegador recarga la página entera al mandar el formulario
     // y perdemos todo el estado de React.
     evento.preventDefault();
 
-    // Si el usuario puso un minimo mayor que el maximo, los damos vuelta en
-    // lugar de devolverle una lista vacia sin explicacion.
+    // Si el usuario puso un mínimo mayor que el máximo, los damos vuelta en
+    // lugar de devolverle una lista vacía sin explicación.
     const { minPrice: min, maxPrice: max } = borrador;
     const alReves = min !== '' && max !== '' && Number(min) > Number(max);
 

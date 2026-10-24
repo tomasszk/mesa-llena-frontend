@@ -1,31 +1,31 @@
 /* ==========================================================================
-   Cliente HTTP - el unico lugar del frontend donde se escribe "fetch"
+   Cliente HTTP - el único lugar del frontend donde se escribe "fetch"
    --------------------------------------------------------------------------
-   Todas las vistas piden datos a traves de este archivo. Lo hicimos asi por
+   Todas las vistas piden datos a través de este archivo. Lo hicimos así por
    tres motivos:
 
-   1) El token se agrega en UN solo lugar. Si manana cambia como se manda la
-      autorizacion, se toca aca y no en cada vista.
+   1) El token se agrega en UN solo lugar. Si mañana cambia cómo se manda la
+      autorización, se toca acá y no en cada vista.
    2) Los errores del backend se traducen una sola vez a un mensaje en
       castellano que las vistas pueden mostrar tal cual.
-   3) Los fetch quedan centralizados para separar la comunicacion HTTP de la
-      logica de las vistas y facilitar futuros cambios.
+   3) Los fetch quedan centralizados para separar la comunicación HTTP de la
+      lógica de las vistas y facilitar futuros cambios.
    ========================================================================== */
 
 import { borrarSesion, leerToken } from './sesion';
 
 // La URL del backend sale de la variable de entorno VITE_API_URL (archivo .env).
-// Asi no queda "localhost" hardcodeado: si manana lo subimos a un servidor,
-// cambiamos el .env y nada mas.
+// Así no queda "localhost" hardcodeado: si mañana lo subimos a un servidor,
+// cambiamos el .env y nada más.
 const URL_API = import.meta.env.VITE_API_URL || 'http://localhost:4002';
 
 /**
- * Nombre del evento que avisa que el token dejo de servir.
+ * Nombre del evento que avisa que el token dejó de servir.
  *
  * El JWT vence a las 24 horas. Cuando eso pasa, el backend responde 401 a
  * cualquier request. En vez de repetir ese control en cada vista, el cliente
  * avisa una sola vez con un evento de window y App lo escucha: cierra la
- * sesion y manda al login. Es un aviso entre partes de nuestro propio codigo,
+ * sesión y manda al login. Es un aviso entre partes de nuestro propio código,
  * no estamos tocando el DOM a mano.
  */
 export const EVENTO_SESION_EXPIRADA = 'mesallena:sesion-expirada';
@@ -35,8 +35,8 @@ export const EVENTO_SESION_EXPIRADA = 'mesallena:sesion-expirada';
  *
  * Nuestro GlobalExceptionHandler siempre devuelve el mismo cuerpo:
  *   { timestamp, status, error, message }
- * asi que leemos "message". Si la respuesta no trae JSON (por ejemplo un 500
- * crudo de Tomcat), armamos un mensaje generico con el codigo de estado.
+ * así que leemos "message". Si la respuesta no trae JSON (por ejemplo un 500
+ * crudo de Tomcat), armamos un mensaje genérico con el código de estado.
  */
 async function mensajeDeError(respuesta) {
   try {
@@ -65,7 +65,7 @@ async function pedir(ruta, { metodo = 'GET', cuerpo, conToken = false, esFormula
   const headers = {};
 
   // Cuando mandamos JSON hay que declararlo. Cuando mandamos un FormData NO
-  // se declara: el navegador tiene que poner el Content-Type el mismo, porque
+  // se declara: el navegador tiene que poner el Content-Type él mismo, porque
   // necesita agregarle el "boundary" que separa cada parte del multipart.
   if (cuerpo && !esFormulario) {
     headers['Content-Type'] = 'application/json';
@@ -91,7 +91,7 @@ async function pedir(ruta, { metodo = 'GET', cuerpo, conToken = false, esFormula
     respuesta = await fetch(`${URL_API}${ruta}`, opciones);
   } catch {
     // Si el fetch explota antes de recibir respuesta es porque no hubo red:
-    // el backend esta apagado, o es otro puerto, o el CORS no deja pasar.
+    // el backend está apagado, o es otro puerto, o el CORS no deja pasar.
     throw new Error(
       'No pudimos conectarnos con el servidor. Verificá que el backend esté corriendo en ' +
         URL_API +
@@ -99,7 +99,7 @@ async function pedir(ruta, { metodo = 'GET', cuerpo, conToken = false, esFormula
     );
   }
 
-  // --- Token vencido o invalido ----------------------------------------
+  // --- Token vencido o inválido ----------------------------------------
   if (respuesta.status === 401 && conToken) {
     borrarSesion();
     window.dispatchEvent(new Event(EVENTO_SESION_EXPIRADA));
@@ -111,14 +111,14 @@ async function pedir(ruta, { metodo = 'GET', cuerpo, conToken = false, esFormula
   }
 
   // 204 No Content (por ejemplo el DELETE de un producto) no trae cuerpo:
-  // si intentaramos parsearlo como JSON reventaria.
+  // si intentáramos parsearlo como JSON reventaría.
   if (respuesta.status === 204) return null;
 
   return respuesta.json();
 }
 
 /* --------------------------------------------------------------------------
-   Atajos por metodo HTTP. Las vistas usan estos, no "pedir" directamente.
+   Atajos por método HTTP. Las vistas usan estos, no "pedir" directamente.
    -------------------------------------------------------------------------- */
 
 export function get(ruta, conToken = false) {

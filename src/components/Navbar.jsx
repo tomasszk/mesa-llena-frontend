@@ -1,15 +1,15 @@
 /* ==========================================================================
    Navbar
    --------------------------------------------------------------------------
-   La barra de arriba cambia segun quien este mirando:
+   La barra de arriba cambia según quién esté mirando:
 
-   - Visitante sin cuenta -> solo el catalogo, mas "Ingresar" y "Crear cuenta".
-   - Comprador (USER)     -> catalogo, carrito con el contador y "Mis compras".
-   - Tienda (ADMIN)       -> catalogo y el panel de administracion.
+   - Visitante sin cuenta -> solo el catálogo, más "Ingresar" y "Crear cuenta".
+   - Comprador (USER)     -> catálogo, carrito con el contador y "Mis compras".
+   - Tienda (ADMIN)       -> catálogo y el panel de administración.
 
-   El ADMIN no ve el carrito a proposito: en el backend /carts y /orders piden
-   el rol USER, porque la tienda vende, no compra. Si le mostraramos el carrito,
-   el boton le daria un 403.
+   El ADMIN no ve el carrito a propósito: en el backend /carts y /orders piden
+   el rol USER, porque la tienda vende, no compra. Si le mostráramos el carrito,
+   el botón le daría un 403.
    ========================================================================== */
 
 import { useState } from 'react';
@@ -18,7 +18,7 @@ import Logo from './Logo';
 import { unidadesEnCarrito } from '../formato';
 
 function Navbar({ usuario, carrito, alCerrarSesion }) {
-  // Estado local del menu desplegable en pantallas chicas.
+  // Estado local del menú desplegable en pantallas chicas.
   const [menuAbierto, setMenuAbierto] = useState(false);
   const navegar = useNavigate();
 
@@ -33,10 +33,10 @@ function Navbar({ usuario, carrito, alCerrarSesion }) {
   function salir() {
     cerrarMenu();
 
-    // Primero navegamos y despues cerramos la sesion. Si lo hicieramos al
-    // reves y el usuario estuviera parado en una vista protegida, por un
-    // instante quedaria sin sesion en una ruta que no puede ver, y
-    // RutaProtegida lo mandaria al login guardando esa ruta como "volver a".
+    // Primero navegamos y después cerramos la sesión. Si lo hiciéramos al
+    // revés y el usuario estuviera parado en una vista protegida, por un
+    // instante quedaría sin sesión en una ruta que no puede ver, y
+    // RutaProtegida lo mandaría al login guardando esa ruta como "volver a".
     navegar('/');
     alCerrarSesion();
   }
@@ -48,7 +48,7 @@ function Navbar({ usuario, carrito, alCerrarSesion }) {
           <Logo />
         </Link>
 
-        {/* Boton del menu: solo se ve en pantallas chicas (ver App.css) */}
+        {/* Botón del menú: solo se ve en pantallas chicas (ver App.css) */}
         <button
           type="button"
           className="navbar-hamburguesa"

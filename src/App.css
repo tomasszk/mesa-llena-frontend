@@ -1,9 +1,9 @@
 /* ==========================================================================
    Mesa Llena - estilos de los componentes
    --------------------------------------------------------------------------
-   index.css tiene la paleta, el reset y los elementos basicos (botones,
+   index.css tiene la paleta, el reset y los elementos básicos (botones,
    inputs, tablas). Este archivo tiene el aspecto de cada parte concreta de la
-   aplicacion: el navbar, las tarjetas de producto, el carrito, etc.
+   aplicación: el navbar, las tarjetas de producto, el carrito, etc.
    ========================================================================== */
 
 /* ==========================================================================
@@ -115,7 +115,7 @@
   cursor: pointer;
 }
 
-/* --- Navbar en pantallas chicas: el menu se despliega hacia abajo --- */
+/* --- Navbar en pantallas chicas: el menú se despliega hacia abajo --- */
 @media (max-width: 880px) {
   .navbar-hamburguesa { display: block; }
 
@@ -146,7 +146,7 @@
 }
 
 /* ==========================================================================
-   Pie de pagina
+   Pie de página
    ========================================================================== */
 
 .pie {
@@ -165,7 +165,7 @@
 }
 
 /* ==========================================================================
-   Portada del catalogo
+   Portada del catálogo
    ========================================================================== */
 
 .portada {
@@ -253,7 +253,7 @@
 }
 
 /* ==========================================================================
-   Chips de categoria
+   Chips de categoría
    ========================================================================== */
 
 .chips {
@@ -412,7 +412,7 @@
 .tarjeta-producto-nombre {
   margin: 0;
   font-size: 1.025rem;
-  /* Si el nombre es muy largo lo cortamos a dos lineas, asi todas las
+  /* Si el nombre es muy largo lo cortamos a dos líneas, así todas las
      tarjetas de la grilla mantienen la misma altura. */
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -473,8 +473,8 @@
    Detalle del producto
    --------------------------------------------------------------------------
    Las variables --juego-* las escribe React con el color sacado de la foto
-   del juego (ver colorDeImagen.js). Aca se declaran los valores por defecto,
-   con la paleta de la marca, para que la pagina se vea bien igual mientras el
+   del juego (ver colorDeImagen.js). Acá se declaran los valores por defecto,
+   con la paleta de la marca, para que la página se vea bien igual mientras el
    color se calcula, o si no se pudo calcular ninguno.
    ========================================================================== */
 
@@ -486,12 +486,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   La portada: la foto del juego, nitida adelante y desenfocada de fondo
+   La portada: la foto del juego, nítida adelante y desenfocada de fondo
    -------------------------------------------------------------------------- */
 
 .juego-hero {
   position: relative;
-  isolation: isolate;          /* el fondo no se escapa de esta seccion */
+  isolation: isolate;          /* el fondo no se escapa de esta sección */
   overflow: hidden;
   padding: 2rem 0 3.5rem;
   margin-bottom: 3.5rem;
@@ -618,7 +618,7 @@
   color: rgba(255, 255, 255, .82);
 }
 
-/* --- La ficha, en linea sobre el fondo --- */
+/* --- La ficha, en línea sobre el fondo --- */
 .juego-ficha {
   display: flex;
   flex-wrap: wrap;
@@ -681,11 +681,11 @@
 .juego-acciones .campo { width: 104px; }
 .juego-acciones .boton { flex: 1; }
 
-/* El boton de comprar NO toma el color del juego, a proposito.
-   Dos motivos: el color sacado de una caja puede caer en un oliva o un marron
-   que queda feo en un boton, y sobre todo el usuario tiene que reconocer de
-   una cual es el boton de comprar, sea cual sea el juego que este mirando.
-   El ambiente lo tiñe el juego; la accion principal es siempre de la marca. */
+/* El botón de comprar NO toma el color del juego, a propósito.
+   Dos motivos: el color sacado de una caja puede caer en un oliva o un marrón
+   que queda feo en un botón, y sobre todo el usuario tiene que reconocer de
+   una cuál es el botón de comprar, sea cual sea el juego que esté mirando.
+   El ambiente lo tiñe el juego; la acción principal es siempre de la marca. */
 .boton-comprar { background: var(--coral); }
 .boton-comprar:hover:not(:disabled) { background: var(--coral-oscuro); }
 
@@ -709,7 +709,7 @@
 }
 
 /* ==========================================================================
-   Como se juega
+   Cómo se juega
    ========================================================================== */
 
 .como-se-juega {
@@ -747,7 +747,7 @@
 }
 
 /* ==========================================================================
-   Relacionados (otros juegos de la misma categoria)
+   Relacionados (otros juegos de la misma categoría)
    ========================================================================== */
 
 .relacionados {
@@ -1010,7 +1010,7 @@
 }
 
 /* ==========================================================================
-   Paneles de administracion
+   Paneles de administración
    ========================================================================== */
 
 .dos-columnas {
@@ -1052,7 +1052,7 @@
 
 .miniatura-tabla img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Edicion de stock / descuento dentro de la tabla */
+/* Edición de stock / descuento dentro de la tabla */
 .edicion-celda {
   display: flex;
   align-items: center;
@@ -1129,7 +1129,7 @@
 }
 
 /* ==========================================================================
-   Cartelito flotante de confirmacion
+   Cartelito flotante de confirmación
    ========================================================================== */
 
 .flotante {
@@ -1155,8 +1155,8 @@
   to { opacity: 1; transform: translate(-50%, 0); }
 }
 
-/* La animacion termina en translateX(-50%), pero si el usuario tiene las
-   animaciones desactivadas no se ejecuta, asi que el centrado va aparte. */
+/* La animación termina en translateX(-50%), pero si el usuario tiene las
+   animaciones desactivadas no se ejecuta, así que el centrado va aparte. */
 .flotante { transform: translateX(-50%); }
 
 @media (prefers-reduced-motion: reduce) {

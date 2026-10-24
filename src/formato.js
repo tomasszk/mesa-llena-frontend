@@ -2,14 +2,14 @@
    Funciones de formato
    --------------------------------------------------------------------------
    Cosas que se repiten en varias vistas: mostrar un precio, armar el src de
-   una imagen, mostrar una fecha. Las ponemos aca para escribirlas una vez.
+   una imagen, mostrar una fecha. Las ponemos acá para escribirlas una vez.
    ========================================================================== */
 
 /**
- * Muestra un numero como precio en pesos: 15990.5 -> "$ 15.990,50"
+ * Muestra un número como precio en pesos: 15990.5 -> "$ 15.990,50"
  *
  * Los precios llegan del backend como BigDecimal, que en el JSON aparece como
- * numero o como string segun el caso, asi que lo convertimos antes de formatear.
+ * número o como string según el caso, así que lo convertimos antes de formatear.
  */
 export function precio(valor) {
   const numero = Number(valor);
@@ -29,7 +29,7 @@ export function precio(valor) {
  * Todo archivo empieza con unos bytes fijos que lo identifican (los "magic
  * numbers"): un PNG arranca con 89 50 4E 47, un JPEG con FF D8 FF, etc. Como
  * Base64 codifica de a bloques de 3 bytes, esos primeros bytes siempre producen
- * el mismo prefijo de texto, y alcanza con comparar strings para saber que es.
+ * el mismo prefijo de texto, y alcanza con comparar strings para saber qué es.
  */
 const FIRMAS = [
   ['iVBORw0KGgo', 'image/png'],
@@ -46,11 +46,11 @@ const FIRMAS = [
  * otro endpoint: se las pasa directo al navegador como "data URL".
  *
  * El tipo hay que declararlo bien. Una data URL necesita un MIME concreto
- * ("image/png"), no un comodin como "image/*": con el comodin el navegador no
- * sabe que esta recibiendo y la imagen queda sin cargar. Como el backend guarda
+ * ("image/png"), no un comodín como "image/*": con el comodín el navegador no
+ * sabe qué está recibiendo y la imagen queda sin cargar. Como el backend guarda
  * el Blob sin recordar de que formato era, lo deducimos del contenido.
  *
- * Devuelve null si el producto no tiene foto, asi la vista puede decidir que
+ * Devuelve null si el producto no tiene foto, así la vista puede decidir qué
  * mostrar en su lugar.
  */
 export function imagenBase64(base64) {
@@ -58,8 +58,8 @@ export function imagenBase64(base64) {
 
   const firma = FIRMAS.find(([prefijo]) => base64.startsWith(prefijo));
 
-  // Si no reconocemos la firma, JPEG es la apuesta mas segura: es el formato
-  // mas comun en fotos de producto.
+  // Si no reconocemos la firma, JPEG es la apuesta más segura: es el formato
+  // más común en fotos de producto.
   const tipo = firma ? firma[1] : 'image/jpeg';
 
   return `data:${tipo};base64,${base64}`;

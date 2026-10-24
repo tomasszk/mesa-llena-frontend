@@ -1,17 +1,17 @@
 /* ==========================================================================
-   App: el componente padre de toda la aplicacion
+   App: el componente padre de toda la aplicación
    --------------------------------------------------------------------------
-   Aca viven las dos cosas que necesitan varias vistas a la vez:
+   Acá viven las dos cosas que necesitan varias vistas a la vez:
 
-   - usuario: quien esta logueado y con que rol.
+   - usuario: quién está logueado y con qué rol.
    - carrito: el carrito del comprador, para que el contador del navbar y la
      vista del carrito muestren siempre lo mismo.
 
    Las vistas no guardan estas dos cosas por su cuenta: las reciben por props
-   desde aca. Ese es el flujo unidireccional de React, el componente padre
+   desde acá. Ese es el flujo unidireccional de React, el componente padre
    manda los datos hacia abajo y los hijos avisan hacia arriba cuando pasa algo.
 
-   El estado compartido se mantiene centralizado aca para evitar duplicarlo entre
+   El estado compartido se mantiene centralizado acá para evitar duplicarlo entre
    vistas y mantener un flujo de datos claro y predecible.
    ========================================================================== */
 
@@ -42,17 +42,17 @@ import { agregarAlCarrito, obtenerCarrito } from './api/carrito';
 function App() {
   /**
    * El estado del usuario arranca leyendo localStorage.
-   * Le pasamos la funcion (sin parentesis) en lugar del resultado para que
+   * Le pasamos la función (sin paréntesis) en lugar del resultado para que
    * React la ejecute una sola vez, en el primer render, y no en cada uno.
    *
-   * Esto es lo que hace que la sesion sobreviva a un F5.
+   * Esto es lo que hace que la sesión sobreviva a un F5.
    */
   const [usuario, setUsuario] = useState(leerUsuario);
 
   const [carrito, setCarrito] = useState(null);
 
-  // El estado de la carga del carrito tambien vive aca, no en la vista. Si lo
-  // manejara la vista, el carrito se pediria dos veces al entrar: una la pide
+  // El estado de la carga del carrito también vive acá, no en la vista. Si lo
+  // manejara la vista, el carrito se pediría dos veces al entrar: una la pide
   // App para el contador del navbar y otra la vista para mostrarlo.
   const [cargandoCarrito, setCargandoCarrito] = useState(false);
   const [errorCarrito, setErrorCarrito] = useState('');
@@ -66,7 +66,7 @@ function App() {
   const avisar = useCallback((tipo, texto) => {
     // Le ponemos la hora como clave para que, si el usuario agrega dos veces
     // el mismo producto, React vuelva a montar el cartel y se reinicie la
-    // animacion en vez de dejarlo quieto.
+    // animación en vez de dejarlo quieto.
     setAviso({ tipo, texto, clave: Date.now() });
   }, []);
 
@@ -79,7 +79,7 @@ function App() {
       setCarrito(await obtenerCarrito());
     } catch (error) {
       // El contador del navbar simplemente no se actualiza, pero la vista del
-      // carrito si tiene que poder contar que paso.
+      // carrito sí tiene que poder contar qué pasó.
       setErrorCarrito(error.message);
     } finally {
       setCargandoCarrito(false);
@@ -114,8 +114,8 @@ function App() {
 
   /* ------------------------------------------------------------------
      El token vence a las 24 horas. Cuando el cliente HTTP recibe un 401
-     avisa con un evento, y nosotros cerramos la sesion y mandamos al login
-     una sola vez para toda la aplicacion.
+     avisa con un evento, y nosotros cerramos la sesión y mandamos al login
+     una sola vez para toda la aplicación.
      ------------------------------------------------------------------ */
   useEffect(() => {
     function alExpirarSesion() {
@@ -135,7 +135,7 @@ function App() {
     setUsuario(leerUsuario());
   }
 
-  /** Cerrar sesion: se borra el token y el carrito deja de mostrarse. */
+  /** Cerrar sesión: se borra el token y el carrito deja de mostrarse. */
   function alCerrarSesion() {
     borrarSesion();
     setUsuario(null);
@@ -146,9 +146,9 @@ function App() {
   /**
    * Agregar un producto al carrito.
    *
-   * Esta aca y no en cada vista porque lo usan el catalogo y el detalle del
+   * Está acá y no en cada vista porque lo usan el catálogo y el detalle del
    * producto, y las dos tienen que dejar el contador del navbar actualizado.
-   * El backend devuelve el carrito completo despues de agregar, asi que con
+   * El backend devuelve el carrito completo después de agregar, así que con
    * esa respuesta ya refrescamos todo.
    */
   async function agregarProducto(producto, cantidad = 1) {
@@ -187,7 +187,7 @@ function App() {
 
       <main>
         <Routes>
-          {/* ---------------- Publico ---------------- */}
+          {/* ---------------- Público ---------------- */}
           <Route
             path="/"
             element={<Catalogo usuario={usuario} alAgregar={agregarProducto} />}
@@ -273,14 +273,14 @@ function App() {
             }
           />
 
-          {/* Cualquier direccion que no exista cae aca */}
+          {/* Cualquier dirección que no exista cae acá */}
           <Route path="*" element={<NoEncontrado />} />
         </Routes>
       </main>
 
       <Pie />
 
-      {/* El cartelito flotante de confirmacion / error */}
+      {/* El cartelito flotante de confirmación / error */}
       {aviso && (
         <div key={aviso.clave} className={`flotante flotante-${aviso.tipo}`} role="status">
           {aviso.texto}

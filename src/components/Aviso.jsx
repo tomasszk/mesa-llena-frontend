@@ -1,16 +1,16 @@
 /* ==========================================================================
-   Aviso: el cartelito de error / exito / informacion
+   Aviso: el cartelito de error / éxito / información
    --------------------------------------------------------------------------
-   Lo usamos en todas las vistas para mostrarle al usuario que paso. Siempre
+   Lo usamos en todas las vistas para mostrarle al usuario qué pasó. Siempre
    mostramos el mensaje que vino del backend, no uno inventado: si el backend
    dice "Stock insuficiente para Catan. Disponible: 2, solicitado: 5", el
    usuario lee exactamente eso.
    ========================================================================== */
 
 const ICONOS = {
-  error: '⚠',   // triangulo de atencion
+  error: '⚠',   // triángulo de atención
   exito: '✓',   // tilde
-  info: 'ℹ',    // i de informacion
+  info: 'ℹ',    // i de información
 };
 
 /**
@@ -19,7 +19,7 @@ const ICONOS = {
  * @param {function} alCerrar  Si viene, muestra la X para cerrar el aviso
  */
 function Aviso({ tipo = 'info', children, alCerrar }) {
-  // Si no hay mensaje no renderizamos nada: asi las vistas pueden escribir
+  // Si no hay mensaje no renderizamos nada: así las vistas pueden escribir
   // {error && <Aviso .../>} o directamente <Aviso>{error}</Aviso>.
   if (!children) return null;
 

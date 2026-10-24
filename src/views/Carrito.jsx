@@ -2,20 +2,20 @@
    Carrito y checkout
    --------------------------------------------------------------------------
    Cubre del enunciado:
-   - "Gestion del carrito de compras, con la posibilidad de agregar, eliminar o
+   - "Gestión del carrito de compras, con la posibilidad de agregar, eliminar o
      modificar productos".
-   - "Realizar el checkout del carrito con el correspondiente calculo
-     automatico del total de la compra".
-   - "Una vez realizado el checkout (sin procesamiento de pago), se descontara
-     el stock de dicho producto. Se debera validar si cuenta con el stock
+   - "Realizar el checkout del carrito con el correspondiente cálculo
+     automático del total de la compra".
+   - "Una vez realizado el checkout (sin procesamiento de pago), se descontará
+     el stock de dicho producto. Se deberá validar si cuenta con el stock
      correspondiente".
 
-   Una decision importante: el total NO se calcula en el frontend. Lo calcula
+   Una decisión importante: el total NO se calcula en el frontend. Lo calcula
    el backend y nosotros mostramos lo que nos manda. Si cada lado hiciera su
-   propia cuenta, podriamos mostrar un total distinto al que se cobra.
+   propia cuenta, podríamos mostrar un total distinto al que se cobra.
 
-   Cada operacion del carrito (cambiar cantidad, quitar, vaciar) devuelve el
-   carrito completo ya actualizado, asi que con esa respuesta refrescamos la
+   Cada operación del carrito (cambiar cantidad, quitar, vaciar) devuelve el
+   carrito completo ya actualizado, así que con esa respuesta refrescamos la
    pantalla sin pedir los datos otra vez.
    ========================================================================== */
 
@@ -37,15 +37,15 @@ import { precio } from '../formato';
 /**
  * El carrito y su estado de carga vienen de App, que es quien los tiene para
  * el contador del navbar. Si esta vista los pidiera por su cuenta, entrar al
- * carrito dispararia dos veces la misma request.
+ * carrito dispararía dos veces la misma request.
  */
 function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
   // Error propio de las operaciones que se hacen desde esta pantalla (cambiar
   // una cantidad, quitar, vaciar, comprar). Arranca con el que pueda traer la
-  // carga inicial, si es que fallo.
+  // carga inicial, si es que falló.
   const [error, setError] = useState(errorInicial || '');
 
-  // "ocupado" bloquea los botones mientras hay una operacion en curso, para
+  // "ocupado" bloquea los botones mientras hay una operación en curso, para
   // que el usuario no dispare dos cambios encima del mismo item.
   const [ocupado, setOcupado] = useState(false);
   const [procesandoCompra, setProcesandoCompra] = useState(false);
@@ -56,10 +56,10 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
     setCarrito(await obtenerCarrito());
   }, [setCarrito]);
 
-  /** Cambia la cantidad de una linea. */
+  /** Cambia la cantidad de una línea. */
   async function cambiarCantidad(item, cantidadNueva) {
     // Si baja a cero, lo que quiere es sacar el producto. El backend no acepta
-    // cantidad 0 (@Min(1)), asi que lo tratamos como un "quitar".
+    // cantidad 0 (@Min(1)), así que lo tratamos como un "quitar".
     if (cantidadNueva < 1) {
       quitar(item);
       return;
@@ -77,7 +77,7 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
     }
   }
 
-  /** Saca una linea del carrito. */
+  /** Saca una línea del carrito. */
   async function quitar(item) {
     setOcupado(true);
     setError('');
@@ -92,9 +92,9 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
     }
   }
 
-  /** Vacia el carrito completo. */
+  /** Vacía el carrito completo. */
   async function vaciar() {
-    // Es una accion destructiva, asi que pedimos confirmacion.
+    // Es una acción destructiva, así que pedimos confirmación.
     if (!window.confirm('¿Seguro que querés vaciar el carrito?')) return;
 
     setOcupado(true);
@@ -114,11 +114,11 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
    * Checkout.
    *
    * No le mandamos nada al backend: el carrito y el usuario los saca del token.
-   * Del otro lado todo pasa en una sola transaccion, asi que o se hace la
+   * Del otro lado todo pasa en una sola transacción, así que o se hace la
    * compra entera o no se hace nada.
    *
-   * Si falla por stock (porque entre que armo el carrito y aprieta el boton
-   * otra persona se llevo las ultimas unidades), recargamos el carrito: asi el
+   * Si falla por stock (porque entre que armó el carrito y aprieta el botón
+   * otra persona se llevó las últimas unidades), recargamos el carrito: así el
    * usuario ve el stock actualizado y puede ajustar la cantidad.
    */
   async function comprar() {
@@ -128,11 +128,11 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
     try {
       const orden = await hacerCheckout();
 
-      // El carrito quedo vacio del lado del backend; lo reflejamos aca.
+      // El carrito quedó vacío del lado del backend; lo reflejamos acá.
       setCarrito({ ...carrito, items: [], total: 0 });
 
       // Lo llevamos al detalle de la compra. El state le avisa a esa vista
-      // que venimos de comprar, para que muestre el cartel de confirmacion.
+      // que venimos de comprar, para que muestre el cartel de confirmación.
       navegar(`/mis-compras/${orden.id}`, { state: { recienComprada: true } });
     } catch (e) {
       setError(e.message);
@@ -154,8 +154,8 @@ function Carrito({ carrito, setCarrito, cargando, errorInicial, avisar }) {
 
   const items = carrito?.items ?? [];
 
-  // Alguna linea pide mas unidades de las que hay en stock? Si pasa eso, el
-  // checkout va a fallar, asi que deshabilitamos el boton y lo explicamos.
+  // ¿Alguna línea pide más unidades de las que hay en stock? Si pasa eso, el
+  // checkout va a fallar, así que deshabilitamos el botón y lo explicamos.
   const hayProblemaDeStock = items.some((item) => item.quantity > item.stock);
 
   return (

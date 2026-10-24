@@ -1,17 +1,17 @@
 /* ==========================================================================
    Panel de la tienda: productos
    --------------------------------------------------------------------------
-   Cubre los puntos de "Gestion de Productos" del enunciado:
-   - alta de la publicacion con una o mas fotos (en FormularioProducto),
-   - modificacion de la publicacion,
+   Cubre los puntos de "Gestión de Productos" del enunciado:
+   - alta de la publicación con una o más fotos (en FormularioProducto),
+   - modificación de la publicación,
    - manejo del stock,
-   - gestion de descuentos sobre productos individuales,
+   - gestión de descuentos sobre productos individuales,
    - baja del producto.
 
    El stock y el descuento se editan desde la misma tabla porque son las dos
-   cosas que la tienda cambia mas seguido, y el backend tiene un endpoint
+   cosas que la tienda cambia más seguido, y el backend tiene un endpoint
    dedicado para cada una (PATCH /products/{id}/stock y /discount). No hace
-   falta abrir el formulario completo para tocar un numero.
+   falta abrir el formulario completo para tocar un número.
    ========================================================================== */
 
 import { useEffect, useState } from 'react';
@@ -41,13 +41,13 @@ function AdminProductos({ avisar }) {
   const [ocupado, setOcupado] = useState(false);
 
   /**
-   * Que celda se esta editando: { id, campo, valor }.
+   * Qué celda se está editando: { id, campo, valor }.
    * Dejamos editar una sola a la vez para que no queden tres inputs abiertos
-   * y el usuario pierda de vista cual guardo y cual no.
+   * y el usuario pierda de vista cuál guardó y cuál no.
    */
   const [edicion, setEdicion] = useState(null);
 
-  // Se incrementa despues de cada cambio para volver a pedir el listado.
+  // Se incrementa después de cada cambio para volver a pedir el listado.
   const [version, setVersion] = useState(0);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ function AdminProductos({ avisar }) {
   async function guardarEdicion() {
     const { id, campo, valor } = edicion;
 
-    // Validamos los mismos limites que valida el backend, para avisarle al
+    // Validamos los mismos límites que valida el backend, para avisarle al
     // usuario antes de mandar una request que ya sabemos que va a fallar.
     const numero = Number(valor);
 
@@ -129,7 +129,7 @@ function AdminProductos({ avisar }) {
     }
   }
 
-  /** Baja del producto. En el backend es una baja logica. */
+  /** Baja del producto. En el backend es una baja lógica. */
   async function borrar(producto) {
     const confirmado = window.confirm(
       `¿Dar de baja "${producto.name}"?\n\n` +
@@ -145,8 +145,8 @@ function AdminProductos({ avisar }) {
       await eliminarProducto(producto.id);
       avisar('exito', `Diste de baja ${producto.name}.`);
 
-      // Si era el ultimo producto de la pagina, retrocedemos una pagina para
-      // no quedar mirando una tabla vacia.
+      // Si era el último producto de la página, retrocedemos una página para
+      // no quedar mirando una tabla vacía.
       if (productos.length === 1 && pagina > 0) {
         setPagina(pagina - 1);
       } else {

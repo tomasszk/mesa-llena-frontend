@@ -3,15 +3,15 @@
    --------------------------------------------------------------------------
    Cubre tres puntos del enunciado:
 
-   - "Visualizacion de productos disponibles con fotografia y precio".
-   - "Al seleccionar alguno de los productos, dirigira al detalle del mismo":
+   - "Visualización de productos disponibles con fotografía y precio".
+   - "Al seleccionar alguno de los productos, dirigirá al detalle del mismo":
      toda la tarjeta es un Link al detalle.
-   - "En caso de que el producto no tenga stock, debera estar indicado y no se
-     podra agregarlo al carrito": si available es false mostramos la cinta de
-     AGOTADO y el boton queda deshabilitado.
+   - "En caso de que el producto no tenga stock, deberá estar indicado y no se
+     podrá agregarlo al carrito": si available es false mostramos la cinta de
+     AGOTADO y el botón queda deshabilitado.
 
    Es un componente "tonto": no pide datos ni decide nada. Recibe todo por
-   props y avisa para arriba cuando el usuario toca el boton. Eso es el flujo
+   props y avisa para arriba cuando el usuario toca el botón. Eso es el flujo
    unidireccional de React: el padre manda los datos, el hijo avisa los eventos.
    ========================================================================== */
 
@@ -23,8 +23,8 @@ function TarjetaProducto({ producto, alAgregar, motivoNoPuedeComprar, agregando 
   const tieneDescuento = producto.discount > 0;
   const agotado = !producto.available;
 
-  // El click del boton no tiene que abrir el detalle: el boton esta adentro
-  // del Link, asi que le cortamos la propagacion del evento.
+  // El click del botón no tiene que abrir el detalle: el botón está adentro
+  // del Link, así que le cortamos la propagación del evento.
   function agregar(evento) {
     evento.preventDefault();
     evento.stopPropagation();
@@ -38,17 +38,17 @@ function TarjetaProducto({ producto, alAgregar, motivoNoPuedeComprar, agregando 
           {imagen ? (
             <img src={imagen} alt={producto.name} loading="lazy" />
           ) : (
-            // Un producto siempre deberia tener foto (el backend lo exige al
-            // darlo de alta), pero si por algun motivo no llega ninguna,
+            // Un producto siempre debería tener foto (el backend lo exige al
+            // darlo de alta), pero si por algún motivo no llega ninguna,
             // mostramos un marcador en vez de una imagen rota.
             <div className="imagen-faltante" aria-hidden="true">
               {'\u{1F3B2}'}
             </div>
           )}
 
-          {/* Las etiquetas van sobre la tapa y no abajo con el precio: asi el
+          {/* Las etiquetas van sobre la tapa y no abajo con el precio: así el
               bloque de texto mide lo mismo en todas las tarjetas y los precios
-              quedan alineados entre si a lo largo de la grilla. */}
+              quedan alineados entre sí a lo largo de la grilla. */}
           <div className="tarjeta-producto-etiquetas">
             {tieneDescuento && !agotado && (
               <span className="etiqueta etiqueta-oferta">-{producto.discount}%</span>
@@ -83,9 +83,9 @@ function TarjetaProducto({ producto, alAgregar, motivoNoPuedeComprar, agregando 
           {agotado ? 'Sin stock' : agregando ? 'Agregando...' : 'Agregar al carrito'}
         </button>
 
-        {/* Al visitante sin cuenta no le escondemos el boton: lo dejamos tocar
+        {/* Al visitante sin cuenta no le escondemos el botón: lo dejamos tocar
             y el padre lo manda al login. Es menos frustrante que no entender
-            por que no puede comprar. El motivo lo decide el padre, porque no
+            por qué no puede comprar. El motivo lo decide el padre, porque no
             es el mismo para un visitante que para la cuenta de la tienda. */}
         {motivoNoPuedeComprar && !agotado && (
           <p className="texto-chico texto-gris sin-margen centrado" style={{ marginTop: '.4rem' }}>

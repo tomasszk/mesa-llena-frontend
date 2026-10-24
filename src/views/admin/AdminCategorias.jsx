@@ -1,12 +1,12 @@
 /* ==========================================================================
-   Panel de la tienda: categorias
+   Panel de la tienda: categorías
    --------------------------------------------------------------------------
-   Las categorias las define la tienda: son las que despues usa el filtro del
-   catalogo y las que se eligen al publicar un producto.
+   Las categorías las define la tienda: son las que después usa el filtro del
+   catálogo y las que se eligen al publicar un producto.
 
-   El backend no tiene endpoint para modificar ni borrar una categoria, y tiene
-   sentido: si se borrara una categoria que ya tiene productos, esos productos
-   quedarian huerfanos. Asi que desde aca se listan y se crean nuevas.
+   El backend no tiene endpoint para modificar ni borrar una categoría, y tiene
+   sentido: si se borrara una categoría que ya tiene productos, esos productos
+   quedarían huérfanos. Así que desde acá se listan y se crean nuevas.
    ========================================================================== */
 
 import { useEffect, useState } from 'react';
@@ -52,8 +52,8 @@ function AdminCategorias({ avisar }) {
       return;
     }
 
-    // El backend rechaza las categorias repetidas con una excepcion propia.
-    // Lo chequeamos aca tambien para avisar sin tener que ir y volver.
+    // El backend rechaza las categorías repetidas con una excepción propia.
+    // Lo chequeamos acá también para avisar sin tener que ir y volver.
     const repetida = categorias.some(
       (categoria) => categoria.description.toLowerCase() === texto.toLowerCase(),
     );

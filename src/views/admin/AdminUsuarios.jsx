@@ -1,15 +1,15 @@
 /* ==========================================================================
    Panel de la tienda: cuentas de usuario
    --------------------------------------------------------------------------
-   Cubre el punto "Administracion de cuentas de usuario, incluyendo la
-   asignacion de permisos".
+   Cubre el punto "Administración de cuentas de usuario, incluyendo la
+   asignación de permisos".
 
-   Un usuario puede ser COMPRADOR (USER) o TIENDA (ADMIN). Desde aca se cambia.
+   Un usuario puede ser COMPRADOR (USER) o TIENDA (ADMIN). Desde acá se cambia.
 
    Dos cosas a tener en cuenta:
-   - El backend no deja que un admin se cambie el rol a si mismo, para que la
-     tienda no quede sin ningun administrador. Aca directamente no le mostramos
-     el boton, asi no intenta algo que va a fallar.
+   - El backend no deja que un admin se cambie el rol a sí mismo, para que la
+     tienda no quede sin ningún administrador. Acá directamente no le mostramos
+     el botón, así no intenta algo que va a fallar.
    - El listado nunca trae contraseñas: el UserResponse no las expone.
    ========================================================================== */
 

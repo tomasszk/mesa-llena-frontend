@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Vacio: que mostrar cuando no hay nada que mostrar
+   Vacio: qué mostrar cuando no hay nada que mostrar
    --------------------------------------------------------------------------
-   Una busqueda sin resultados, un carrito sin productos o un historial sin
+   Una búsqueda sin resultados, un carrito sin productos o un historial sin
    compras no son errores. Son estados normales, y conviene que digan que pasa
    y que puede hacer el usuario, en vez de dejar la pantalla en blanco.
    ========================================================================== */

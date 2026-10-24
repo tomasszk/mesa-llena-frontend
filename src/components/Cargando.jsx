@@ -1,8 +1,8 @@
 /* ==========================================================================
    Cargando
    --------------------------------------------------------------------------
-   La profesora lo explico asi: cuando le pedimos algo al backend trabajamos
-   con dos factores, la demora y la incertidumbre. No sabemos cuanto tarda ni
+   La profesora lo explicó así: cuando le pedimos algo al backend trabajamos
+   con dos factores, la demora y la incertidumbre. No sabemos cuánto tarda ni
    que nos va a responder.
 
    Por eso toda vista que pide datos maneja tres estados posibles:

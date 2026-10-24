@@ -1,12 +1,12 @@
 /* ==========================================================================
    Mesa Llena - estilos base
    --------------------------------------------------------------------------
-   Toda la paleta de la marca vive aca arriba, como variables de CSS. Si manana
+   Toda la paleta de la marca vive acá arriba, como variables de CSS. Si mañana
    cambiamos un color de la marca, lo cambiamos en UN solo lugar y se actualiza
-   toda la aplicacion.
+   toda la aplicación.
 
-   La profesora pidio elegir UNA sola libreria de estilos y no mezclarlas.
-   Nosotros decidimos no usar ninguna y escribir CSS propio: asi el frontend
+   La profesora pidió elegir UNA sola librería de estilos y no mezclarlas.
+   Nosotros decidimos no usar ninguna y escribir CSS propio: así el frontend
    queda liviano y no arrastramos dependencias que no necesitamos.
    ========================================================================== */
 
@@ -32,7 +32,7 @@
   --coral-suave: #FEF0EB;
   --amarillo-suave: #FEF6E0;
 
-  /* --- Colores semanticos (avisos al usuario) --- */
+  /* --- Colores semánticos (avisos al usuario) --- */
   --error: #DC2626;
   --error-suave: #FEF2F2;
   --error-borde: #FECACA;
@@ -49,7 +49,7 @@
   --alto-navbar: 68px;
 }
 
-/* --- Reset minimo --- */
+/* --- Reset mínimo --- */
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
@@ -93,7 +93,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 0 1.25rem;
 }
 
-/* La pagina ocupa al menos el alto de la ventana, para que el pie quede
+/* La página ocupa al menos el alto de la ventana, para que el pie quede
    siempre abajo del todo aunque el contenido sea corto. */
 .pagina {
   min-height: 100vh;
@@ -294,7 +294,7 @@ textarea { resize: vertical; min-height: 96px; }
 .etiqueta-poco { background: var(--amarillo-suave); color: #92400E; }
 
 /* ==========================================================================
-   Avisos (exito / error / informacion)
+   Avisos (éxito / error / información)
    ========================================================================== */
 
 .aviso {
@@ -325,7 +325,7 @@ textarea { resize: vertical; min-height: 96px; }
 .aviso-cerrar:hover { opacity: 1; }
 
 /* ==========================================================================
-   Estados: cargando / vacio
+   Estados: cargando / vacío
    ========================================================================== */
 
 .cargando {
@@ -358,7 +358,7 @@ textarea { resize: vertical; min-height: 96px; }
 .vacio h3 { color: var(--azul); }
 
 /* ==========================================================================
-   Tablas (paneles de administracion)
+   Tablas (paneles de administración)
    ========================================================================== */
 
 .tabla-scroll { overflow-x: auto; }

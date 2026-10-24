@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Mis compras (historial de ordenes)
+   Mis compras (historial de órdenes)
    --------------------------------------------------------------------------
-   Es el listado de ordenes del usuario logueado. El backend lo trae ordenado
-   de la mas nueva a la mas vieja y solo devuelve las del dueno del token:
+   Es el listado de órdenes del usuario logueado. El backend lo trae ordenado
+   de la más nueva a la más vieja y solo devuelve las del dueño del token:
    nadie puede ver las compras de otra persona.
    ========================================================================== */
 
@@ -83,8 +83,8 @@ function MisCompras() {
         <>
           <ul className="lista-ordenes">
             {ordenes.map((orden) => {
-              // Cuantas unidades se llevo en total, que no es lo mismo que
-              // cuantos productos distintos tiene la compra.
+              // Cuántas unidades se llevó en total, que no es lo mismo que
+              // cuántos productos distintos tiene la compra.
               const unidades = orden.items.reduce((suma, item) => suma + item.quantity, 0);
 
               return (

@@ -1,12 +1,12 @@
 /* ==========================================================================
    Ingresar (login)
    --------------------------------------------------------------------------
-   Cubre "Autenticacion de usuarios mediante usuario y contraseña (login)".
+   Cubre "Autenticación de usuarios mediante usuario y contraseña (login)".
 
    El backend responde con { access_token, role, username }. El token lo
-   guardamos en localStorage (lo hace App a traves de alIniciarSesion) y el
-   rol nos sirve para saber a donde mandar al usuario: la tienda va al panel
-   de administracion, el comprador al catalogo.
+   guardamos en localStorage (lo hace App a través de alIniciarSesion) y el
+   rol nos sirve para saber a dónde mandar al usuario: la tienda va al panel
+   de administración, el comprador al catálogo.
    ========================================================================== */
 
 import { useState } from 'react';
@@ -23,19 +23,19 @@ function Ingresar({ alIniciarSesion }) {
   const navegar = useNavigate();
   const ubicacion = useLocation();
 
-  // Si el usuario llego aca porque quiso entrar a una pagina protegida,
-  // RutaProtegida nos dejo anotado a donde queria ir. Despues del login lo
-  // devolvemos ahi en vez de al home.
+  // Si el usuario llegó acá porque quiso entrar a una página protegida,
+  // RutaProtegida nos dejó anotado a dónde quería ir. Después del login lo
+  // devolvemos ahí en vez de al home.
   const volverA = ubicacion.state?.volverA;
 
   /**
-   * A donde mandamos al usuario despues de loguearse.
+   * A dónde mandamos al usuario después de loguearse.
    *
    * No alcanza con usar "volverA" tal cual: la ruta guardada puede ser de un
-   * rol distinto al de la cuenta con la que termino entrando. Por ejemplo,
-   * alguien que estaba en /carrito, se le vencio la sesion y despues entro con
-   * la cuenta de la tienda: mandarlo de vuelta a /carrito le mostraria la
-   * pantalla de "no tenes permiso". En ese caso lo ignoramos y lo llevamos al
+   * rol distinto al de la cuenta con la que terminó entrando. Por ejemplo,
+   * alguien que estaba en /carrito, se le venció la sesión y después entró con
+   * la cuenta de la tienda: mandarlo de vuelta a /carrito le mostraría la
+   * pantalla de "no tenés permiso". En ese caso lo ignoramos y lo llevamos al
    * inicio que corresponde a su rol.
    */
   function destino(rol) {
@@ -56,7 +56,7 @@ function Ingresar({ alIniciarSesion }) {
   function alCambiar(evento) {
     const { name, value } = evento.target;
     setDatos({ ...datos, [name]: value });
-    // Al primer cambio borramos el error anterior: si el usuario esta
+    // Al primer cambio borramos el error anterior: si el usuario está
     // corrigiendo la contraseña, el cartel rojo viejo ya no aplica.
     setError('');
   }
@@ -71,8 +71,8 @@ function Ingresar({ alIniciarSesion }) {
       const respuesta = await iniciarSesion(datos);
       alIniciarSesion(respuesta);
 
-      // replace: true reemplaza el login en el historial, asi el boton de
-      // "atras" del navegador no lo trae de vuelta al formulario.
+      // replace: true reemplaza el login en el historial, así el botón de
+      // "atrás" del navegador no lo trae de vuelta al formulario.
       navegar(destino(respuesta.role), { replace: true });
     } catch (e) {
       setError(e.message);

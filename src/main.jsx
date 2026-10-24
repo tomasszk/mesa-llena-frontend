@@ -1,11 +1,11 @@
 /* ==========================================================================
-   Punto de entrada de la aplicacion
+   Punto de entrada de la aplicación
    --------------------------------------------------------------------------
    React no renderiza sobre todo el documento: se le da UN nodo del HTML (el
-   div#root de index.html) y de ahi para abajo maneja todo el.
+   div#root de index.html) y de ahí para abajo maneja todo él.
 
-   El BrowserRouter va aca y envuelve a App. Tiene que estar por fuera de todo
-   para que cualquier componente de la aplicacion pueda usar Link, NavLink,
+   El BrowserRouter va acá y envuelve a App. Tiene que estar por fuera de todo
+   para que cualquier componente de la aplicación pueda usar Link, NavLink,
    useNavigate o useParams.
    ========================================================================== */
 

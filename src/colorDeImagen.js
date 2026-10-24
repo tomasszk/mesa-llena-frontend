@@ -1,43 +1,43 @@
 /* ==========================================================================
    Color dominante de una imagen
    --------------------------------------------------------------------------
-   Sirve para que la pagina de cada juego se tiña con los colores de su propia
+   Sirve para que la página de cada juego se tiña con los colores de su propia
    caja: Catan queda rojizo, Azul queda celeste, Dixit violeta.
 
-   Lo importante es de donde sale ese color: NO esta escrito a mano en una
-   lista de juegos. Se calcula de la foto que el producto tiene en la base, asi
-   que cuando la tienda publique un juego nuevo la pagina se va a tematizar
-   sola, sin que nadie toque el codigo.
+   Lo importante es de dónde sale ese color: NO está escrito a mano en una
+   lista de juegos. Se calcula de la foto que el producto tiene en la base, así
+   que cuando la tienda publique un juego nuevo la página se va a tematizar
+   sola, sin que nadie toque el código.
 
-   Sobre el canvas: lo usamos como herramienta de calculo, no para dibujar en
+   Sobre el canvas: lo usamos como herramienta de cálculo, no para dibujar en
    pantalla. El canvas nunca se agrega al documento; se crea en memoria, se
-   pinta la imagen adentro para poder leerle los pixeles, y lo unico que sale
-   de aca es un string con un color. Ese color despues entra como estado de
-   React, que es quien decide que se ve. No estamos manipulando el DOM a mano.
+   pinta la imagen adentro para poder leerle los píxeles, y lo único que sale
+   de acá es un string con un color. Ese color después entra como estado de
+   React, que es quien decide qué se ve. No estamos manipulando el DOM a mano.
    ========================================================================== */
 
-/** A que tamanio reducimos la imagen antes de leerla. */
+/** A qué tamaño reducimos la imagen antes de leerla. */
 const MUESTRA = 64;
 
-/** En cuantos tonos dividimos la rueda de color. */
+/** En cuántos tonos dividimos la rueda de color. */
 const CAJONES = 24;
 
 /**
- * Que parte del borde descartamos.
+ * Qué parte del borde descartamos.
  *
  * Las fotos de producto suelen tener la caja en el centro y fondo alrededor.
- * Si midieramos la imagen entera ganaria casi siempre el fondo, que es lo que
- * mas superficie ocupa y justamente lo que menos identifica al juego.
+ * Si midiéramos la imagen entera ganaría casi siempre el fondo, que es lo que
+ * más superficie ocupa y justamente lo que menos identifica al juego.
  */
 const BORDE = 0.21;
 
-/** Saturacion minima para que un pixel cuente: abajo de esto es un gris. */
+/** Saturación mínima para que un píxel cuente: abajo de esto es un gris. */
 const SATURACION_MINIMA = 0.3;
 
-/** Presencia minima de un tono para considerarlo, sobre el total util. */
+/** Presencia mínima de un tono para considerarlo, sobre el total útil. */
 const PRESENCIA_MINIMA = 0.04;
 
-/** Convierte un color RGB a HSL, para poder razonar en saturacion y brillo. */
+/** Convierte un color RGB a HSL, para poder razonar en saturación y brillo. */
 function aHsl(r, g, b) {
   r /= 255;
   g /= 255;
@@ -64,12 +64,12 @@ function aHsl(r, g, b) {
  * Devuelve el color que identifica a la imagen como { h, s, l }, o null si no
  * se pudo leer (imagen rota, o un formato que el navegador no entiende).
  *
- * No busca el color que mas superficie ocupa, sino el mas VIVIDO de los que
+ * No busca el color que más superficie ocupa, sino el más VÍVIDO de los que
  * tienen presencia real. En la caja de un juego, el color que uno recuerda
- * casi nunca es el que mas espacio ocupa: el carton, la madera o el cielo del
- * fondo ganarian siempre, y todas las cajas terminarian del mismo marron.
- * Por eso el puntaje de cada tono es su saturacion al cuadrado por la raiz de
- * cuanto aparece: premia lo vivo sin dejar que gane un detalle de dos pixeles.
+ * casi nunca es el que más espacio ocupa: el cartón, la madera o el cielo del
+ * fondo ganarían siempre, y todas las cajas terminarían del mismo marrón.
+ * Por eso el puntaje de cada tono es su saturación al cuadrado por la raíz de
+ * cuánto aparece: premia lo vivo sin dejar que gane un detalle de dos píxeles.
  */
 export function colorDominante(src) {
   return new Promise((resolve) => {
@@ -103,7 +103,7 @@ export function colorDominante(src) {
           for (let x = desde; x < hasta; x++) {
             const i = (y * MUESTRA + x) * 4;
 
-            if (data[i + 3] < 200) continue; // pixel transparente
+            if (data[i + 3] < 200) continue; // píxel transparente
 
             const { h, s, l } = aHsl(data[i], data[i + 1], data[i + 2]);
 
@@ -144,7 +144,7 @@ export function colorDominante(src) {
         }
 
         resolve({
-          h: Math.round((elegido + 0.5) * (360 / CAJONES)), // centro del cajon
+          h: Math.round((elegido + 0.5) * (360 / CAJONES)), // centro del cajón
           s: Math.round((suma_s[elegido] / peso[elegido]) * 100),
           l: Math.round((suma_l[elegido] / peso[elegido]) * 100),
         });
@@ -162,16 +162,16 @@ export function colorDominante(src) {
 }
 
 /**
- * Arma las variables de CSS de la pagina de un juego a partir de ese color.
+ * Arma las variables de CSS de la página de un juego a partir de ese color.
  *
- * Se devuelven como objeto de estilo para pasarselo a un elemento con
+ * Se devuelven como objeto de estilo para pasárselo a un elemento con
  * style={...}. React escribe las variables y el CSS las usa; no tocamos
  * clases ni nodos a mano.
  */
 export function variablesDeTema(color) {
   if (!color) return undefined;
 
-  // Saturacion y luminosidad acotadas: una caja muy estridente no puede
+  // Saturación y luminosidad acotadas: una caja muy estridente no puede
   // romper la legibilidad del texto que va encima.
   const s = Math.min(Math.max(color.s, 35), 72);
 

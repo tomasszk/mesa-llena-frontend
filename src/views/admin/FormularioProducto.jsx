@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Alta y modificacion de un producto
+   Alta y modificación de un producto
    --------------------------------------------------------------------------
    El mismo componente sirve para las dos cosas. Lo que decide el modo es si la
    URL trae un id: /admin/productos/nuevo no lo trae, y
-   /admin/productos/7/editar si.
+   /admin/productos/7/editar sí.
 
-   Este es el unico formulario de toda la aplicacion que NO manda JSON.
+   Este es el único formulario de toda la aplicación que NO manda JSON.
    El endpoint de productos recibe multipart/form-data porque junto con los
-   datos suben los archivos de las fotos, asi que armamos un FormData.
+   datos suben los archivos de las fotos, así que armamos un FormData.
    Importante: el Content-Type no se pone a mano. Lo tiene que poner el
    navegador, porque necesita agregarle el "boundary" que separa cada parte.
    ========================================================================== */
@@ -27,7 +27,7 @@ const CAMPOS_VACIOS = {
   stock: '',
   discount: '0',
   categoryId: '',
-  // Ficha del juego. Es opcional: si queda vacia, el producto se publica
+  // Ficha del juego. Es opcional: si queda vacía, el producto se publica
   // igual y el detalle simplemente no muestra esos datos.
   minPlayers: '',
   maxPlayers: '',
@@ -48,11 +48,11 @@ function FormularioProducto({ avisar }) {
   const [datos, setDatos] = useState(CAMPOS_VACIOS);
   const [categorias, setCategorias] = useState([]);
 
-  // Las fotos nuevas que eligio el usuario (objetos File del navegador).
+  // Las fotos nuevas que eligió el usuario (objetos File del navegador).
   const [archivos, setArchivos] = useState([]);
   // Las URL temporales para poder previsualizarlas antes de subirlas.
   const [previsualizaciones, setPrevisualizaciones] = useState([]);
-  // Las fotos que el producto ya tenia (solo en modo edicion).
+  // Las fotos que el producto ya tenía (solo en modo edición).
   const [imagenesActuales, setImagenesActuales] = useState([]);
 
   const [errores, setErrores] = useState({});
@@ -61,7 +61,7 @@ function FormularioProducto({ avisar }) {
   const [enviando, setEnviando] = useState(false);
 
   /* ------------------------------------------------------------------
-     Las categorias se necesitan siempre: sin categoria no se puede publicar.
+     Las categorías se necesitan siempre: sin categoría no se puede publicar.
      ------------------------------------------------------------------ */
   useEffect(() => {
     obtenerCategorias()
@@ -70,8 +70,8 @@ function FormularioProducto({ avisar }) {
   }, []);
 
   /* ------------------------------------------------------------------
-     En modo edicion traemos el producto y llenamos el formulario con lo que
-     ya tenia cargado.
+     En modo edición traemos el producto y llenamos el formulario con lo que
+     ya tenía cargado.
      ------------------------------------------------------------------ */
   useEffect(() => {
     if (!esEdicion) return;
@@ -111,11 +111,11 @@ function FormularioProducto({ avisar }) {
   }, [id, esEdicion]);
 
   /* ------------------------------------------------------------------
-     Previsualizacion de las fotos elegidas.
+     Previsualización de las fotos elegidas.
 
-     createObjectURL le da al navegador una direccion temporal para mostrar un
-     archivo que todavia esta en la maquina del usuario. Esas direcciones
-     ocupan memoria hasta que se liberan, asi que la limpieza del useEffect
+     createObjectURL le da al navegador una dirección temporal para mostrar un
+     archivo que todavía está en la máquina del usuario. Esas direcciones
+     ocupan memoria hasta que se liberan, así que la limpieza del useEffect
      las libera cuando cambian los archivos o cuando se cierra la pantalla.
      ------------------------------------------------------------------ */
   useEffect(() => {
@@ -209,7 +209,7 @@ function FormularioProducto({ avisar }) {
       nuevos.minAge = 'La edad no puede ser negativa';
 
     // Al publicar hace falta al menos una foto. Al editar, si no elige fotos
-    // nuevas, se quedan las que ya tenia.
+    // nuevas, se quedan las que ya tenía.
     if (!esEdicion && archivos.length === 0) {
       nuevos.imagenes = 'El producto tiene que tener al menos una foto';
     }
@@ -272,7 +272,7 @@ function FormularioProducto({ avisar }) {
     );
   }
 
-  // Cuanto saldria el producto con el descuento puesto, para que la tienda vea
+  // Cuánto saldría el producto con el descuento puesto, para que la tienda vea
   // el resultado sin tener que guardar primero. Es la misma cuenta que hace
   // getFinalPrice() en el backend.
   const precioFinal =
@@ -520,7 +520,7 @@ function FormularioProducto({ avisar }) {
           )}
         </div>
 
-        {/* Las fotos que ya tenia el producto */}
+        {/* Las fotos que ya tenía el producto */}
         {esEdicion && imagenesActuales.length > 0 && archivos.length === 0 && (
           <div className="campo">
             <label>Fotos actuales</label>

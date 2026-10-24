@@ -2,16 +2,16 @@
    Detalle de una compra
    --------------------------------------------------------------------------
    Sirve para dos cosas: es el comprobante que se ve apenas termina el
-   checkout, y es el detalle al que se entra despues desde "Mis compras".
+   checkout, y es el detalle al que se entra después desde "Mis compras".
 
-   Los precios que se muestran aca son los que tenia el producto EN EL MOMENTO
+   Los precios que se muestran acá son los que tenía el producto EN EL MOMENTO
    de la compra, no los de hoy. El backend los congela en el OrderItem cuando
    se hace el checkout, justamente para que una orden vieja no cambie de total
-   si manana cambiamos el precio del juego.
+   si mañana cambiamos el precio del juego.
 
    El cartel verde de "compra confirmada" aparece solo cuando venimos del
    checkout. Eso lo sabemos por el state que nos manda la vista del carrito al
-   navegar hasta aca: si alguien entra a esta direccion mas tarde, no hay state
+   navegar hasta acá: si alguien entra a esta dirección más tarde, no hay state
    y el cartel no se muestra.
    ========================================================================== */
 
@@ -65,7 +65,7 @@ function DetalleCompra() {
   if (error || !orden) {
     return (
       <div className="contenedor">
-        {/* Si la orden es de otra persona el backend responde 404, no 403: asi
+        {/* Si la orden es de otra persona el backend responde 404, no 403: así
             no le confirma a nadie que esa compra existe. */}
         <Aviso tipo="error">{error || 'No encontramos esta compra.'}</Aviso>
         <Link to="/mis-compras" className="boton">
@@ -75,7 +75,7 @@ function DetalleCompra() {
     );
   }
 
-  // Cuantas unidades se compraron en total (no cuantas lineas).
+  // Cuántas unidades se compraron en total (no cuántas líneas).
   const unidades = orden.items.reduce((suma, item) => suma + item.quantity, 0);
 
   return (
@@ -130,20 +130,20 @@ function DetalleCompra() {
               {orden.items.map((item) => {
                 /*
                  * Cuidado con el precio que se muestra: la orden guarda
-                 * unitPrice como el precio DE LISTA y el descuento aparte, asi
+                 * unitPrice como el precio DE LISTA y el descuento aparte, así
                  * que mostrar unitPrice tal cual no cierra con el subtotal
                  * (54.999 x 2 no da 93.498,30). Lo que pago el usuario por
                  * unidad sale de dividir el subtotal por la cantidad, que
-                 * ademas lo calculo el backend. El precio de lista queda
-                 * tachado al lado, igual que en el catalogo y en el carrito.
+                 * además lo calculó el backend. El precio de lista queda
+                 * tachado al lado, igual que en el catálogo y en el carrito.
                  */
                 const pagadoPorUnidad = Number(item.subtotal) / item.quantity;
 
                 return (
                   <tr key={item.id}>
                     <td>
-                      {/* El producto puede haber sido dado de baja despues de
-                          la compra. El nombre quedo guardado en la orden, asi
+                      {/* El producto puede haber sido dado de baja después de
+                          la compra. El nombre quedó guardado en la orden, así
                           que la compra se sigue viendo bien igual. */}
                       <Link to={`/productos/${item.productId}`}>{item.productName}</Link>
                     </td>

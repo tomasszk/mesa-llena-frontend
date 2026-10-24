@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Catalogo (home)
+   Catálogo (home)
    --------------------------------------------------------------------------
-   Es la vista publica: se puede mirar sin tener cuenta, igual que en cualquier
-   e-commerce. Para comprar si hace falta loguearse.
+   Es la vista pública: se puede mirar sin tener cuenta, igual que en cualquier
+   e-commerce. Para comprar sí hace falta loguearse.
 
    Cubre del enunciado:
-   - "Visualizacion de productos disponibles con fotografia y precio".
-   - "Busqueda y filtrado de productos por categoria, precio, etc."
-   - "Opcion para anadir productos al carrito".
+   - "Visualización de productos disponibles con fotografía y precio".
+   - "Búsqueda y filtrado de productos por categoría, precio, etc."
+   - "Opción para añadir productos al carrito".
    ========================================================================== */
 
 import { useEffect, useState } from 'react';
@@ -38,14 +38,14 @@ function Catalogo({ usuario, alAgregar }) {
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [totalProductos, setTotalProductos] = useState(null);
 
-  // --- Que le pedimos al backend ---
+  // --- Qué le pedimos al backend ---
   /*
-   * La categoria elegida vive en la URL y no en un useState.
+   * La categoría elegida vive en la URL y no en un useState.
    *
-   * Es el filtro que mas se usa, y teniendolo en la direccion pasan tres
-   * cosas que con un estado comun no: se puede compartir o guardar el link de
-   * una categoria, el boton de atras del navegador funciona como uno espera,
-   * y otras pantallas pueden linkear directo a una categoria (lo hace la miga
+   * Es el filtro que más se usa, y teniéndolo en la dirección pasan tres
+   * cosas que con un estado común no: se puede compartir o guardar el link de
+   * una categoría, el botón de atrás del navegador funciona como uno espera,
+   * y otras pantallas pueden linkear directo a una categoría (lo hace la miga
    * de pan del detalle del producto).
    */
   const [parametros, setParametros] = useSearchParams();
@@ -58,30 +58,30 @@ function Catalogo({ usuario, alAgregar }) {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
 
-  // Cual producto se esta agregando, para deshabilitar solo ese boton.
+  // Cuál producto se está agregando, para deshabilitar solo ese botón.
   const [agregandoId, setAgregandoId] = useState(null);
 
   /* ------------------------------------------------------------------
-     Las categorias se piden UNA sola vez, cuando el componente se monta.
-     Por eso el array de dependencias va vacio: [].
+     Las categorías se piden UNA sola vez, cuando el componente se monta.
+     Por eso el array de dependencias va vacío: [].
      ------------------------------------------------------------------ */
   useEffect(() => {
     obtenerCategorias()
       .then((pagina) => setCategorias(pagina.content ?? []))
       .catch(() => {
-        // Si fallan las categorias el catalogo igual funciona: simplemente no
+        // Si fallan las categorías el catálogo igual funciona: simplemente no
         // se ven los chips. No vale la pena romper toda la pantalla por eso.
         setCategorias([]);
       });
   }, []);
 
   /* ------------------------------------------------------------------
-     Los productos se vuelven a pedir cada vez que cambia algun filtro o la
-     pagina. Eso es lo que dice el array de dependencias.
+     Los productos se vuelven a pedir cada vez que cambia algún filtro o la
+     página. Eso es lo que dice el array de dependencias.
 
-     El flag "cancelado" evita un problema clasico: si el usuario cambia el
-     filtro dos veces rapido, podrian volver las dos respuestas y la primera
-     (mas lenta) pisar a la segunda. Con esto, cuando el efecto se vuelve a
+     El flag "cancelado" evita un problema clásico: si el usuario cambia el
+     filtro dos veces rápido, podrían volver las dos respuestas y la primera
+     (más lenta) pisar a la segunda. Con esto, cuando el efecto se vuelve a
      ejecutar, la respuesta vieja se descarta.
      ------------------------------------------------------------------ */
   useEffect(() => {
@@ -95,7 +95,7 @@ function Catalogo({ usuario, alAgregar }) {
         if (cancelado) return;
 
         // El backend devuelve un Page de Spring: los productos vienen adentro
-        // de "content", no en la raiz de la respuesta.
+        // de "content", no en la raíz de la respuesta.
         setProductos(respuesta.content ?? []);
         setTotalPaginas(respuesta.totalPages ?? 0);
         setTotalProductos(respuesta.totalElements ?? 0);
@@ -115,7 +115,7 @@ function Catalogo({ usuario, alAgregar }) {
     };
   }, [filtros, categoriaId, pagina]);
 
-  /** Al cambiar cualquier filtro volvemos a la primera pagina. */
+  /** Al cambiar cualquier filtro volvemos a la primera página. */
   function aplicarFiltros(filtrosNuevos) {
     setFiltros(filtrosNuevos);
     setPagina(0);
@@ -130,15 +130,15 @@ function Catalogo({ usuario, alAgregar }) {
 
   function cambiarPagina(paginaNueva) {
     setPagina(paginaNueva);
-    // Al cambiar de pagina subimos la pantalla, si no el usuario queda
+    // Al cambiar de página subimos la pantalla, si no el usuario queda
     // mirando el medio de la lista nueva.
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**
-   * Agregar al carrito. La funcion que hace el trabajo vive en App (porque
-   * tiene que actualizar el contador del navbar); aca solo marcamos que boton
-   * esta ocupado mientras va y vuelve la request.
+   * Agregar al carrito. La función que hace el trabajo vive en App (porque
+   * tiene que actualizar el contador del navbar); acá solo marcamos qué botón
+   * está ocupado mientras va y vuelve la request.
    */
   async function agregar(producto) {
     setAgregandoId(producto.id);
@@ -147,9 +147,9 @@ function Catalogo({ usuario, alAgregar }) {
   }
 
   /**
-   * Si la cuenta no puede comprar, por que. Devuelve null cuando si puede,
-   * asi la tarjeta no muestra ningun aviso.
-   *   - Sin sesion       -> le falta una cuenta.
+   * Si la cuenta no puede comprar, por qué. Devuelve null cuando sí puede,
+   * así la tarjeta no muestra ningún aviso.
+   *   - Sin sesión       -> le falta una cuenta.
    *   - Cuenta de tienda -> /carts pide el rol USER, la tienda no compra.
    */
   const motivoNoPuedeComprar = !usuario
@@ -176,7 +176,7 @@ function Catalogo({ usuario, alAgregar }) {
           </p>
         </div>
 
-        {/* Decoracion: un dado y dos fichas, puro adorno */}
+        {/* Decoración: un dado y dos fichas, puro adorno */}
         <div className="portada-adorno" aria-hidden="true">
           <span className="adorno-dado">{'⚄'}</span>
           <span className="adorno-ficha adorno-ficha-1">{'⬢'}</span>
@@ -194,7 +194,7 @@ function Catalogo({ usuario, alAgregar }) {
 
       <Aviso tipo="error">{error}</Aviso>
 
-      {/* Cuantos resultados hay, y de que categoria */}
+      {/* Cuántos resultados hay, y de qué categoría */}
       {!cargando && totalProductos != null && (
         <p className="resumen-resultados">
           {totalProductos === 0

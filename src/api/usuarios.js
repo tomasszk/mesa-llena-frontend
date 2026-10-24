@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Administracion de cuentas  ->  /users
+   Administración de cuentas  ->  /users
    --------------------------------------------------------------------------
-   Todo este modulo es exclusivo del ADMIN. Cubre el requerimiento del
-   enunciado: "Administracion de cuentas de usuario, incluyendo la asignacion
+   Todo este módulo es exclusivo del ADMIN. Cubre el requerimiento del
+   enunciado: "Administración de cuentas de usuario, incluyendo la asignación
    de permisos".
    ========================================================================== */
 
@@ -19,9 +19,9 @@ export function obtenerUsuario(id) {
 }
 
 /**
- * Asignacion de permisos: cambia el rol de una cuenta entre USER y ADMIN.
- * El backend no deja que un admin se cambie el rol a si mismo, para que no
- * quede la tienda sin ningun administrador.
+ * Asignación de permisos: cambia el rol de una cuenta entre USER y ADMIN.
+ * El backend no deja que un admin se cambie el rol a sí mismo, para que no
+ * quede la tienda sin ningún administrador.
  */
 export function cambiarRol(id, role) {
   return patch(`/users/${id}/role`, { role }, true);

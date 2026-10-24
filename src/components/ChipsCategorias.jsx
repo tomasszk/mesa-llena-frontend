@@ -1,27 +1,27 @@
 /* ==========================================================================
    ChipsCategorias
    --------------------------------------------------------------------------
-   Los botones de categoria que van arriba del catalogo.
+   Los botones de categoría que van arriba del catálogo.
 
-   Antes la categoria era una opcion mas adentro del formulario de filtros, y
-   habia que desplegar un <select> y despues apretar "Buscar". Como es el filtro
-   que mas se usa en una tienda, lo sacamos afuera: se ve de una, se elige de un
+   Antes la categoría era una opción más adentro del formulario de filtros, y
+   había que desplegar un <select> y después apretar "Buscar". Como es el filtro
+   que más se usa en una tienda, lo sacamos afuera: se ve de una, se elige de un
    clic y se aplica solo.
 
-   Es un componente controlado: no guarda nada, recibe cual esta elegida y avisa
+   Es un componente controlado: no guarda nada, recibe cuál está elegida y avisa
    al padre cuando cambia.
    ========================================================================== */
 
-/** Un icono para cada categoria, para que se distingan de un vistazo. */
+/** Un icono para cada categoría, para que se distingan de un vistazo. */
 const ICONOS = {
-  Estrategia: '♟',        // peon de ajedrez
+  Estrategia: '♟',        // peón de ajedrez
   Familiar: '\u{1F46A}',       // familia
-  Cartas: '\u{1F0CF}',         // comodin
+  Cartas: '\u{1F0CF}',         // comodín
   'Party games': '\u{1F389}',  // fiesta
 };
 
 function ChipsCategorias({ categorias, elegida, alElegir }) {
-  // Sin categorias no tiene sentido mostrar la barra.
+  // Sin categorías no tiene sentido mostrar la barra.
   if (categorias.length === 0) return null;
 
   return (

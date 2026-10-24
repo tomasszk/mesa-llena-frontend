@@ -1,16 +1,16 @@
 /* ==========================================================================
    Logo de Mesa Llena
    --------------------------------------------------------------------------
-   Esta hecho como SVG dentro del componente (y no como un .png) para que se
-   vea nitido en cualquier tamanio y para poder pintarlo con las variables de
+   Está hecho como SVG dentro del componente (y no como un .png) para que se
+   vea nítido en cualquier tamaño y para poder pintarlo con las variables de
    la paleta.
 
-   Si mas adelante queremos usar el archivo del logo que disenamos aparte,
+   Si más adelante queremos usar el archivo del logo que diseñamos aparte,
    se reemplaza el <svg> por un <img src={logo} /> y se toca SOLO este archivo:
-   el resto de la aplicacion usa <Logo /> y no se entera del cambio.
+   el resto de la aplicación usa <Logo /> y no se entera del cambio.
    ========================================================================== */
 
-/** El meeple: la fichita de madera clasica de los juegos de mesa. */
+/** El meeple: la fichita de madera clásica de los juegos de mesa. */
 const MEEPLE =
   'M12 2.2c-2 0-3.6 1.6-3.6 3.6 0 .9.3 1.7.9 2.3-1.9.5-3.7 1.1-5.3 1.8' +
   '-1.4.6-2 1.4-2 2.3 0 .9.7 1.6 1.6 1.6.3 0 .6-.1.9-.2l2.6-1.1c.3-.1.6.1.5.4' +
@@ -32,7 +32,7 @@ function Logo({ conTexto = true, tamanio = 38 }) {
         {/* La baldosa de fondo, en el azul profundo de la marca */}
         <rect x="0" y="0" width="48" height="48" rx="12" fill="var(--azul)" />
 
-        {/* Tres meeples: el del medio adelante y mas grande, como en el logo */}
+        {/* Tres meeples: el del medio adelante y más grande, como en el logo */}
         <g transform="translate(5 13) scale(0.72)">
           <path d={MEEPLE} fill="var(--turquesa)" />
         </g>

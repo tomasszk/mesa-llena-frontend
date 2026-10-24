@@ -1,12 +1,12 @@
 /* ==========================================================================
    Paginador
    --------------------------------------------------------------------------
-   El backend devuelve los listados como Page de Spring, que ademas del
-   contenido trae el numero de pagina actual y el total de paginas. Este
-   componente usa esos datos para moverse entre paginas.
+   El backend devuelve los listados como Page de Spring, que además del
+   contenido trae el número de página actual y el total de páginas. Este
+   componente usa esos datos para moverse entre páginas.
 
-   Si hay una sola pagina no se renderiza nada: no tiene sentido mostrar
-   "pagina 1 de 1".
+   Si hay una sola página no se renderiza nada: no tiene sentido mostrar
+   "página 1 de 1".
    ========================================================================== */
 
 function Paginador({ pagina, totalPaginas, alCambiarPagina }) {

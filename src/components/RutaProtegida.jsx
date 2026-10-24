@@ -1,14 +1,14 @@
 /* ==========================================================================
    RutaProtegida
    --------------------------------------------------------------------------
-   Envuelve a las vistas que no son publicas. Hace dos controles:
+   Envuelve a las vistas que no son públicas. Hace dos controles:
 
-   1) Si no hay nadie logueado, redirige al login. Se guarda a donde queria ir
-      el usuario, asi despues de loguearse vuelve ahi y no al home.
+   1) Si no hay nadie logueado, redirige al login. Se guarda a dónde quería ir
+      el usuario, así después de loguearse vuelve ahí y no al home.
    2) Si hay alguien logueado pero con el rol equivocado (un comprador
       intentando entrar al panel de la tienda), le avisa que no tiene permiso.
 
-   Esto es solo para la experiencia de uso: la seguridad de verdad esta en el
+   Esto es solo para la experiencia de uso: la seguridad de verdad está en el
    backend. Aunque alguien escriba /admin/productos a mano en la barra de
    direcciones, los endpoints le van a responder 403 porque su token dice USER.
    ========================================================================== */
@@ -18,12 +18,12 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 function RutaProtegida({ usuario, rol, children }) {
   const ubicacion = useLocation();
 
-  // --- Control 1: hay sesion? ---
+  // --- Control 1: ¿hay sesión? ---
   if (!usuario) {
     return <Navigate to="/ingresar" state={{ volverA: ubicacion.pathname }} replace />;
   }
 
-  // --- Control 2: el rol alcanza? ---
+  // --- Control 2: ¿el rol alcanza? ---
   if (rol && usuario.role !== rol) {
     return (
       <div className="contenedor">

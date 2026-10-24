@@ -1,13 +1,13 @@
 /* ==========================================================================
    LineaCarrito: una fila del carrito
    --------------------------------------------------------------------------
-   Cubre "Gestion del carrito de compras, con la posibilidad de agregar,
-   eliminar o modificar productos": desde aca se cambia la cantidad y se
-   elimina la linea.
+   Cubre "Gestión del carrito de compras, con la posibilidad de agregar,
+   eliminar o modificar productos": desde acá se cambia la cantidad y se
+   elimina la línea.
 
-   El subtotal no lo calculamos aca: lo calcula el backend y nos lo manda en
+   El subtotal no lo calculamos acá: lo calcula el backend y nos lo manda en
    la CartItemResponse. Es importante que la plata la calcule un solo lado,
-   porque si el frontend hiciera su propia cuenta podria mostrar un total
+   porque si el frontend hiciera su propia cuenta podría mostrar un total
    distinto al que se va a cobrar.
    ========================================================================== */
 
@@ -17,12 +17,12 @@ import { precio, imagenBase64 } from '../formato';
 function LineaCarrito({ item, alCambiarCantidad, alQuitar, ocupado }) {
   const imagen = imagenBase64(item.image);
 
-  // No dejamos subir la cantidad mas alla del stock: el backend lo rechazaria
-  // igual, pero es mejor frenarlo antes de que el usuario toque el boton.
+  // No dejamos subir la cantidad más allá del stock: el backend lo rechazaría
+  // igual, pero es mejor frenarlo antes de que el usuario toque el botón.
   const puedeSumar = item.quantity < item.stock;
   const puedeRestar = item.quantity > 1;
 
-  // Si entre que agrego el producto y ahora bajo el stock, se lo avisamos:
+  // Si entre que agregó el producto y ahora bajó el stock, se lo avisamos:
   // el checkout iba a fallar y conviene que lo sepa antes.
   const excedeStock = item.quantity > item.stock;
 

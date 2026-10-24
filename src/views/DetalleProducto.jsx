@@ -2,22 +2,22 @@
    Detalle del producto
    --------------------------------------------------------------------------
    Cubre el punto del enunciado: "Al seleccionar alguno de los productos,
-   dirigira al detalle del mismo donde se visualizara la imagen del producto
-   junto a su descripcion".
+   dirigirá al detalle del mismo donde se visualizará la imagen del producto
+   junto a su descripción".
 
-   Ademas de eso muestra la ficha del juego: para cuantos jugadores es, cuanto
-   dura una partida, desde que edad, y una explicacion de como se juega. Todo
+   Además de eso muestra la ficha del juego: para cuántos jugadores es, cuánto
+   dura una partida, desde qué edad, y una explicación de cómo se juega. Todo
    eso son campos del producto y vienen del backend, igual que el precio: no
-   hay ningun dato escrito a mano en el frontend.
+   hay ningún dato escrito a mano en el frontend.
 
    La pantalla se arma alrededor de la foto del juego: la misma imagen se usa
-   dos veces, nitida adelante y desenfocada y oscurecida como fondo, y de ella
-   sale tambien el color de los acentos (ver colorDeImagen.js). Asi cada juego
-   tiene su propia pagina sin que haya una lista de juegos escrita a mano: uno
-   que la tienda publique manana se va a ver igual de propio.
+   dos veces, nítida adelante y desenfocada y oscurecida como fondo, y de ella
+   sale también el color de los acentos (ver colorDeImagen.js). Así cada juego
+   tiene su propia página sin que haya una lista de juegos escrita a mano: uno
+   que la tienda publique mañana se va a ver igual de propio.
 
-   El id del producto sale de la URL con useParams: la ruta esta declarada
-   como /productos/:id, asi que useParams() devuelve { id }.
+   El id del producto sale de la URL con useParams: la ruta está declarada
+   como /productos/:id, así que useParams() devuelve { id }.
    ========================================================================== */
 
 import { useEffect, useState } from 'react';
@@ -29,7 +29,7 @@ import { obtenerProducto, obtenerProductos } from '../api/productos';
 import { imagenBase64, precio, primeraImagen } from '../formato';
 import { colorDominante, variablesDeTema } from '../colorDeImagen';
 
-/** Cuantos juegos de la misma categoria mostramos abajo del detalle. */
+/** Cuántos juegos de la misma categoría mostramos abajo del detalle. */
 const RELACIONADOS = 4;
 
 function DetalleProducto({ usuario, alAgregar }) {
@@ -39,13 +39,13 @@ function DetalleProducto({ usuario, alAgregar }) {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
 
-  // Cual de las fotos se esta mirando en grande.
+  // Cuál de las fotos se está mirando en grande.
   const [imagenActiva, setImagenActiva] = useState(0);
 
   const [cantidad, setCantidad] = useState(1);
   const [agregando, setAgregando] = useState(false);
 
-  // Otros juegos de la misma categoria, para que el usuario siga mirando.
+  // Otros juegos de la misma categoría, para que el usuario siga mirando.
   const [relacionados, setRelacionados] = useState([]);
 
   // Los colores sacados de la caja del juego.
@@ -53,9 +53,9 @@ function DetalleProducto({ usuario, alAgregar }) {
 
   /* ------------------------------------------------------------------
      Se pide el producto cada vez que cambia el id de la URL. Es importante
-     que el id este en las dependencias: si el usuario pasa de un producto a
+     que el id esté en las dependencias: si el usuario pasa de un producto a
      otro desde un link, el componente no se desmonta, solo cambia el id, y
-     sin esto seguiria mostrando el producto anterior.
+     sin esto seguiría mostrando el producto anterior.
      ------------------------------------------------------------------ */
   useEffect(() => {
     let cancelado = false;
@@ -87,9 +87,9 @@ function DetalleProducto({ usuario, alAgregar }) {
 
   /* ------------------------------------------------------------------
      Cuando ya tenemos la foto, le sacamos el color dominante. Es una
-     operacion asincronica (el navegador tiene que decodificar la imagen),
-     asi que va en su propio efecto y no bloquea el renderizado: la pagina se
-     ve igual mientras tanto, solo que todavia sin teñir.
+     operación asincrónica (el navegador tiene que decodificar la imagen),
+     así que va en su propio efecto y no bloquea el renderizado: la página se
+     ve igual mientras tanto, solo que todavía sin teñir.
      ------------------------------------------------------------------ */
   const portada = producto ? primeraImagen(producto) : null;
 
@@ -106,10 +106,10 @@ function DetalleProducto({ usuario, alAgregar }) {
   }, [portada]);
 
   /* ------------------------------------------------------------------
-     Una vez que sabemos de que categoria es el producto, pedimos otros de la
-     misma. Este efecto depende de la categoria y del id, no del objeto
-     producto entero: si dependiera del objeto se volveria a ejecutar en cada
-     render que lo reemplace, aunque la categoria sea la misma.
+     Una vez que sabemos de qué categoría es el producto, pedimos otros de la
+     misma. Este efecto depende de la categoría y del id, no del objeto
+     producto entero: si dependiera del objeto se volvería a ejecutar en cada
+     render que lo reemplace, aunque la categoría sea la misma.
      ------------------------------------------------------------------ */
   const categoriaId = producto?.categoryId;
 
@@ -121,7 +121,7 @@ function DetalleProducto({ usuario, alAgregar }) {
 
     let cancelado = false;
 
-    // Pedimos uno de mas, porque uno de los que vuelven es el que ya estamos
+    // Pedimos uno de más, porque uno de los que vuelven es el que ya estamos
     // mirando y lo vamos a descartar.
     obtenerProductos({ categoryId: categoriaId, size: RELACIONADOS + 1 })
       .then((respuesta) => {
@@ -135,7 +135,7 @@ function DetalleProducto({ usuario, alAgregar }) {
       })
       .catch(() => {
         // Es contenido secundario: si falla, simplemente no mostramos la
-        // seccion. No tiene sentido avisarle nada al usuario por esto.
+        // sección. No tiene sentido avisarle nada al usuario por esto.
         if (!cancelado) setRelacionados([]);
       });
 
@@ -173,12 +173,12 @@ function DetalleProducto({ usuario, alAgregar }) {
   const tieneDescuento = producto.discount > 0;
   const puedeComprar = usuario?.role === 'USER';
 
-  // Cuanto puede llevar como maximo: el stock, pero nunca menos de 1 para que
-  // el <select> no quede vacio.
+  // Cuánto puede llevar como máximo: el stock, pero nunca menos de 1 para que
+  // el <select> no quede vacío.
   const maximo = Math.max(producto.stock, 1);
 
   // La ficha del juego. Cada dato se muestra solo si el producto lo tiene
-  // cargado, asi un producto sin ficha no deja huecos raros en la pantalla.
+  // cargado, así un producto sin ficha no deja huecos raros en la pantalla.
   const ficha = [];
 
   if (producto.minPlayers && producto.maxPlayers) {
@@ -210,17 +210,17 @@ function DetalleProducto({ usuario, alAgregar }) {
     valor: producto.categoryDescription,
   });
 
-  // El style lleva las variables del tema. De ahi para abajo, el CSS las usa.
+  // El style lleva las variables del tema. De ahí para abajo, el CSS las usa.
   return (
     <div className="juego" style={tema}>
       {/* ================= Portada inmersiva ================= */}
       <section className="juego-hero">
         {/*
-          La misma foto, de fondo, desenfocada y oscurecida. Es la forma mas
-          directa de que cada pagina tenga su propia identidad sin inventar
+          La misma foto, de fondo, desenfocada y oscurecida. Es la forma más
+          directa de que cada página tenga su propia identidad sin inventar
           nada: el ambiente sale literalmente del producto.
-          aria-hidden porque no aporta informacion: es la misma imagen que ya
-          esta al lado, nitida y con su alt.
+          aria-hidden porque no aporta información: es la misma imagen que ya
+          está al lado, nítida y con su alt.
         */}
         <div className="juego-hero-fondo" aria-hidden="true">
           {portada && <img src={portada} alt="" />}
@@ -259,7 +259,7 @@ function DetalleProducto({ usuario, alAgregar }) {
                 )}
               </div>
 
-              {/* Las miniaturas solo tienen sentido si hay mas de una foto */}
+              {/* Las miniaturas solo tienen sentido si hay más de una foto */}
               {producto.images?.length > 1 && (
                 <div className="juego-miniaturas">
                   {producto.images.map((imagen, indice) => (
@@ -283,7 +283,7 @@ function DetalleProducto({ usuario, alAgregar }) {
               <h1>{producto.name}</h1>
               <p className="juego-bajada">{producto.description}</p>
 
-              {/* La ficha, en linea y sobre la foto de fondo */}
+              {/* La ficha, en línea y sobre la foto de fondo */}
               {ficha.length > 0 && (
                 <ul className="juego-ficha">
                   {ficha.map((dato) => (
@@ -362,7 +362,7 @@ function DetalleProducto({ usuario, alAgregar }) {
       </section>
 
       <div className="contenedor">
-        {/* ================= Como se juega ================= */}
+        {/* ================= Cómo se juega ================= */}
         {producto.howToPlay && (
           <section className="como-se-juega">
             <div className="como-se-juega-marca" aria-hidden="true">
@@ -375,7 +375,7 @@ function DetalleProducto({ usuario, alAgregar }) {
           </section>
         )}
 
-        {/* ================= Otros de la categoria ================= */}
+        {/* ================= Otros de la categoría ================= */}
         {relacionados.length > 0 && (
           <section className="relacionados">
             <h2>Mas de {producto.categoryDescription}</h2>

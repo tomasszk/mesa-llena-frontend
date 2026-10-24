@@ -6,11 +6,11 @@
 
    Los cinco campos son los que pide el RegisterRequest del backend. No hay
    campo de rol: todos los registros entran como comprador (USER), porque
-   Mesa Llena tiene un unico vendedor, que somos nosotros. El rol lo asigna el
-   servicio del backend, no el formulario; si lo dejaramos elegir, cualquiera
-   podria registrarse como ADMIN y manejar el catalogo.
+   Mesa Llena tiene un único vendedor, que somos nosotros. El rol lo asigna el
+   servicio del backend, no el formulario; si lo dejáramos elegir, cualquiera
+   podría registrarse como ADMIN y manejar el catálogo.
 
-   La validacion la hacemos en los dos lados: aca para avisarle al usuario al
+   La validación la hacemos en los dos lados: acá para avisarle al usuario al
    instante, y en el backend con las anotaciones de Jakarta Validation porque
    es la que de verdad protege los datos.
    ========================================================================== */
@@ -42,7 +42,7 @@ function Registro({ alIniciarSesion }) {
     const { name, value } = evento.target;
     setDatos({ ...datos, [name]: value });
 
-    // Sacamos el error de ese campo en particular mientras lo esta corrigiendo.
+    // Sacamos el error de ese campo en particular mientras lo está corrigiendo.
     setErrores({ ...errores, [name]: undefined });
     setError('');
   }
@@ -50,7 +50,7 @@ function Registro({ alIniciarSesion }) {
   /**
    * Valida los campos antes de molestar al backend.
    * Las reglas son las mismas que tienen las anotaciones del RegisterRequest,
-   * para que el usuario no se entere recien al apretar el boton.
+   * para que el usuario no se entere recién al apretar el botón.
    */
   function validar() {
     const nuevos = {};
@@ -88,7 +88,7 @@ function Registro({ alIniciarSesion }) {
     setError('');
 
     try {
-      // El backend devuelve el token igual que en el login, asi que el usuario
+      // El backend devuelve el token igual que en el login, así que el usuario
       // queda logueado de una y no tiene que ingresar sus datos dos veces.
       const respuesta = await registrarse({
         username: datos.username.trim(),
@@ -101,14 +101,14 @@ function Registro({ alIniciarSesion }) {
       alIniciarSesion(respuesta);
       navegar('/', { replace: true });
     } catch (e) {
-      // Aca cae, por ejemplo, "Ya existe un usuario con ese email".
+      // Acá cae, por ejemplo, "Ya existe un usuario con ese email".
       setError(e.message);
     } finally {
       setEnviando(false);
     }
   }
 
-  /** Para no repetir la clase del campo invalido en los seis campos. */
+  /** Para no repetir la clase del campo inválido en los seis campos. */
   function claseCampo(campo) {
     return `campo ${errores[campo] ? 'campo-invalido' : ''}`;
   }

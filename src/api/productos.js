@@ -1,19 +1,19 @@
 /* ==========================================================================
-   Catalogo y gestion de productos  ->  /products
+   Catálogo y gestión de productos  ->  /products
    --------------------------------------------------------------------------
-   Los GET son publicos: se puede mirar el catalogo sin estar registrado.
-   El alta, la modificacion, el stock, el descuento y la baja son solo del
+   Los GET son públicos: se puede mirar el catálogo sin estar registrado.
+   El alta, la modificación, el stock, el descuento y la baja son solo del
    ADMIN, y por eso esas funciones mandan el token (conToken = true).
    ========================================================================== */
 
 import { eliminar, get, patch, postFormulario, putFormulario } from './cliente';
 
 /**
- * Catalogo con filtros y paginado.
+ * Catálogo con filtros y paginado.
  *
  * Solo manda al backend los filtros que el usuario realmente completo: si
- * mandaramos minPrice vacio, Spring no podria convertir "" a BigDecimal y
- * tendriamos un 400. Por eso vamos agregando parametros de a uno.
+ * mandáramos minPrice vacío, Spring no podría convertir "" a BigDecimal y
+ * tendríamos un 400. Por eso vamos agregando parámetros de a uno.
  *
  * Devuelve el Page de Spring: { content, totalElements, totalPages, number, ... }
  */
@@ -39,7 +39,7 @@ export function obtenerProductos({
   return get(`/products?${parametros.toString()}`);
 }
 
-/** Detalle de un producto: imagenes, descripcion, precio y disponibilidad. */
+/** Detalle de un producto: imágenes, descripción, precio y disponibilidad. */
 export function obtenerProducto(id) {
   return get(`/products/${id}`);
 }
@@ -47,9 +47,9 @@ export function obtenerProducto(id) {
 /**
  * Agrega al formulario los datos de la ficha del juego.
  *
- * Los campos vacios no se mandan: en el backend son opcionales, y si
- * mandaramos un string vacio Spring no podria convertirlo a Integer y la
- * request fallaria con un 400.
+ * Los campos vacíos no se mandan: en el backend son opcionales, y si
+ * mandáramos un string vacío Spring no podría convertirlo a Integer y la
+ * request fallaría con un 400.
  */
 function agregarFicha(formulario, ficha) {
   if (!ficha) return;
@@ -62,12 +62,12 @@ function agregarFicha(formulario, ficha) {
 /**
  * Alta de un producto (solo ADMIN).
  *
- * Este endpoint es el unico que NO recibe JSON: recibe multipart/form-data,
+ * Este endpoint es el único que NO recibe JSON: recibe multipart/form-data,
  * porque junto con los datos del producto suben los archivos de las fotos.
  * Por eso armamos un FormData en vez de un objeto.
  *
  * Importante: el campo se llama "images" (en plural) y se agrega una vez por
- * cada archivo. Asi lo recibe la List<MultipartFile> del ProductRequest.
+ * cada archivo. Así lo recibe la List<MultipartFile> del ProductRequest.
  */
 export function crearProducto({ name, description, price, stock, discount, categoryId,
   imagenes, ficha }) {
@@ -89,11 +89,11 @@ export function crearProducto({ name, description, price, stock, discount, categ
 }
 
 /**
- * Modificacion de un producto (solo ADMIN).
+ * Modificación de un producto (solo ADMIN).
  *
  * En el backend todos los campos del ProductUpdateRequest son opcionales: se
  * actualiza solo lo que llega. Aprovechamos eso para no mandar las fotos si el
- * admin no eligio fotos nuevas, y asi no le borramos las que ya tenia.
+ * admin no eligió fotos nuevas, y así no le borramos las que ya tenía.
  */
 export function actualizarProducto(
   id,
@@ -110,7 +110,7 @@ export function actualizarProducto(
   agregarFicha(formulario, ficha);
 
   // Si no hay archivos nuevos no mandamos el campo: el backend interpreta
-  // "images == null" como "dejale las fotos que ya tenia".
+  // "images == null" como "dejale las fotos que ya tenía".
   if (imagenes && imagenes.length > 0) {
     for (const archivo of imagenes) {
       formulario.append('images', archivo);
@@ -125,15 +125,15 @@ export function actualizarStock(id, stock) {
   return patch(`/products/${id}/stock`, { stock: Number(stock) }, true);
 }
 
-/** Gestion de descuentos sobre un producto individual (solo ADMIN). */
+/** Gestión de descuentos sobre un producto individual (solo ADMIN). */
 export function actualizarDescuento(id, discount) {
   return patch(`/products/${id}/discount`, { discount: Number(discount) }, true);
 }
 
 /**
  * Baja de un producto (solo ADMIN).
- * En el backend es una baja logica (active = false): el producto desaparece
- * del catalogo pero las ordenes viejas que lo incluyen siguen intactas.
+ * En el backend es una baja lógica (active = false): el producto desaparece
+ * del catálogo pero las órdenes viejas que lo incluyen siguen intactas.
  */
 export function eliminarProducto(id) {
   return eliminar(`/products/${id}`, true);

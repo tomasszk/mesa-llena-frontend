@@ -1,12 +1,12 @@
 /* ==========================================================================
    TarjetaChica
    --------------------------------------------------------------------------
-   La version compacta de la tarjeta de producto. La usa el detalle para
-   mostrar otros juegos de la misma categoria.
+   La versión compacta de la tarjeta de producto. La usa el detalle para
+   mostrar otros juegos de la misma categoría.
 
-   No trae el boton de agregar al carrito a proposito: desde aca lo unico que
+   No trae el botón de agregar al carrito a propósito: desde acá lo único que
    queremos es que el usuario siga mirando. Si le interesa, entra al detalle y
-   compra desde ahi.
+   compra desde ahí.
    ========================================================================== */
 
 import { Link } from 'react-router-dom';
