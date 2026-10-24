@@ -48,7 +48,7 @@ function AdminCategorias({ avisar }) {
     const texto = descripcion.trim();
 
     if (texto === '') {
-      setError('Escribi el nombre de la categoria.');
+      setError('Escribí el nombre de la categoría.');
       return;
     }
 
@@ -59,7 +59,7 @@ function AdminCategorias({ avisar }) {
     );
 
     if (repetida) {
-      setError(`Ya existe la categoria "${texto}".`);
+      setError(`Ya existe la categoría "${texto}".`);
       return;
     }
 
@@ -70,7 +70,7 @@ function AdminCategorias({ avisar }) {
       const nueva = await crearCategoria(texto);
       setCategorias([...categorias, nueva]);
       setDescripcion('');
-      avisar('exito', `Creaste la categoria ${nueva.description}.`);
+      avisar('exito', `Creaste la categoría ${nueva.description}.`);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -82,8 +82,8 @@ function AdminCategorias({ avisar }) {
     <div className="contenedor">
       <div className="encabezado-pagina">
         <div>
-          <h1>Categorias</h1>
-          <p>Con estas categorias se clasifican los juegos del catalogo.</p>
+          <h1>Categorías</h1>
+          <p>Con estas categorías se clasifican los juegos del catálogo.</p>
         </div>
       </div>
 
@@ -93,7 +93,7 @@ function AdminCategorias({ avisar }) {
 
       <div className="dos-columnas">
         <form className="panel" onSubmit={crear}>
-          <h2>Nueva categoria</h2>
+          <h2>Nueva categoría</h2>
 
           <div className="campo">
             <label htmlFor="descripcion">Nombre</label>
@@ -114,7 +114,7 @@ function AdminCategorias({ avisar }) {
             className="boton boton-ancho"
             disabled={enviando || descripcion.trim() === ''}
           >
-            {enviando ? 'Creando...' : 'Crear categoria'}
+            {enviando ? 'Creando...' : 'Crear categoría'}
           </button>
         </form>
 
@@ -127,7 +127,7 @@ function AdminCategorias({ avisar }) {
           {cargando ? (
             <Cargando texto="Cargando categorias..." />
           ) : categorias.length === 0 ? (
-            <Vacio icono={'\u{1F3F7}'} titulo="Todavia no hay categorias">
+            <Vacio icono={'\u{1F3F7}'} titulo="Todavía no hay categorías">
               Crea la primera con el formulario de al lado.
             </Vacio>
           ) : (

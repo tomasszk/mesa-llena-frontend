@@ -47,7 +47,7 @@ async function mensajeDeError(respuesta) {
     // La respuesta no era JSON: seguimos al mensaje por defecto.
   }
 
-  if (respuesta.status === 401) return 'Tenes que iniciar sesion para hacer esto.';
+  if (respuesta.status === 401) return 'Tenés que iniciar sesión para hacer esto.';
   if (respuesta.status === 403) return 'Tu cuenta no tiene permiso para hacer esto.';
   if (respuesta.status === 404) return 'No encontramos lo que estabas buscando.';
   return `El servidor respondio con un error (${respuesta.status}).`;
@@ -103,7 +103,7 @@ async function pedir(ruta, { metodo = 'GET', cuerpo, conToken = false, esFormula
   if (respuesta.status === 401 && conToken) {
     borrarSesion();
     window.dispatchEvent(new Event(EVENTO_SESION_EXPIRADA));
-    throw new Error('Tu sesion vencio. Volve a iniciar sesion para continuar.');
+    throw new Error('Tu sesión venció. Volvé a iniciar sesión para continuar.');
   }
 
   if (!respuesta.ok) {

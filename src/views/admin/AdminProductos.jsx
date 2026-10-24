@@ -99,8 +99,8 @@ function AdminProductos({ avisar }) {
     if (valor === '' || Number.isNaN(numero) || numero < 0) {
       setError(
         campo === 'stock'
-          ? 'El stock tiene que ser un numero de 0 o mas.'
-          : 'El descuento tiene que ser un numero entre 0 y 100.',
+          ? 'El stock tiene que ser un número de 0 o más.'
+          : 'El descuento tiene que ser un número entre 0 y 100.',
       );
       return;
     }
@@ -133,7 +133,7 @@ function AdminProductos({ avisar }) {
   async function borrar(producto) {
     const confirmado = window.confirm(
       `Dar de baja "${producto.name}"?\n\n` +
-        'Va a dejar de aparecer en el catalogo y se va a quitar de los carritos. ' +
+        'Va a dejar de aparecer en el catálogo y se va a quitar de los carritos. ' +
         'Las compras ya hechas no se tocan.',
     );
     if (!confirmado) return;
@@ -184,7 +184,7 @@ function AdminProductos({ avisar }) {
       ) : productos.length === 0 ? (
         <Vacio
           icono={'\u{1F3B2}'}
-          titulo="Todavia no hay productos publicados"
+          titulo="Todavía no hay productos publicados"
           accion={
             <Link to="/admin/productos/nuevo" className="boton">
               Publicar el primero
@@ -202,7 +202,7 @@ function AdminProductos({ avisar }) {
                   <tr>
                     <th></th>
                     <th>Producto</th>
-                    <th>Categoria</th>
+                    <th>Categoría</th>
                     <th className="numero">Precio</th>
                     <th className="numero">Descuento</th>
                     <th className="numero">Precio final</th>

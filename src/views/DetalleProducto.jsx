@@ -201,7 +201,7 @@ function DetalleProducto({ usuario, alAgregar }) {
   }
 
   if (producto.minAge) {
-    ficha.push({ icono: '\u{1F382}', titulo: 'Desde', valor: `${producto.minAge} anios` });
+    ficha.push({ icono: '\u{1F382}', titulo: 'Desde', valor: `${producto.minAge} años` });
   }
 
   ficha.push({
@@ -228,7 +228,7 @@ function DetalleProducto({ usuario, alAgregar }) {
 
         <div className="contenedor juego-hero-contenido">
           <nav className="migas migas-claras">
-            <Link to="/">Catalogo</Link>
+            <Link to="/">Catálogo</Link>
             <span aria-hidden="true">/</span>
             <Link to={`/?categoria=${producto.categoryId}`}>
               {producto.categoryDescription}
@@ -345,9 +345,9 @@ function DetalleProducto({ usuario, alAgregar }) {
 
                 <p className="juego-nota">
                   {agotado
-                    ? 'Por ahora no hay unidades. Volve a mirar en unos dias.'
+                    ? 'Por ahora no hay unidades. Volvé a mirar en unos días.'
                     : producto.stock <= 5
-                      ? `Ultimas ${producto.stock} ${producto.stock === 1 ? 'unidad' : 'unidades'}`
+                      ? `Últimas ${producto.stock} ${producto.stock === 1 ? 'unidad' : 'unidades'}`
                       : `${producto.stock} unidades disponibles`}
                   {!puedeComprar &&
                     !agotado &&

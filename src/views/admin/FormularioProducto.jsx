@@ -145,7 +145,7 @@ function FormularioProducto({ avisar }) {
       if (!TIPOS_PERMITIDOS.includes(archivo.type)) {
         rechazados.push(`${archivo.name} no es una imagen (jpg, png, webp o gif)`);
       } else if (archivo.size > TAMANIO_MAXIMO) {
-        rechazados.push(`${archivo.name} pesa mas de 5 MB`);
+        rechazados.push(`${archivo.name} pesa más de 5 MB`);
       } else {
         aceptados.push(archivo);
       }
@@ -168,7 +168,7 @@ function FormularioProducto({ avisar }) {
     const nuevos = {};
 
     if (datos.name.trim() === '') nuevos.name = 'El nombre es obligatorio';
-    if (datos.description.trim() === '') nuevos.description = 'La descripcion es obligatoria';
+    if (datos.description.trim() === '') nuevos.description = 'La descripción es obligatoria';
 
     if (datos.price === '') {
       nuevos.price = 'El precio es obligatorio';
@@ -179,7 +179,7 @@ function FormularioProducto({ avisar }) {
     if (datos.stock === '') {
       nuevos.stock = 'El stock es obligatorio';
     } else if (Number(datos.stock) < 0 || !Number.isInteger(Number(datos.stock))) {
-      nuevos.stock = 'El stock tiene que ser un numero entero de 0 o mas';
+      nuevos.stock = 'El stock tiene que ser un número entero de 0 o más';
     }
 
     const descuento = Number(datos.discount === '' ? 0 : datos.discount);
@@ -187,20 +187,20 @@ function FormularioProducto({ avisar }) {
       nuevos.discount = 'El descuento va de 0 a 100';
     }
 
-    if (datos.categoryId === '') nuevos.categoryId = 'Elegi una categoria';
+    if (datos.categoryId === '') nuevos.categoryId = 'Elegí una categoría';
 
     // La ficha es opcional, pero si se completa tiene que tener sentido.
     const min = Number(datos.minPlayers);
     const max = Number(datos.maxPlayers);
 
     if (datos.minPlayers !== '' && min < 1)
-      nuevos.minPlayers = 'Tiene que ser 1 o mas';
+      nuevos.minPlayers = 'Tiene que ser 1 o más';
 
     if (datos.maxPlayers !== '' && max < 1)
-      nuevos.maxPlayers = 'Tiene que ser 1 o mas';
+      nuevos.maxPlayers = 'Tiene que ser 1 o más';
 
     if (datos.minPlayers !== '' && datos.maxPlayers !== '' && min > max)
-      nuevos.maxPlayers = 'El maximo no puede ser menor que el minimo';
+      nuevos.maxPlayers = 'El máximo no puede ser menor que el mínimo';
 
     if (datos.durationMinutes !== '' && Number(datos.durationMinutes) < 1)
       nuevos.durationMinutes = 'Tiene que ser de al menos 1 minuto';
@@ -249,7 +249,7 @@ function FormularioProducto({ avisar }) {
         avisar('exito', 'Guardamos los cambios del producto.');
       } else {
         await crearProducto(cuerpo);
-        avisar('exito', 'Publicamos el producto en el catalogo.');
+        avisar('exito', 'Publicamos el producto en el catálogo.');
       }
 
       navegar('/admin/productos');
@@ -294,7 +294,7 @@ function FormularioProducto({ avisar }) {
           <p>
             {esEdicion
               ? 'Cambia lo que necesites y guarda. Las fotos solo se reemplazan si subis nuevas.'
-              : 'Carga el juego con su descripcion, categoria, precio y al menos una foto.'}
+              : 'Cargá el juego con su descripción, categoría, precio y al menos una foto.'}
           </p>
         </div>
       </div>
@@ -306,7 +306,7 @@ function FormularioProducto({ avisar }) {
       {categorias.length === 0 && (
         <Aviso tipo="info">
           Todavia no hay categorias cargadas, y un producto necesita una.{' '}
-          <Link to="/admin/categorias">Crea la primera categoria</Link> y volve.
+          <Link to="/admin/categorias">Creá la primera categoría</Link> y volvé.
         </Aviso>
       )}
 
@@ -337,14 +337,14 @@ function FormularioProducto({ avisar }) {
         </div>
 
         <div className={claseCampo('categoryId')}>
-          <label htmlFor="categoryId">Categoria</label>
+          <label htmlFor="categoryId">Categoría</label>
           <select
             id="categoryId"
             name="categoryId"
             value={datos.categoryId}
             onChange={alCambiar}
           >
-            <option value="">Elegi una categoria</option>
+            <option value="">Elegí una categoría</option>
             {categorias.map((categoria) => (
               <option key={categoria.id} value={categoria.id}>
                 {categoria.description}
@@ -575,7 +575,7 @@ function FormularioProducto({ avisar }) {
               ? 'Guardando...'
               : esEdicion
                 ? 'Guardar cambios'
-                : 'Publicar en el catalogo'}
+                : 'Publicar en el catálogo'}
           </button>
         </div>
       </form>

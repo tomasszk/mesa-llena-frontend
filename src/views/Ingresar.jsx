@@ -107,7 +107,7 @@ function Ingresar({ alIniciarSesion }) {
           </div>
 
           <div className="campo">
-            <label htmlFor="password">Contrasenia</label>
+            <label htmlFor="password">Contraseña</label>
             <input
               id="password"
               name="password"

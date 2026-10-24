@@ -31,7 +31,7 @@ function RutaProtegida({ usuario, rol, children }) {
           <div className="vacio-icono" aria-hidden="true">
             {'\u{1F512}'}
           </div>
-          <h2>No tenes permiso para entrar aca</h2>
+          <h2>No tenés permiso para entrar acá</h2>
           <p className="texto-gris">
             {rol === 'ADMIN'
               ? 'Esta seccion es del panel de la tienda. Tu cuenta es de comprador.'

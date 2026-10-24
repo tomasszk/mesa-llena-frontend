@@ -153,7 +153,7 @@ function Catalogo({ usuario, alAgregar }) {
    *   - Cuenta de tienda -> /carts pide el rol USER, la tienda no compra.
    */
   const motivoNoPuedeComprar = !usuario
-    ? 'Necesitas una cuenta para comprar'
+    ? 'Necesitás una cuenta para comprar'
     : usuario.role !== 'USER'
       ? 'La cuenta de la tienda no compra'
       : null;

@@ -121,7 +121,7 @@ function App() {
     function alExpirarSesion() {
       setUsuario(null);
       setCarrito(null);
-      avisar('info', 'Tu sesion vencio. Volve a ingresar.');
+      avisar('info', 'Tu sesión venció. Volvé a ingresar.');
       navegar('/ingresar');
     }
 
@@ -140,7 +140,7 @@ function App() {
     borrarSesion();
     setUsuario(null);
     setCarrito(null);
-    avisar('info', 'Cerraste la sesion.');
+    avisar('info', 'Cerraste la sesión.');
   }
 
   /**
@@ -154,7 +154,7 @@ function App() {
   async function agregarProducto(producto, cantidad = 1) {
     // Un visitante sin cuenta no puede comprar: lo mandamos a loguearse.
     if (!usuario) {
-      avisar('info', 'Inicia sesion para agregar productos al carrito.');
+      avisar('info', 'Iniciá sesión para agregar productos al carrito.');
       navegar('/ingresar', { state: { volverA: `/productos/${producto.id}` } });
       return;
     }

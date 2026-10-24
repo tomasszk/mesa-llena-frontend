@@ -15,7 +15,7 @@ function NoEncontrado() {
         <div className="vacio-icono" aria-hidden="true">
           {'\u{1F3B2}'}
         </div>
-        <h1>Esta pagina no existe</h1>
+        <h1>Esta página no existe</h1>
         <p className="texto-gris">
           La direccion que pusiste no corresponde a ninguna seccion de Mesa Llena.
         </p>

@@ -175,7 +175,7 @@ function Registro({ alIniciarSesion }) {
 
           <div className="fila-campos">
             <div className={claseCampo('password')}>
-              <label htmlFor="password">Contrasenia</label>
+              <label htmlFor="password">Contraseña</label>
               <input
                 id="password"
                 name="password"
@@ -192,7 +192,7 @@ function Registro({ alIniciarSesion }) {
             </div>
 
             <div className={claseCampo('repetirPassword')}>
-              <label htmlFor="repetirPassword">Repetir contrasenia</label>
+              <label htmlFor="repetirPassword">Repetir contraseña</label>
               <input
                 id="repetirPassword"
                 name="repetirPassword"
@@ -213,7 +213,7 @@ function Registro({ alIniciarSesion }) {
         </form>
 
         <p className="centrado texto-chico" style={{ marginTop: '1.25rem', marginBottom: 0 }}>
-          Ya tenes cuenta? <Link to="/ingresar">Ingresar</Link>
+          ¿Ya tenés cuenta? <Link to="/ingresar">Ingresar</Link>
         </p>
       </div>
     </div>
